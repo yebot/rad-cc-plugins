@@ -48,6 +48,16 @@
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
       }
+    },
+    {
+      "name": "astro-content-author",
+      "source": "./plugins/astro-content-author",
+      "description": "Astro Content Author - Comprehensive toolkit for creating and managing content in Astro projects including markdown files, content collections, images, data fetching, and Astro DB",
+      "version": "1.0.0",
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }
