@@ -38,7 +38,7 @@ All `plugin.json` files must include:
 - `name`: kebab-case plugin identifier
 - `version`: Semantic version (e.g., "1.0.0")
 - `description`: Clear description of plugin purpose
-- `author`: Must be "Tobey Forsman"
+- `author`: Object with `name` and `email` fields (see example below)
 - Component arrays: `agents`, `commands`, `skills` (as applicable)
 
 ### Agent Definition Format
@@ -62,7 +62,7 @@ See `plugins/agent-architect/templates/claude-code-subagent-template.md` for the
 ### Creating New Plugins
 
 1. Create directory under `plugins/{plugin-name}/`
-2. Create `plugin.json` with required metadata (author: "Tobey Forsman")
+2. Create `plugin.json` with required metadata (see Plugin Metadata Requirements)
 3. Add components (agents/commands/skills/hooks)
 4. Register in root `marketplace.json`
 
@@ -107,7 +107,10 @@ The `marketplace.json` file lists all available plugins:
       "source": "./plugins/plugin-name",
       "description": "Brief description",
       "version": "1.0.0",
-      "author": "Tobey Forsman"
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }
