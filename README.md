@@ -18,7 +18,7 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 **From GitHub:**
 
 ```
-/plugin marketplace add yebot/yebots-cc-plugins
+/plugin marketplace add yebot/rad-cc-plugins
 ```
 
 ### Install Plugins
@@ -26,7 +26,7 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 **Install a specific plugin:**
 
 ```
-/plugin install plugin-name@yebots-cc-plugins
+/plugin install plugin-name@rad-cc-plugins
 ```
 
 **Or, browse and install interactively:**

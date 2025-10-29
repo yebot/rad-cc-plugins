@@ -11,7 +11,7 @@ This is a Claude Code plugin marketplace containing custom plugins that extend C
 ## Repository Structure
 
 ```
-yebots-cc-plugins/
+rad-cc-plugins/
 ├── marketplace.json          # Registry of all plugins in this marketplace
 ├── plugins/
 │   ├── git-github-operations/   # Git workflow automation
@@ -100,7 +100,7 @@ The `marketplace.json` file lists all available plugins:
 
 ```json
 {
-  "name": "yebots-cc-plugins",
+  "name": "rad-cc-plugins",
   "plugins": [
     {
       "name": "plugin-name",
