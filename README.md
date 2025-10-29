@@ -11,16 +11,30 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 - **github-issues** - Elite agent for managing GitHub Issues using the gh CLI
 - **backlog-md** - CLI-first workflow orchestration for Git-native project management
 
-## Getting Started
+## Installation
 
-Each plugin in the `plugins/` directory is self-contained and can be installed individually into your Claude Code environment.
+### Add the Marketplace
+
+**From GitHub:**
+
+```
+/plugin marketplace add yebot/yebots-cc-plugins
+```
+
+### Install Plugins
+
+**Install a specific plugin:**
+
+```
+/plugin install plugin-name@yebots-cc-plugins
+```
+
+**Or, browse and install interactively:**
+
+```
+/plugin
+```
+
+## Development
 
 See [CLAUDE.md](CLAUDE.md) for detailed documentation on plugin architecture and development.
-
-## Author
-
-Tobey Forsman
-
----
-
-*Because sometimes you need a bigger brain to handle your dev workflow* 🧠
