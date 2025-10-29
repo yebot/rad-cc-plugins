@@ -1,7 +1,7 @@
 {
-  "name": "yebots-cc-plugins",
+  "name": "rad-cc-plugins",
   "metadata": {
-    "description": "Yebot's Claude Code Plugin Marketplace",
+    "description": "Yebot's Rad CC Plugins (a Claude Code Marketplace)",
     "version": "0.1.0"
   },
   "owner": {
