@@ -1,0 +1,47 @@
+{
+  "name": "astro-content-author",
+  "version": "1.0.0",
+  "description": "Comprehensive toolkit for creating and managing content in Astro projects - markdown files, content collections, images, data fetching, and Astro DB integration",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "agents": [
+    {
+      "name": "content-creator",
+      "file": "agents/content-creator.md"
+    },
+    {
+      "name": "collection-architect",
+      "file": "agents/collection-architect.md"
+    },
+    {
+      "name": "image-optimizer",
+      "file": "agents/image-optimizer.md"
+    },
+    {
+      "name": "data-fetcher",
+      "file": "agents/data-fetcher.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "new-post",
+      "file": "commands/new-post.md"
+    },
+    {
+      "name": "new-collection",
+      "file": "commands/new-collection.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "frontmatter-schemas",
+      "file": "skills/frontmatter-schemas/SKILL.md"
+    },
+    {
+      "name": "astro-db-patterns",
+      "file": "skills/astro-db-patterns/SKILL.md"
+    }
+  ]
+}
