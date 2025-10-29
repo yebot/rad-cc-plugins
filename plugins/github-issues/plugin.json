@@ -1,7 +1,7 @@
 {
   "name": "github-issues",
   "version": "1.0.0",
-  "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI",
+  "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI with priority workflow, guided commands, and best practices",
   "author": "Tobey Forsman",
   "agents": [
     {
@@ -9,5 +9,38 @@
       "source": "./agents/github-issues-manager.md",
       "description": "Elite GitHub Issues management specialist using gh CLI for all issue operations"
     }
-  ]
+  ],
+  "skills": [
+    {
+      "name": "github-issues-quick-reference",
+      "source": "./skills/github-issues-quick-reference"
+    },
+    {
+      "name": "issue-templates",
+      "source": "./skills/issue-templates"
+    }
+  ],
+  "commands": [
+    {
+      "name": "gh-create-issue",
+      "source": "./commands/gh-create-issue.md",
+      "description": "Create new GitHub issue with guided workflow and priority assessment"
+    },
+    {
+      "name": "gh-close-issue",
+      "source": "./commands/gh-close-issue.md",
+      "description": "Close GitHub issue with verification and proper documentation"
+    },
+    {
+      "name": "gh-triage",
+      "source": "./commands/gh-triage.md",
+      "description": "Triage open issues and ensure all have proper priority labels"
+    },
+    {
+      "name": "gh-status-report",
+      "source": "./commands/gh-status-report.md",
+      "description": "Generate comprehensive status report of all GitHub issues"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
 }
