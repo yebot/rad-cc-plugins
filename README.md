@@ -35,6 +35,16 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 /plugin
 ```
 
+### Get Updates
+
+**To receive the latest plugin updates:**
+
+```
+/plugin marketplace update rad-cc-plugins
+```
+
+Run this command periodically to get new features, bug fixes, and improvements.
+
 ## Development
 
 See [CLAUDE.md](CLAUDE.md) for detailed documentation on plugin architecture and development.

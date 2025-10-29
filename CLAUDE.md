@@ -94,6 +94,70 @@ The `backlog-md` plugin demonstrates advanced hook usage:
 - `user-prompt-submit` events can provide contextual reminders
 - Hooks use bash commands with filter patterns
 
+### Updating Plugins (Semantic Versioning)
+
+**IMPORTANT**: When making changes to any plugin, always update version numbers using semantic versioning:
+
+#### Version Format: `MAJOR.MINOR.PATCH`
+
+- **PATCH** (`1.0.0` → `1.0.1`): Bug fixes, typo corrections, minor tweaks
+  - No breaking changes
+  - No new features
+
+- **MINOR** (`1.0.0` → `1.1.0`): New features, new commands, new skills
+  - Backward compatible
+  - Adds functionality
+
+- **MAJOR** (`1.0.0` → `2.0.0`): Breaking changes
+  - Changes to existing APIs or workflows
+  - Removal of features
+  - Incompatible updates
+
+#### Steps to Update a Plugin
+
+1. **Modify the plugin files** (agents, commands, skills, hooks)
+
+2. **Update version in plugin's `plugin.json`**:
+   ```json
+   {
+     "name": "github-issues",
+     "version": "1.1.0",  // Increment appropriately
+     ...
+   }
+   ```
+
+3. **Update version in root `marketplace.json`**:
+   ```json
+   {
+     "plugins": [
+       {
+         "name": "github-issues",
+         "version": "1.1.0",  // Must match plugin.json
+         ...
+       }
+     ]
+   }
+   ```
+
+4. **Sync to `.claude-plugin/marketplace.json`**:
+   ```bash
+   cp marketplace.json .claude-plugin/marketplace.json
+   ```
+
+5. **Commit and push changes**
+
+#### When to Update Versions
+
+- **Always** update versions when making user-facing changes
+- **Don't** update versions for documentation-only changes (unless docs affect usage)
+- **Test** changes locally before incrementing version
+- **Document** changes in commit messages
+
+Users will receive updates when they run:
+```bash
+/plugin marketplace update rad-cc-plugins
+```
+
 ## Marketplace Registry
 
 The `marketplace.json` file lists all available plugins:
