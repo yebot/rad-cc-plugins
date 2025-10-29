@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "tool-use-warn-gh-direct": {
+      "event": "tool-use",
+      "filter": "Bash(gh issue create*)|Bash(gh issue edit*)|Bash(gh issue close*)",
+      "command": "bash",
+      "args": [
+        "-c",
+        "echo 'ℹ️  TIP: Use /gh-create-issue or /gh-close-issue commands for guided workflows'"
+      ]
+    },
+    "tool-use-validate-priority": {
+      "event": "tool-use",
+      "filter": "Bash(gh issue create*)|Bash(gh issue edit*)",
+      "command": "bash",
+      "args": [
+        "-c",
+        "echo '⚠️  REMINDER: Did you assign a priority label (P1/P2/P3)?'"
+      ]
+    },
+    "user-prompt-submit-bug-mention": {
+      "event": "user-prompt-submit",
+      "command": "bash",
+      "args": [
+        "-c",
+        "if echo \"$PROMPT\" | grep -qiE '(bug|broken|not working|error|issue)'; then echo 'ℹ️  Consider creating a GitHub issue:'; echo '   Use /gh-create-issue for guided workflow'; echo '   Or: gh issue create --title \"...\" --body \"...\" --label P1'; fi"
+      ]
+    },
+    "user-prompt-submit-fixed-mention": {
+      "event": "user-prompt-submit",
+      "command": "bash",
+      "args": [
+        "-c",
+        "if echo \"$PROMPT\" | grep -qiE '(fixed|resolved|completed|done with).*(issue|#[0-9]+)'; then echo 'ℹ️  Remember to close the related GitHub issue:'; echo '   Use /gh-close-issue for guided workflow'; echo '   Or: gh issue close <number> --comment \"...\\n\\n-cc\"'; fi"
+      ]
+    }
+  }
+}
