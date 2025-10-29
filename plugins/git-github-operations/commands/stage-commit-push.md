@@ -17,9 +17,14 @@ You are helping the user perform a complete git workflow: staging changes, creat
    - Push to the remote with `git push` (or `git push -u origin <branch>` if not tracking)
    - Confirm the push was successful
 
-## Important Notes
+## Important Notes and Guidelines
 
+- Always verify what branch you're on before pushing
+- Each commit should represent a single logical change
+- If there are many small changes, group them into 2-4 meaningful commits
 - Always show the user what changes will be committed before creating the commit
 - If there are no changes to commit, inform the user
+- Commit messages should be concise but descriptive (1-2 lines)
+- If there are merge conflicts or issues, report them to the user
 - If the push fails (e.g., diverged branches), explain the issue and suggest solutions
 - Be careful with force pushes - only suggest if explicitly requested and after warning
