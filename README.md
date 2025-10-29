@@ -10,6 +10,7 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 - **agent-architect** - Tools and templates for designing Claude Code subagents
 - **github-issues** - Elite agent for managing GitHub Issues using the gh CLI
 - **backlog-md** - CLI-first workflow orchestration for Git-native project management
+- **astro-content-author** - Comprehensive toolkit for creating and managing content in Astro projects
 
 ## Installation
 

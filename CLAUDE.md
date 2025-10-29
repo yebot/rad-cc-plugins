@@ -17,7 +17,8 @@ rad-cc-plugins/
 │   ├── git-github-operations/   # Git workflow automation
 │   ├── agent-architect/         # Tools for designing subagents
 │   ├── github-issues/           # GitHub Issues management via gh CLI
-│   └── backlog-md/              # Task management with Backlog.md CLI
+│   ├── backlog-md/              # Task management with Backlog.md CLI
+│   └── astro-content-author/    # Astro content creation and management
 ```
 
 ## Plugin Architecture
