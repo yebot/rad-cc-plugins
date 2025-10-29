@@ -1,0 +1,13 @@
+{
+  "name": "agent-architect",
+  "version": "1.0.0",
+  "description": "Agent Architect - Tools and templates for designing Claude Code subagents",
+  "author": "Tobey Forsman",
+  "agents": [
+    {
+      "name": "agent-composer",
+      "source": "./agents/agent-composer.md",
+      "description": "Expert at designing and creating Claude Code subagent definitions"
+    }
+  ]
+}

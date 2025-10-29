@@ -1,0 +1,13 @@
+{
+  "name": "github-issues",
+  "version": "1.0.0",
+  "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI",
+  "author": "Tobey Forsman",
+  "agents": [
+    {
+      "name": "github-issues-manager",
+      "source": "./agents/github-issues-manager.md",
+      "description": "Elite GitHub Issues management specialist using gh CLI for all issue operations"
+    }
+  ]
+}

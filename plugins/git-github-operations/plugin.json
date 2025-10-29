@@ -1,0 +1,12 @@
+{
+  "name": "git-github-operations",
+  "version": "1.0.0",
+  "description": "Git & Github Operations - Streamlined git and GitHub workflow commands",
+  "author": "Tobey Forsman",
+  "commands": [
+    {
+      "name": "stage-commit-push",
+      "source": "./commands/stage-commit-push.md"
+    }
+  ]
+}

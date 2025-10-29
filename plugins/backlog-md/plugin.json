@@ -1,0 +1,47 @@
+{
+  "name": "backlog-md",
+  "version": "1.0.0",
+  "description": "Backlog.md Task Management - CLI-first workflow orchestration for Git-native project management with strict file naming enforcement",
+  "author": "Tobey Forsman",
+  "agents": [
+    {
+      "name": "backlog-task-manager",
+      "source": "./agents/backlog-task-manager.md",
+      "description": "Expert at managing Backlog.md tasks via CLI with strict workflow discipline and file naming enforcement"
+    },
+    {
+      "name": "backlog-validator",
+      "source": "./agents/backlog-validator.md",
+      "description": "Audits Backlog.md directory structure and validates task file naming compliance"
+    }
+  ],
+  "skills": [
+    {
+      "name": "backlog-quick-reference",
+      "source": "./skills/backlog-quick-reference"
+    }
+  ],
+  "commands": [
+    {
+      "name": "backlog-start",
+      "source": "./commands/backlog-start.md",
+      "description": "Start working on a Backlog.md task with proper workflow"
+    },
+    {
+      "name": "backlog-create",
+      "source": "./commands/backlog-create.md",
+      "description": "Create new Backlog.md task with guided prompts"
+    },
+    {
+      "name": "backlog-complete",
+      "source": "./commands/backlog-complete.md",
+      "description": "Complete a task with Definition of Done verification"
+    },
+    {
+      "name": "backlog-validate",
+      "source": "./commands/backlog-validate.md",
+      "description": "Validate backlog structure and file naming compliance"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
+}
