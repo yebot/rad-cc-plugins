@@ -1,0 +1,41 @@
+{
+  "name": "rad-cc-plugins",
+  "metadata": {
+    "description": "Yebot's Rad CC Plugins (a Claude Code Marketplace)",
+    "version": "0.1.0"
+  },
+  "owner": {
+    "name": "Yebot",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "git-github-operations",
+      "source": "./plugins/git-github-operations",
+      "description": "Git & Github Operations - Streamlined git and GitHub workflow commands",
+      "version": "1.0.0",
+      "author": "Tobey Forsman"
+    },
+    {
+      "name": "agent-architect",
+      "source": "./plugins/agent-architect",
+      "description": "Agent Architect - Tools and templates for designing Claude Code subagents",
+      "version": "1.0.0",
+      "author": "Tobey Forsman"
+    },
+    {
+      "name": "github-issues",
+      "source": "./plugins/github-issues",
+      "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI",
+      "version": "1.0.0",
+      "author": "Tobey Forsman"
+    },
+    {
+      "name": "backlog-md",
+      "source": "./plugins/backlog-md",
+      "description": "Backlog.md Task Management - CLI-first workflow orchestration for Git-native project management with strict file naming enforcement",
+      "version": "1.0.0",
+      "author": "Tobey Forsman"
+    }
+  ]
+}
