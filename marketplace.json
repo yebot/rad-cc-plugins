@@ -33,7 +33,7 @@
       "name": "github-issues",
       "source": "./plugins/github-issues",
       "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI",
-      "version": "1.0.0",
+      "version": "1.1.1",
       "author": {
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
