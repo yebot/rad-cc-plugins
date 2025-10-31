@@ -100,6 +100,25 @@ Never forget this signature - it's critical for transparency and accountability.
 3. Reassess priority based on new information
 4. Add comments explaining significant updates (with "-cc" signature)
 
+### When Viewing Issues
+
+**IMPORTANT**: Always use `--json` format when viewing issue details for structured data:
+
+```bash
+gh issue view 59 --json title,body,labels,state,number,author,assignees,createdAt,updatedAt
+```
+
+This ensures consistent, parseable output. Key fields to include:
+- `title` - Issue title
+- `body` - Issue description
+- `labels` - Applied labels (including priority)
+- `state` - Issue state (OPEN, CLOSED)
+- `number` - Issue number
+- `author` - Who created the issue
+- `assignees` - Who is assigned
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last update timestamp
+
 ### When Searching/Filtering
 
 1. Use precise 'gh' CLI queries with appropriate filters:

@@ -10,7 +10,7 @@ Properly close a GitHub issue with summary comment and verification.
 
 2. **View the issue**:
    ```bash
-   gh issue view {number}
+   gh issue view {number} --json title,body,labels,state,number,author,assignees
    ```
    - Show issue details to user
    - Confirm this is the correct issue to close
@@ -36,7 +36,7 @@ Properly close a GitHub issue with summary comment and verification.
 
 6. **Verify closure**:
    ```bash
-   gh issue view {number}
+   gh issue view {number} --json title,state,number
    ```
    - Confirm status is "CLOSED"
    - Show closing comment to user
@@ -55,6 +55,6 @@ Properly close a GitHub issue with summary comment and verification.
 - [ ] Closing comment added with summary
 - [ ] Comment includes "-cc" signature
 - [ ] Issue status changed to CLOSED
-- [ ] Closure verified with `gh issue view`
+- [ ] Closure verified with `gh issue view --json`
 - [ ] Follow-up tasks created if needed
 - [ ] User sees confirmation of closure

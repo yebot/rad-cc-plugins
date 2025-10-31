@@ -5,10 +5,13 @@ Review open issues and ensure all have appropriate priority labels.
 ## Instructions
 
 1. **Check for priority labels**:
+
    ```bash
    gh label list
    ```
+
    - If P1, P2, P3 labels don't exist, create them:
+
    ```bash
    gh label create P1 --description "Critical priority - blocks core functionality" --color d73a4a
    gh label create P2 --description "High priority - significant impact" --color fbca04
@@ -16,17 +19,21 @@ Review open issues and ensure all have appropriate priority labels.
    ```
 
 2. **List all open issues**:
+
    ```bash
    gh issue list --state open --limit 100
    ```
+
    - Show count of total open issues
 
 3. **Identify issues without priority labels**:
+
    - Filter the list to find issues missing P1/P2/P3 labels
    - Show these to the user for triage
 
 4. **For each unlabeled issue**:
-   - Show issue details: `gh issue view {number}`
+
+   - Show issue details: `gh issue view {number} --json title,body,labels,state,number,author,assignees`
    - Assess priority based on:
      - **Impact scope**: How many users are affected?
      - **Severity**: How broken is the functionality?
@@ -37,11 +44,13 @@ Review open issues and ensure all have appropriate priority labels.
      - **P2**: Significant impact but has workaround, affects some users
      - **P3**: Nice-to-have, minor bugs, feature requests
    - Apply label after user confirms:
+
    ```bash
    gh issue edit {number} --add-label "P2"
    ```
 
 5. **Generate priority summary**:
+
    ```bash
    gh issue list --label P1 --state open
    gh issue list --label P2 --state open
@@ -60,10 +69,12 @@ Review open issues and ensure all have appropriate priority labels.
      - Assign critical issues
      - Create PRs for P1 items
      - Schedule P2 items
+   - When presenting a list of issues, include links to the issues. Expect that the terminal app will make them clickable for the user.
 
 ## Priority Assessment Guidelines
 
 ### P1 - Critical Priority
+
 - System is down or unusable
 - Security vulnerabilities
 - Data loss or corruption
@@ -71,12 +82,14 @@ Review open issues and ensure all have appropriate priority labels.
 - Production outage
 
 ### P2 - High Priority
+
 - Significant feature broken but workaround exists
 - Performance degradation
 - Affects subset of users
 - Important feature request with clear business value
 
 ### P3 - Normal Priority
+
 - Minor bugs with minimal impact
 - UI/UX improvements
 - Feature requests

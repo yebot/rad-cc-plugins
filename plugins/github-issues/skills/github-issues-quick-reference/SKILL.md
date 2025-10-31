@@ -35,13 +35,32 @@ gh label create P3 --description "Normal priority - standard workflow" --color 0
 
 ### Viewing Issues
 
+**IMPORTANT**: Use `--json` format for structured, parseable output:
+
+```bash
+gh issue view 59 --json title,body,labels,state,number,author,assignees,createdAt,updatedAt
+```
+
+**Recommended JSON fields**:
+- `title` - Issue title
+- `body` - Full description
+- `labels` - All labels (including priority)
+- `state` - OPEN or CLOSED
+- `number` - Issue number
+- `author` - Creator
+- `assignees` - Assigned users
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last modified
+
+**Basic Commands**:
+
 | Action                     | Command                                      |
 |----------------------------|----------------------------------------------|
 | List all issues            | `gh issue list`                              |
 | List open issues           | `gh issue list --state open`                 |
 | Filter by priority         | `gh issue list --label P1`                   |
 | Filter by assignee         | `gh issue list --assignee @me`               |
-| View specific issue        | `gh issue view 42`                           |
+| View specific issue        | `gh issue view 42 --json title,body,labels,state,number` |
 | Search issues              | `gh issue list --search "keyword"`           |
 
 ### Creating Issues
@@ -184,8 +203,8 @@ No issues detected.
 # List unlabeled issues
 gh issue list --state open
 
-# View issue details
-gh issue view 45
+# View issue details with structured data
+gh issue view 45 --json title,body,labels,state,number,author,assignees
 
 # Assign priority after assessment
 gh issue edit 45 --add-label "P2"
