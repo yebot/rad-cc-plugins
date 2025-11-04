@@ -58,6 +58,16 @@
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
       }
+    },
+    {
+      "name": "documentation-tools",
+      "source": "./plugins/documentation-tools",
+      "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal Claude Code context",
+      "version": "1.0.0",
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }
