@@ -116,7 +116,76 @@ Ensure all documentation files in the repository are properly referenced in CLAU
       - Maintain alphabetical or logical ordering
       - Keep consistent formatting with existing references
 
-6. **Group related documentation** (optional enhancement):
+6. **Optimize documentation link hierarchy** (handle subdirectory CLAUDE.md files):
+
+   **Scenario**: A parent CLAUDE.md may contain links to documentation that would be more appropriately referenced in a newly created subdirectory CLAUDE.md file (closer to the relevant code).
+
+   a) **For each subdirectory CLAUDE.md file** (if any exist):
+
+      - Identify its directory path (e.g., `components/auth/CLAUDE.md`)
+      - Determine its "scope" (the subdirectory it covers)
+
+   b) **Review parent CLAUDE.md files for potentially misplaced references**:
+
+      - Read each parent CLAUDE.md (especially root CLAUDE.md)
+      - Examine all documentation references in the "Related Documentation" or similar sections
+
+   c) **Evaluate each reference for relocation**:
+
+      For each documentation link in a parent CLAUDE.md, check:
+
+      - **Is the referenced file within or closely related to a subdirectory that has its own CLAUDE.md?**
+
+        Example scenarios where relocation makes sense:
+        - Root CLAUDE.md links to `components/auth/README.md` → Move to `components/auth/CLAUDE.md`
+        - Root CLAUDE.md links to `services/api/endpoints.md` → Move to `services/CLAUDE.md` or `services/api/CLAUDE.md`
+        - `src/CLAUDE.md` links to `src/utils/helpers/guide.md` → Move to `src/utils/CLAUDE.md`
+
+      - **Would the reference provide more value at the lower level?**
+
+        Consider:
+        - Proximity to relevant code
+        - Specificity of the documentation (component-specific vs. project-wide)
+        - Whether the subdirectory CLAUDE.md is missing critical context
+
+      - **Should it remain at the parent level?**
+
+        Keep references in parent CLAUDE.md if:
+        - Documentation covers cross-cutting concerns
+        - File provides repository-wide context
+        - Documentation spans multiple subdirectories
+        - The doc is a top-level architecture/overview document
+
+   d) **Move references when appropriate**:
+
+      For references that should be relocated:
+
+      1. **Read the subdirectory CLAUDE.md** to understand its structure
+      2. **Add the reference** to the subdirectory CLAUDE.md:
+         - Adjust the relative path from the new location
+         - Place in appropriate section (create "## Related Documentation" if needed)
+         - Keep the same description or refine it for local context
+      3. **Remove the reference** from the parent CLAUDE.md:
+         - Use Edit tool to cleanly remove the line
+         - Preserve formatting and surrounding references
+         - Don't leave empty sections (remove section if last item)
+
+   e) **Document moved references**:
+
+      Keep track of relocations for the summary report:
+      ```
+      Moved references:
+      - docs/auth/oauth.md: CLAUDE.md → components/auth/CLAUDE.md
+      - services/api/endpoints.md: CLAUDE.md → services/CLAUDE.md
+      ```
+
+   **Important considerations**:
+   - Don't create duplicate references (check subdirectory CLAUDE.md first)
+   - Relative paths will change when moving between CLAUDE.md files
+   - When in doubt, leave the reference in the parent (no harm in redundancy)
+   - This is an optimization step—only move references when clearly beneficial
+
+7. **Group related documentation** (optional enhancement):
 
    If multiple documentation files share a common theme or directory:
    - Group them together in the CLAUDE.md
@@ -134,7 +203,7 @@ Ensure all documentation files in the repository are properly referenced in CLAU
      - [docs/testing.md](docs/testing.md) - Testing strategy and guidelines
      ```
 
-7. **Report results to the user**:
+8. **Report results to the user**:
 
    Provide a summary:
    ```
@@ -143,18 +212,23 @@ Ensure all documentation files in the repository are properly referenced in CLAU
    Total markdown files found: X
    Already referenced in CLAUDE.md: Y
    Newly added references: Z
+   References relocated: M
 
    Updated files:
-   - CLAUDE.md (+Z references)
-   - path/to/subdirectory/CLAUDE.md (+N references)
+   - CLAUDE.md (+Z references, -M moved)
+   - path/to/subdirectory/CLAUDE.md (+N references, +M moved in)
 
    New references added:
    - docs/api/endpoints.md → CLAUDE.md
    - docs/setup.md → CLAUDE.md
    - components/auth/README.md → components/CLAUDE.md
+
+   References relocated for better hierarchy:
+   - components/auth/oauth-guide.md: CLAUDE.md → components/auth/CLAUDE.md
+   - services/api/endpoints.md: CLAUDE.md → services/CLAUDE.md
    ```
 
-8. **Suggest next steps**:
+9. **Suggest next steps**:
    - "Review the added references for accuracy"
    - "Consider updating the brief descriptions if needed"
    - "Run this command periodically to catch new documentation"
@@ -236,6 +310,8 @@ Additional documentation files in this repository:
 - [ ] Unreferenced docs identified
 - [ ] Best CLAUDE.md target determined for each unreferenced doc
 - [ ] References added with appropriate brief descriptions
+- [ ] Documentation link hierarchy optimized (references moved to subdirectory CLAUDE.md files where appropriate)
+- [ ] Relative paths updated correctly for any moved references
 - [ ] CLAUDE.md files updated using Edit tool
 - [ ] Summary report provided to user
 - [ ] No duplicate references created
