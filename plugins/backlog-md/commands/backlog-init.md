@@ -27,7 +27,36 @@ Guide the user through initializing a Backlog.md presence in the current reposit
 
    If user selects "Custom name" or "Other", ask them to provide the custom name.
 
-3. **Verify backlog directory doesn't exist**:
+3. **Ask user for connection preference (MCP vs CLI)**:
+
+   Use the AskUserQuestion tool to ask:
+
+   - Question: "How would you like Claude Code to interact with Backlog.md?"
+   - Header: "Connection"
+   - Options:
+     - Label: "MCP Server"
+       Description: "Use Model Context Protocol for direct integration (recommended for Claude Code workflows)"
+     - Label: "CLI Commands"
+       Description: "Use backlog-md CLI commands via bash (requires CLI installation)"
+
+   **Understanding the options:**
+
+   - **MCP Server**:
+     - Direct integration with Claude Code
+     - No CLI installation required
+     - Claude uses native tools to read/write task files
+     - Faster and more seamless workflow
+     - Recommended for most users
+
+   - **CLI Commands**:
+     - Uses the backlog-md command-line tool
+     - Requires separate installation (`npm install -g @backlog-md/cli`)
+     - Traditional CLI workflow
+     - Good for users who want to use backlog-md outside Claude Code
+
+   **Note the user's preference** for use in subsequent steps.
+
+4. **Verify backlog directory doesn't exist**:
    ```bash
    # Check if backlog directory already exists
    if [ -d "backlog" ]; then
@@ -41,7 +70,7 @@ Guide the user through initializing a Backlog.md presence in the current reposit
      - Reinitialize (will preserve existing tasks)
      - Delete and start fresh (DANGEROUS - confirm twice)
 
-4. **Create directory structure**:
+5. **Create directory structure**:
    ```bash
    # Create the backlog directory hierarchy
    mkdir -p backlog/tasks
@@ -50,7 +79,9 @@ Guide the user through initializing a Backlog.md presence in the current reposit
    mkdir -p backlog/decisions
    ```
 
-5. **Initialize with backlog CLI**:
+6. **Initialize based on connection preference**:
+
+   **If user chose CLI Commands:**
    ```bash
    # Initialize the backlog with the chosen name
    backlog init "{backlog_name}"
@@ -69,7 +100,22 @@ Guide the user through initializing a Backlog.md presence in the current reposit
      ```
    - Ask user to install, then retry
 
-6. **Verify initialization**:
+   **If user chose MCP Server:**
+   - Create a basic `.backlog/config.json` file:
+     ```bash
+     mkdir -p .backlog
+     cat > .backlog/config.json <<EOF
+{
+  "name": "{backlog_name}",
+  "version": "1.0.0",
+  "connection": "mcp"
+}
+EOF
+     ```
+   - Inform user: "Backlog.md is configured for MCP. Claude Code will interact directly with task files."
+   - Note: MCP server configuration is handled in Claude Code settings, not here
+
+7. **Verify initialization**:
    ```bash
    # Verify directory structure
    tree backlog -L 2
@@ -84,7 +130,9 @@ Guide the user through initializing a Backlog.md presence in the current reposit
      - `backlog/docs/`
      - `backlog/decisions/`
 
-7. **Create initial README** (optional but recommended):
+8. **Create initial README** (optional but recommended):
+
+   **If user chose CLI Commands:**
    ```bash
    backlog doc create "README" -c "# {backlog_name}
 
@@ -99,7 +147,26 @@ This project uses Backlog.md for task management.
 See the full documentation for more details."
    ```
 
-8. **Add to .gitignore** (optional):
+   **If user chose MCP Server:**
+   ```bash
+   cat > backlog/docs/README.md <<EOF
+# {backlog_name}
+
+This project uses Backlog.md for task management with MCP integration.
+
+## Quick Start
+
+- Create tasks: Use Claude Code's \`/backlog-create\` command
+- List tasks: Claude can read from \`backlog/tasks/\` directly
+- Start work: Use \`/backlog-start\` command
+
+Claude Code interacts with task files directly through MCP.
+
+See the full documentation for more details.
+EOF
+   ```
+
+9. **Add to .gitignore** (optional):
 
    Ask user if they want to ignore certain backlog files:
    - Options:
@@ -115,14 +182,38 @@ See the full documentation for more details."
    echo "backlog/drafts/" >> .gitignore
    ```
 
-9. **Show initialization summary**:
+10. **Show initialization summary**:
 
    Display to the user:
+
+   **If user chose CLI Commands:**
    ```
    ✅ Backlog.md initialized successfully!
 
    Backlog name: {backlog_name}
    Location: ./backlog
+   Connection: CLI Commands
+
+   Directory structure created:
+   - backlog/tasks/     (Task files)
+   - backlog/drafts/    (Draft tasks)
+   - backlog/docs/      (Documentation)
+   - backlog/decisions/ (ADRs and decisions)
+
+   Next steps:
+   1. Create your first task: `backlog task create "Title"`
+   2. View available commands: `backlog --help`
+   3. Explore the task board: `backlog board`
+   4. Use Claude Code commands: `/backlog-create`, `/backlog-start`
+   ```
+
+   **If user chose MCP Server:**
+   ```
+   ✅ Backlog.md initialized successfully!
+
+   Backlog name: {backlog_name}
+   Location: ./backlog
+   Connection: MCP Server (direct integration)
 
    Directory structure created:
    - backlog/tasks/     (Task files)
@@ -132,15 +223,25 @@ See the full documentation for more details."
 
    Next steps:
    1. Create your first task: `/backlog-create`
-   2. View available commands: `backlog --help`
-   3. Explore the task board: `backlog board`
+   2. Use `/backlog-start` to begin working on a task
+   3. Claude Code will interact with task files directly
+   4. No CLI installation needed!
    ```
 
-10. **Remind about workflow**:
-    - "Use `/backlog-create` to create your first task"
-    - "Use `/backlog-start` to begin working on a task"
-    - "Use `/backlog-validate` to check backlog health"
-    - "All operations should use the backlog CLI - never edit task files directly"
+11. **Remind about workflow**:
+
+   **If user chose CLI Commands:**
+   - "Use `backlog task create` or `/backlog-create` to create your first task"
+   - "Use `backlog task edit` or `/backlog-start` to begin working on a task"
+   - "Use `/backlog-validate` to check backlog health"
+   - "All operations should use the backlog CLI - never edit task files directly"
+
+   **If user chose MCP Server:**
+   - "Use `/backlog-create` to create your first task"
+   - "Use `/backlog-start` to begin working on a task"
+   - "Use `/backlog-validate` to check backlog health"
+   - "Claude Code will handle task file operations automatically"
+   - "Never edit task files directly - use Claude Code commands"
 
 ## Important Guidelines
 
@@ -186,10 +287,13 @@ backlog doc create "Title" -c $'# Heading\n\nParagraph one.\n\nParagraph two.'
 
 - [ ] Repository/backlog name determined
 - [ ] User confirmed backlog name (custom or default)
+- [ ] User selected connection preference (MCP or CLI)
 - [ ] Directory structure created (tasks, drafts, docs, decisions)
-- [ ] `backlog init` command executed successfully
+- [ ] Initialization completed based on connection choice:
+  - [ ] CLI: `backlog init` command executed successfully
+  - [ ] MCP: `.backlog/config.json` created
 - [ ] Directory structure verified
-- [ ] Optional: README documentation created
+- [ ] Optional: README documentation created (appropriate for connection type)
 - [ ] Optional: .gitignore configured
-- [ ] Initialization summary displayed to user
-- [ ] User understands next steps and available commands
+- [ ] Initialization summary displayed to user (showing connection type)
+- [ ] User understands next steps and available commands for their connection type

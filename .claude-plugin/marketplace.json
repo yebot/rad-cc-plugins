@@ -43,7 +43,7 @@
       "name": "backlog-md",
       "source": "./plugins/backlog-md",
       "description": "Backlog.md Task Management - CLI-first workflow orchestration for Git-native project management with strict file naming enforcement",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "author": {
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
