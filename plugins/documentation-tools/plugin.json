@@ -1,6 +1,6 @@
 {
   "name": "documentation-tools",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal Claude Code context",
   "author": {
     "name": "Tobey Forsman",
@@ -11,6 +11,11 @@
       "name": "link-docs-to-claude",
       "source": "./commands/link-docs-to-claude.md",
       "description": "Link all documentation files to CLAUDE.md for better context availability"
+    },
+    {
+      "name": "plan-claude-md",
+      "source": "./commands/plan-claude-md.md",
+      "description": "Analyze repository structure and recommend optimal CLAUDE.md placement strategy"
     }
   ]
 }

@@ -1,3 +1,13 @@
+---
+description: Link all documentation files to CLAUDE.md for better context availability
+allowed-tools:
+  - Bash
+  - Glob
+  - Grep
+  - Read
+  - Edit
+---
+
 # Link All Documentation to CLAUDE.md
 
 Ensure all documentation files in the repository are properly referenced in CLAUDE.md files for maximum context availability.
