@@ -1,6 +1,6 @@
 {
   "name": "documentation-tools",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal Claude Code context",
   "author": {
     "name": "Tobey Forsman",

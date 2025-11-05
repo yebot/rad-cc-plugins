@@ -213,7 +213,88 @@ Ensure all documentation files in the repository are properly referenced in CLAU
      - [docs/testing.md](docs/testing.md) - Testing strategy and guidelines
      ```
 
-8. **Report results to the user**:
+8. **Link child CLAUDE.md files to parent CLAUDE.md files**:
+
+   **Purpose**: Create navigation links from parent CLAUDE.md files to child CLAUDE.md files for easy context discovery.
+
+   a) **Identify CLAUDE.md hierarchy**:
+      - From step 1, you have a list of all CLAUDE.md files
+      - Identify which is the root CLAUDE.md (typically `./CLAUDE.md`)
+      - Identify all subdirectory CLAUDE.md files (e.g., `./src/components/CLAUDE.md`)
+
+   b) **For the root CLAUDE.md** (and any parent CLAUDE.md files):
+
+      - **Find all child CLAUDE.md files**:
+        - Any CLAUDE.md file in a subdirectory relative to this parent
+        - Example: If parent is `./CLAUDE.md`, children include:
+          - `./src/components/design/CLAUDE.md`
+          - `./packages/api/CLAUDE.md`
+          - `./services/auth/CLAUDE.md`
+
+      - **Read each child CLAUDE.md to get context**:
+        - Read the first 5-10 lines of the child CLAUDE.md
+        - Extract the title (first `# Heading`) if present
+        - Infer purpose from title or path if no clear title
+
+      - **Check if child is already referenced**:
+        - Search parent CLAUDE.md for references to the child file path
+        - Look for existing "## Subdirectory Context Files" or similar section
+
+      - **Add or update the "Subdirectory Context Files" section**:
+
+        In the parent CLAUDE.md, find or create this section (typically after main content, before "Related Documentation"):
+
+        ```markdown
+        ## Subdirectory Context Files
+
+        Additional CLAUDE.md files in subdirectories provide focused context for specific areas:
+
+        - [src/components/design/CLAUDE.md](src/components/design/CLAUDE.md) - Design system components
+        - [packages/api/CLAUDE.md](packages/api/CLAUDE.md) - Backend API service
+        - [services/auth/CLAUDE.md](services/auth/CLAUDE.md) - Authentication service
+        ```
+
+        **Guidelines for child CLAUDE.md descriptions**:
+        - Use the title from the child file if available
+        - Or describe the subdirectory's purpose (e.g., "Backend API service", "Design system components")
+        - Keep descriptions brief (3-8 words)
+        - Focus on what that area contains or does
+
+      - **Use relative paths**:
+        - All paths should be relative to the parent CLAUDE.md location
+        - Example: Root `./CLAUDE.md` → child `./src/auth/CLAUDE.md` = link path `src/auth/CLAUDE.md`
+
+      - **Use Edit tool to add the section**:
+        - If section doesn't exist, add it before "## Related Documentation"
+        - If section exists, add missing child references
+        - Keep links alphabetically sorted or grouped logically by area
+        - Don't duplicate existing references
+
+   c) **Handle nested hierarchies** (if applicable):
+
+      - If a subdirectory CLAUDE.md also has children (e.g., `src/CLAUDE.md` and `src/components/CLAUDE.md`):
+        - Link `./CLAUDE.md` → `src/CLAUDE.md` (child)
+        - Link `src/CLAUDE.md` → `src/components/CLAUDE.md` (grandchild)
+        - Each parent only links to its direct children, not grandchildren
+
+      - This creates a natural navigation hierarchy:
+        ```
+        ./CLAUDE.md
+        └── links to: src/CLAUDE.md, packages/CLAUDE.md
+
+        src/CLAUDE.md
+        └── links to: src/components/CLAUDE.md, src/utils/CLAUDE.md
+        ```
+
+   d) **Track child CLAUDE.md links for reporting**:
+
+      Keep count of:
+      - Child CLAUDE.md files found
+      - Child CLAUDE.md links already present
+      - New child CLAUDE.md links added
+      - Which parent files were updated
+
+9. **Report results to the user**:
 
    Provide a summary:
    ```
@@ -224,8 +305,12 @@ Ensure all documentation files in the repository are properly referenced in CLAU
    Newly added references: Z
    References relocated: M
 
+   Child CLAUDE.md files:
+   - Total child CLAUDE.md files found: N
+   - Child CLAUDE.md links added: P
+
    Updated files:
-   - CLAUDE.md (+Z references, -M moved)
+   - CLAUDE.md (+Z references, -M moved, +P child CLAUDE.md links)
    - path/to/subdirectory/CLAUDE.md (+N references, +M moved in)
 
    New references added:
@@ -236,9 +321,13 @@ Ensure all documentation files in the repository are properly referenced in CLAU
    References relocated for better hierarchy:
    - components/auth/oauth-guide.md: CLAUDE.md → components/auth/CLAUDE.md
    - services/api/endpoints.md: CLAUDE.md → services/CLAUDE.md
+
+   Child CLAUDE.md links added:
+   - src/components/design/CLAUDE.md → CLAUDE.md
+   - packages/api/CLAUDE.md → CLAUDE.md
    ```
 
-9. **Suggest next steps**:
+10. **Suggest next steps**:
    - "Review the added references for accuracy"
    - "Consider updating the brief descriptions if needed"
    - "Run this command periodically to catch new documentation"
@@ -254,7 +343,7 @@ Ensure all documentation files in the repository are properly referenced in CLAU
 - ✅ Configuration references
 
 ### What to Skip
-- ❌ CLAUDE.md files themselves (avoid circular references)
+- ❌ CLAUDE.md files in "Related Documentation" sections (but DO link them in "Subdirectory Context Files")
 - ❌ README.md at root (usually already referenced or primary doc)
 - ❌ CHANGELOG.md (version history, not context)
 - ❌ LICENSE.md (legal, not development context)
@@ -289,7 +378,7 @@ Ensure all documentation files in the repository are properly referenced in CLAU
 
 ## Example Output Structure
 
-For a CLAUDE.md file after running this command:
+For a root CLAUDE.md file after running this command:
 
 ```markdown
 # Project Name
@@ -299,6 +388,14 @@ Project overview and instructions...
 ## Repository Structure
 
 ...existing content...
+
+## Subdirectory Context Files
+
+Additional CLAUDE.md files in subdirectories provide focused context for specific areas:
+
+- [src/components/design/CLAUDE.md](src/components/design/CLAUDE.md) - Design system components
+- [packages/api/CLAUDE.md](packages/api/CLAUDE.md) - Backend API service
+- [services/auth/CLAUDE.md](services/auth/CLAUDE.md) - Authentication service
 
 ## Related Documentation
 
@@ -322,8 +419,12 @@ Additional documentation files in this repository:
 - [ ] References added with appropriate brief descriptions
 - [ ] Documentation link hierarchy optimized (references moved to subdirectory CLAUDE.md files where appropriate)
 - [ ] Relative paths updated correctly for any moved references
+- [ ] Child CLAUDE.md files identified and hierarchy established
+- [ ] Parent CLAUDE.md files updated with "Subdirectory Context Files" section
+- [ ] All child CLAUDE.md files linked from appropriate parent CLAUDE.md files
+- [ ] Child CLAUDE.md descriptions extracted or inferred
 - [ ] CLAUDE.md files updated using Edit tool
-- [ ] Summary report provided to user
+- [ ] Summary report provided to user (including child CLAUDE.md links)
 - [ ] No duplicate references created
 - [ ] No circular references created
 - [ ] User informed of next steps
