@@ -8,7 +8,7 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 
 ### Workflow & Project Management
 
-- **backlog-md** (v1.1.2) - CLI-first workflow orchestration for Git-native project management with strict file naming enforcement and automated validation hooks
+- **backlog-md** (v1.1.2) - CLI-first workflow orchestration for [Backlog.md](https://github.com/MrLesk/Backlog.md) project management with strict file naming enforcement and automated validation hooks
 - **github-issues** (v1.1.1) - Elite agent for managing GitHub Issues using the gh CLI with priority labels, status management, and smart issue tracking
 
 ### Git & GitHub
