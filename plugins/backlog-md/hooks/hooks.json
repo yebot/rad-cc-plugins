@@ -1,47 +1,48 @@
 {
   "hooks": {
-    "tool-use-block-edit": {
-      "event": "tool-use",
-      "filter": "Edit(*backlog/tasks/*)|Write(*backlog/tasks/*)",
-      "command": "bash",
-      "args": [
-        "-c",
-        "echo '❌ BLOCKED: Direct editing of task files is prohibited!' && echo '' && echo 'Task files must only be modified via CLI:' && echo '  backlog task edit <id> [options]' && echo '' && echo 'This ensures file naming (task-{id} - {title}.md) and metadata stay synchronized.' && echo '' && echo '📖 Use /backlog-start, /backlog-create, or /backlog-complete commands for guidance.' && exit 1"
-      ]
-    },
-    "tool-use-warn-read": {
-      "event": "tool-use",
-      "filter": "Read(*backlog/tasks/*)",
-      "command": "bash",
-      "args": [
-        "-c",
-        "echo 'ℹ️  NOTE: Prefer CLI for task access: backlog task <id> --plain' && echo 'Direct file reading is allowed but CLI provides better formatting.'"
-      ]
-    },
-    "tool-use-validate-after-cli": {
-      "event": "tool-use",
-      "filter": "Bash(backlog task create*)|Bash(backlog task edit*)",
-      "command": "bash",
-      "args": [
-        "-c",
-        "if [ -d backlog/tasks ]; then LAST_FILE=$(ls -t backlog/tasks/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null); if [ -n \"$LAST_FILE\" ] && ! echo \"$LAST_FILE\" | grep -qE '^task-[0-9]+ - .+\\.md$'; then echo '⚠️  WARNING: Task file naming may be incorrect: '$LAST_FILE; echo 'Expected pattern: task-{id} - {title}.md'; echo 'Run /backlog-validate to check all tasks.'; fi; fi"
-      ]
-    },
-    "user-prompt-submit-complete": {
-      "event": "user-prompt-submit",
-      "command": "bash",
-      "args": [
-        "-c",
-        "if echo \"$PROMPT\" | grep -qiE '(complete|done|finish).*(task|backlog)'; then echo 'ℹ️  Reminder: Verify all Definition of Done items before marking task as Done'; echo '   Use /backlog-complete for guided completion workflow'; fi"
-      ]
-    },
-    "user-prompt-submit-start": {
-      "event": "user-prompt-submit",
-      "command": "bash",
-      "args": [
-        "-c",
-        "if echo \"$PROMPT\" | grep -qiE '(start|begin|work on).*(task|backlog)'; then echo 'ℹ️  Reminder: Start task workflow:'; echo '   1. Assign yourself: backlog task edit <id> -a @myself'; echo '   2. Set status: backlog task edit <id> -s \"In Progress\"'; echo '   3. Add plan: backlog task edit <id> --plan ...'; echo '   Or use /backlog-start for guided workflow'; fi"
-      ]
-    }
+    "PreToolUse": [
+      {
+        "filter": "Edit(*backlog/tasks/*)|Write(*backlog/tasks/*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '❌ BLOCKED: Direct editing of task files is prohibited!' && echo '' && echo 'Task files must only be modified via CLI:' && echo '  backlog task edit <id> [options]' && echo '' && echo 'This ensures file naming (task-{id} - {title}.md) and metadata stay synchronized.' && echo '' && echo '📖 Use /backlog-start, /backlog-create, or /backlog-complete commands for guidance.' && exit 1"
+        ]
+      },
+      {
+        "filter": "Read(*backlog/tasks/*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo 'ℹ️  NOTE: Prefer CLI for task access: backlog task <id> --plain' && echo 'Direct file reading is allowed but CLI provides better formatting.'"
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "filter": "Bash(backlog task create*)|Bash(backlog task edit*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "if [ -d backlog/tasks ]; then LAST_FILE=$(ls -t backlog/tasks/*.md 2>/dev/null | head -1 | xargs basename 2>/dev/null); if [ -n \"$LAST_FILE\" ] && ! echo \"$LAST_FILE\" | grep -qE '^task-[0-9]+ - .+\\.md$'; then echo '⚠️  WARNING: Task file naming may be incorrect: '$LAST_FILE; echo 'Expected pattern: task-{id} - {title}.md'; echo 'Run /backlog-validate to check all tasks.'; fi; fi"
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(complete|done|finish).*(task|backlog)'; then echo 'ℹ️  Reminder: Verify all Definition of Done items before marking task as Done'; echo '   Use /backlog-complete for guided completion workflow'; fi"
+        ]
+      },
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(start|begin|work on).*(task|backlog)'; then echo 'ℹ️  Reminder: Start task workflow:'; echo '   1. Assign yourself: backlog task edit <id> -a @myself'; echo '   2. Set status: backlog task edit <id> -s \"In Progress\"'; echo '   3. Add plan: backlog task edit <id> --plan ...'; echo '   Or use /backlog-start for guided workflow'; fi"
+        ]
+      }
+    ]
   }
 }
