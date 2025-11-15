@@ -1,3 +1,10 @@
+---
+argument-hint: "<version> [options]"
+description: "Complete release build automation with code signing, notarization, installers, and distribution-ready artifacts"
+allowed-tools: Bash, Read, Write, AskUserQuestion, Task
+model: sonnet
+---
+
 # /release-build
 
 Complete release build automation for JUCE audio plugins. Builds all formats, signs binaries, notarizes macOS builds, creates installers, and prepares release artifacts.

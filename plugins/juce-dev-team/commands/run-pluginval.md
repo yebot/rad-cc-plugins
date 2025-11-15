@@ -1,5 +1,7 @@
 ---
 argument-hint: "[format: vst3|au|aax|all] [strictness: 1-10]"
+description: "Run industry-standard pluginval validation tool on JUCE plugins with comprehensive tests and detailed reports"
+allowed-tools: Bash, Read, AskUserQuestion
 ---
 
 # Run Pluginval Validation

@@ -1,3 +1,10 @@
+---
+argument-hint: "[target] [--profiler=<tool>] [--benchmark] [--report]"
+description: "Profile plugin performance with Instruments, perf, VTune, Tracy to identify bottlenecks and optimize DSP algorithms"
+allowed-tools: Bash, Read, Write, AskUserQuestion
+model: sonnet
+---
+
 # /analyze-performance - Performance Profiling and Optimization
 
 Profile your JUCE plugin's performance to identify bottlenecks, optimize DSP algorithms, and ensure efficient CPU usage across different scenarios.

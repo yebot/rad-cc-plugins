@@ -1,5 +1,8 @@
 ---
 argument-hint: "[plugin-name] [type: effect|synth|midi]"
+description: "Scaffold complete JUCE plugin project with architecture, build config, and CI/CD using expert agents"
+allowed-tools: Read, Write, Bash, AskUserQuestion, Task
+model: sonnet
 ---
 
 # Create New JUCE Plugin Project

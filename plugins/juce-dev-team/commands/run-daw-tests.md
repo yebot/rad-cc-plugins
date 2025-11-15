@@ -1,3 +1,10 @@
+---
+argument-hint: "[format] [platform] [--quick|--full]"
+description: "Comprehensive DAW compatibility testing across Logic Pro, Ableton Live, Pro Tools, Cubase, Reaper, FL Studio, Bitwig, and Ardour"
+allowed-tools: Bash, Read, Write, AskUserQuestion
+model: sonnet
+---
+
 # /run-daw-tests - DAW Compatibility Testing
 
 Execute comprehensive compatibility testing across multiple DAWs to ensure your JUCE plugin works correctly in all major digital audio workstations.

@@ -1,5 +1,7 @@
 ---
 argument-hint: ""
+description: "Build offline HTML documentation for JUCE and download essential reference materials for audio plugin development"
+allowed-tools: Bash, Read, Write, AskUserQuestion
 ---
 
 # Setup Offline Documentation for JUCE Development

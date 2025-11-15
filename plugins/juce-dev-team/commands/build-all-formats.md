@@ -1,5 +1,7 @@
 ---
 argument-hint: "[build-type: debug|release|relwithdebinfo]"
+description: "Build JUCE plugin for all configured formats (VST3, AU, AAX, Standalone) with CMake, tests, and build report"
+allowed-tools: Bash, Read, AskUserQuestion
 ---
 
 # Build All Plugin Formats
