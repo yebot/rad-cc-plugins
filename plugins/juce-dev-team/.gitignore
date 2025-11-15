@@ -1,0 +1,14 @@
+# Offline documentation (users should run /setup-offline-docs to build these)
+docs/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
+.hts-*
+hts-*
+
+# User notes
+hitl*.md
