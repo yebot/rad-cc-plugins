@@ -82,8 +82,8 @@
     {
       "name": "juce-dev-team",
       "source": "./plugins/juce-dev-team",
-      "description": "JUCE Dev Team - Complete workflow: 13 agents, scaffolding, validation, testing hooks, DSP algorithms, and QA strategy",
-      "version": "1.3.0",
+      "description": "JUCE Dev Team - Production-ready workflow: 13 agents, release automation, code signing, cross-platform builds, comprehensive guides",
+      "version": "1.4.0",
       "author": {
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"

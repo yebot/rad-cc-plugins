@@ -85,6 +85,15 @@ Once installed, you can invoke specific expert agents by @-mentioning them or as
 
 ## Version History
 
+### 1.4.0 (Phase 3 - Production Ready)
+- Added `/release-build` command - Complete release automation with code signing, notarization, installers, and distribution
+- Added `prevent-audio-thread-allocation` hook - Blocks writes to processBlock containing memory allocations or locks
+- Added `cross-platform-builds` skill - Comprehensive guide to building for macOS, Windows, and Linux with CMake, code signing, and CI/CD
+- Created `BUILD_GUIDE.md` - Step-by-step build instructions from development to production for all platforms
+- Created `RELEASE_CHECKLIST.md` - Complete pre-release validation checklist covering testing, QA, signing, and distribution
+- Production-ready release workflow with automated signing and notarization
+- Platform-specific build documentation for all target systems
+
 ### 1.3.0 (Phase 2 - Quality Assurance)
 - Added `/run-pluginval` command - Industry-standard plugin validation with strictness levels and detailed reports
 - Added 3 testing hooks - Auto-run DSP tests after code changes, warn on realtime-unsafe patterns, validate parameter stability

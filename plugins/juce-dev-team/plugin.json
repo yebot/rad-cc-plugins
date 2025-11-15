@@ -1,7 +1,7 @@
 {
   "name": "juce-dev-team",
-  "version": "1.3.0",
-  "description": "JUCE Framework Audio Plugin Development Team - Complete JUCE development workflow with validation, testing hooks, DSP cookbook, and comprehensive testing strategy",
+  "version": "1.4.0",
+  "description": "JUCE Framework Audio Plugin Development Team - Complete production-ready workflow with release automation, code signing, cross-platform builds, and comprehensive guides",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -25,11 +25,13 @@
     "commands/setup-offline-docs.md",
     "commands/new-juce-plugin.md",
     "commands/build-all-formats.md",
-    "commands/run-pluginval.md"
+    "commands/run-pluginval.md",
+    "commands/release-build.md"
   ],
   "skills": [
     "skills/juce-best-practices",
-    "skills/dsp-cookbook"
+    "skills/dsp-cookbook",
+    "skills/cross-platform-builds"
   ],
   "hooks": "hooks/hooks.json"
 }
