@@ -82,8 +82,8 @@
     {
       "name": "juce-dev-team",
       "source": "./plugins/juce-dev-team",
-      "description": "JUCE Dev Team - Production-ready workflow: 13 agents, release automation, code signing, cross-platform builds, comprehensive guides",
-      "version": "1.4.0",
+      "description": "JUCE Dev Team - Advanced features: DAW compatibility testing, performance profiling, architecture patterns, comprehensive DAW guide",
+      "version": "1.5.0",
       "author": {
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"

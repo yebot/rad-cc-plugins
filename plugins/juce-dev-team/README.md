@@ -85,6 +85,15 @@ Once installed, you can invoke specific expert agents by @-mentioning them or as
 
 ## Version History
 
+### 1.5.0 (Phase 4 - Advanced Features)
+- Added `/run-daw-tests` command - Comprehensive DAW compatibility testing across Logic Pro, Ableton Live, Pro Tools, Cubase, Reaper, FL Studio, Bitwig, and Ardour
+- Added `/analyze-performance` command - Performance profiling and optimization with Instruments, perf, VTune, Tracy, flame graphs, and SIMD optimization
+- Added `plugin-architecture-patterns` skill - Clean architecture, separation of concerns, APVTS patterns, state management, preset systems, MIDI handling, and modulation routing
+- Added `daw-compatibility-guide` skill - DAW-specific quirks, known issues, and workarounds for all major DAWs with format-specific requirements (AU/VST3/AAX)
+- Advanced tooling for performance analysis and DAW compatibility
+- Comprehensive architecture patterns for maintainable, testable plugins
+- Complete DAW compatibility reference with specific solutions
+
 ### 1.4.0 (Phase 3 - Production Ready)
 - Added `/release-build` command - Complete release automation with code signing, notarization, installers, and distribution
 - Added `prevent-audio-thread-allocation` hook - Blocks writes to processBlock containing memory allocations or locks

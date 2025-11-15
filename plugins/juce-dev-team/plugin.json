@@ -1,7 +1,7 @@
 {
   "name": "juce-dev-team",
-  "version": "1.4.0",
-  "description": "JUCE Framework Audio Plugin Development Team - Complete production-ready workflow with release automation, code signing, cross-platform builds, and comprehensive guides",
+  "version": "1.5.0",
+  "description": "JUCE Framework Audio Plugin Development Team - Advanced features: DAW compatibility testing, performance profiling, architecture patterns, and comprehensive DAW compatibility guide",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -26,12 +26,16 @@
     "commands/new-juce-plugin.md",
     "commands/build-all-formats.md",
     "commands/run-pluginval.md",
-    "commands/release-build.md"
+    "commands/release-build.md",
+    "commands/run-daw-tests.md",
+    "commands/analyze-performance.md"
   ],
   "skills": [
     "skills/juce-best-practices",
     "skills/dsp-cookbook",
-    "skills/cross-platform-builds"
+    "skills/cross-platform-builds",
+    "skills/plugin-architecture-patterns",
+    "skills/daw-compatibility-guide"
   ],
   "hooks": "hooks/hooks.json"
 }
