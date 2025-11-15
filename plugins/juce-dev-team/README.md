@@ -85,6 +85,14 @@ Once installed, you can invoke specific expert agents by @-mentioning them or as
 
 ## Version History
 
+### 1.3.0 (Phase 2 - Quality Assurance)
+- Added `/run-pluginval` command - Industry-standard plugin validation with strictness levels and detailed reports
+- Added 3 testing hooks - Auto-run DSP tests after code changes, warn on realtime-unsafe patterns, validate parameter stability
+- Added `dsp-cookbook` skill - Production-ready DSP algorithms: filters, compressors, delays, modulation, saturation with JUCE integration
+- Created `TESTING_STRATEGY.md` - Comprehensive testing guide covering unit tests, integration tests, DAW compatibility, CI/CD, and manual QA
+- Quality gates and automated feedback during development
+- Complete testing workflow from unit tests to release validation
+
 ### 1.2.0 (Phase 1 - Immediate Value)
 - Added `/new-juce-plugin` command - Complete project scaffolding with architecture, build config, and CI/CD
 - Added `/build-all-formats` command - Build VST3/AU/AAX/Standalone with one command

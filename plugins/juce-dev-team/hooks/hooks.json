@@ -1,0 +1,40 @@
+{
+  "hooks": [
+    {
+      "name": "run-tests-after-dsp-change",
+      "description": "Automatically run DSP unit tests after modifying DSP source files",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": "Edit",
+        "path": "**/DSP/**/*.{cpp,h}"
+      },
+      "command": "if [ -f \"build/Tests/DSPTests\" ] || [ -f \"build/Tests/RunUnitTests\" ]; then echo '🧪 Running DSP tests after code change...'; (cd \"$CLAUDE_PROJECT_DIR\" && ctest --test-dir build -R DSP --output-on-failure) && echo '✅ DSP tests passed' || echo '⚠️  DSP tests failed - review output above'; else echo 'ℹ️  DSP tests not found - run cmake to configure tests'; fi",
+      "action": "notify",
+      "timeout": 30000
+    },
+    {
+      "name": "warn-on-processblock-allocation",
+      "description": "Warn if potentially unsafe code patterns are added to processBlock",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": "Edit",
+        "path": "**/*Processor.cpp"
+      },
+      "command": "file=\"$TOOL_INPUT_file_path\"; if grep -n 'processBlock' \"$file\" | head -1 | cut -d: -f1 | xargs -I {} awk 'NR >= {} && NR <= {}+100' \"$file\" | grep -E '(new |delete |malloc|free|std::vector.*push_back|std::lock|mutex)' > /dev/null; then echo '⚠️  Warning: Potential realtime-unsafe code detected in processBlock'; echo 'Check for: allocations (new/delete/malloc), locks (mutex), or vector resizing'; echo 'Review /juce-best-practices for realtime safety rules'; exit 0; fi",
+      "action": "warn",
+      "timeout": 5000
+    },
+    {
+      "name": "validate-parameter-ids",
+      "description": "Check that parameter IDs haven't changed (breaks session compatibility)",
+      "event": "PostToolUse",
+      "matcher": {
+        "tool": "Edit",
+        "path": "**/*Parameters.{cpp,h}"
+      },
+      "command": "echo 'ℹ️  Parameter file modified - ensure parameter IDs remain stable for backward compatibility'; echo 'Changing parameter IDs will break existing user sessions and presets'",
+      "action": "notify",
+      "timeout": 2000
+    }
+  ]
+}
