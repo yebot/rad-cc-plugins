@@ -1,3 +1,9 @@
+---
+name: cross-platform-builds
+description: Comprehensive guide to building JUCE plugins for macOS, Windows, and Linux with CMake, code signing, notarization, and CI/CD. Use when configuring builds, setting up CI/CD pipelines, troubleshooting cross-platform compilation, implementing code signing, or creating installers for multiple platforms.
+allowed-tools: Read, Grep, Glob
+---
+
 # Cross-Platform Builds for JUCE Plugins
 
 Comprehensive guide to building JUCE audio plugins across macOS, Windows, and Linux with proper configuration, code signing, and continuous integration.

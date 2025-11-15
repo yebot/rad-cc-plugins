@@ -1,3 +1,8 @@
+---
+name: dsp-cookbook
+description: Production-ready DSP algorithms including filters, compressors, delays, modulation effects, saturation, and distortion with JUCE integration and optimization techniques. Use when implementing audio processing, DSP algorithms, audio effects, dynamics processors, or need code examples for common audio operations.
+---
+
 # DSP Cookbook
 
 Practical DSP algorithm implementations for audio plugins. Production-ready code examples with JUCE framework integration, covering filters, dynamics, modulation, delays, and common audio effects.

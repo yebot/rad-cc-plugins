@@ -1,3 +1,9 @@
+---
+name: juce-best-practices
+description: Professional JUCE development guide covering realtime safety, threading, memory management, modern C++, and audio plugin best practices. Use when writing JUCE code, reviewing for realtime safety, implementing audio threads, managing parameters, or learning JUCE patterns and idioms.
+allowed-tools: Read, Grep, Glob
+---
+
 # JUCE Best Practices
 
 Comprehensive guide to professional JUCE framework development with modern C++ patterns, realtime safety, thread management, and audio plugin best practices.

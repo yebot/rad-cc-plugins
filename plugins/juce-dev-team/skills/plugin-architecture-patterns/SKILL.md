@@ -1,3 +1,9 @@
+---
+name: plugin-architecture-patterns
+description: Clean architecture patterns for JUCE plugins including separation of concerns, APVTS patterns, state management, preset systems, MIDI handling, and modulation routing. Use when designing plugin architecture, refactoring code structure, implementing parameter systems, building preset managers, or scaling complex audio plugins.
+allowed-tools: Read, Grep, Glob
+---
+
 # Plugin Architecture Patterns
 
 Master architectural patterns for building maintainable, testable, and scalable audio plugins using clean architecture, separation of concerns, and JUCE best practices.

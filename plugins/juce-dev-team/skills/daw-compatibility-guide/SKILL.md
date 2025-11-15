@@ -1,3 +1,9 @@
+---
+name: daw-compatibility-guide
+description: DAW-specific quirks, known issues, and workarounds for Logic Pro, Ableton Live, Pro Tools, Cubase, Reaper, FL Studio, Bitwig with format-specific requirements (AU/VST3/AAX). Use when troubleshooting DAW compatibility, fixing host-specific bugs, implementing DAW workarounds, passing auval validation, or debugging automation issues.
+allowed-tools: Read, Grep, Glob
+---
+
 # DAW Compatibility Guide
 
 Comprehensive guide to DAW-specific quirks, known issues, and workarounds for ensuring your JUCE plugin works correctly across all major digital audio workstations.
