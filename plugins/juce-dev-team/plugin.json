@@ -1,7 +1,7 @@
 {
   "name": "juce-dev-team",
-  "version": "1.1.0",
-  "description": "JUCE Framework Audio Plugin Development Team - Expert agents for DSP, UI/UX, QA, and build engineering with offline documentation setup",
+  "version": "1.2.0",
+  "description": "JUCE Framework Audio Plugin Development Team - 13 expert agents, project scaffolding, build automation, and comprehensive JUCE best practices",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -22,7 +22,11 @@
     "agents/platform-engineer.md"
   ],
   "commands": [
-    "commands/setup-offline-docs.md"
+    "commands/setup-offline-docs.md",
+    "commands/new-juce-plugin.md",
+    "commands/build-all-formats.md"
   ],
-  "skills": []
+  "skills": [
+    "skills/juce-best-practices"
+  ]
 }

@@ -85,6 +85,14 @@ Once installed, you can invoke specific expert agents by @-mentioning them or as
 
 ## Version History
 
+### 1.2.0 (Phase 1 - Immediate Value)
+- Added `/new-juce-plugin` command - Complete project scaffolding with architecture, build config, and CI/CD
+- Added `/build-all-formats` command - Build VST3/AU/AAX/Standalone with one command
+- Added `juce-best-practices` skill - Comprehensive JUCE development guide covering realtime safety, threading, memory management, modern C++, and common pitfalls
+- Created `GETTING_STARTED.md` - Complete guide to using all 13 agents, commands, and workflows
+- Project structure templates with proper CMake configuration
+- Agent orchestration for complex workflows
+
 ### 1.1.0
 - Added `/setup-offline-docs` command for building offline documentation
 - Automated JUCE API documentation building with Doxygen

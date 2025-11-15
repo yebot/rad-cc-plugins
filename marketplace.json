@@ -82,8 +82,8 @@
     {
       "name": "juce-dev-team",
       "source": "./plugins/juce-dev-team",
-      "description": "JUCE Dev Team - Expert agents for audio plugin development with offline documentation setup command",
-      "version": "1.1.0",
+      "description": "JUCE Dev Team - 13 expert agents, project scaffolding, build automation, best practices skill, and getting started guide",
+      "version": "1.2.0",
       "author": {
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
