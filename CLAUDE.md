@@ -178,7 +178,31 @@ The `backlog-md` plugin demonstrates advanced hook usage:
    cp marketplace.json .claude-plugin/marketplace.json
    ```
 
-5. **Commit and push changes**
+5. **Commit and push changes**:
+   ```bash
+   git add plugins/<plugin-name>/ marketplace.json .claude-plugin/marketplace.json
+   git commit -m "feat/fix/chore(<plugin-name>): description"
+   git push
+   ```
+
+#### Publishing Plugin Updates
+
+**IMPORTANT**: After creating or updating any plugin, **always ask the user** if they want to immediately publish the changes to GitHub so the plugin becomes available to users.
+
+Prompt the user with:
+```
+Would you like me to stage, commit, and push these plugin changes to GitHub?
+This will make the plugin immediately available for users to install/update.
+
+[Yes/No]
+```
+
+If the user says yes:
+1. Stage the relevant files
+2. Create a descriptive commit message
+3. Push to the remote repository
+
+**Why this matters**: Plugins are only available to users after they're committed and pushed to the git repository. Uncommitted changes exist only in your local working directory and won't appear when users update their marketplace.
 
 #### When to Update Versions
 
