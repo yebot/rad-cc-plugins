@@ -1,0 +1,47 @@
+{
+  "hooks": [
+    {
+      "event": "user-prompt-submit",
+      "filter": {
+        "pattern": "(?i)(project|item|gh project|sprint|backlog|roadmap|triage|status|field)"
+      },
+      "command": "echo '\n💡 GitHub Project Manager Tips:\n- Use /gh-project-view to see project overview\n- Use /gh-item-add to add items to projects\n- Use /gh-project-status for comprehensive reports\n- Use project-manager agent for complex operations\n- Use project-architect agent for project design help\n\nAvailable agents: project-manager, project-architect, item-orchestrator'"
+    },
+    {
+      "event": "user-prompt-submit",
+      "filter": {
+        "pattern": "(?i)(create.*project|new.*project|setup.*project)"
+      },
+      "command": "echo '\n🚀 Creating a new project? Use /gh-project-create for guided setup!\n\nThe command will help you:\n- Choose project type (Agile/Roadmap/Bug Tracking)\n- Set up essential fields (Status, Priority, etc.)\n- Configure best practices\n- Link to repository\n\nOr use the project-architect agent for custom project design.'"
+    },
+    {
+      "event": "user-prompt-submit",
+      "filter": {
+        "pattern": "(?i)(add.*to project|add issue|add pr|add item)"
+      },
+      "command": "echo '\n➕ Adding items to a project?\n\nUse /gh-item-add for guided workflow, or use project-manager agent for batch operations.\n\nRemember to set:\n- Status (where in workflow)\n- Priority (P0-P3)\n- Other relevant fields\n\nProper field assignment at creation saves triage time later!'"
+    },
+    {
+      "event": "user-prompt-submit",
+      "filter": {
+        "pattern": "(?i)(triage|prioritize|backlog.*refine)"
+      },
+      "command": "echo '\n🎯 Time to triage?\n\nUse /gh-project-triage for systematic item triage with:\n- Smart priority suggestions\n- Batch or interactive mode\n- Comprehensive triage reports\n\nOr use item-orchestrator agent for custom bulk operations.'"
+    },
+    {
+      "event": "user-prompt-submit",
+      "filter": {
+        "pattern": "(?i)(project.*status|sprint.*report|project.*progress|project.*health)"
+      },
+      "command": "echo '\n📊 Generating project status report?\n\nUse /gh-project-status for comprehensive reports with:\n- Status and priority distributions\n- Velocity tracking\n- Items requiring attention\n- Health metrics and insights\n- Actionable recommendations'"
+    },
+    {
+      "event": "tool-use",
+      "filter": {
+        "tool": "Bash",
+        "pattern": "gh project"
+      },
+      "command": "echo '\n💡 Using gh project commands?\n\nRemember:\n- Always use --format json for parseable output\n- Project scope required: gh auth refresh -s project\n- Field updates need field IDs and option IDs (not names)\n- Use project-manager agent for complex multi-step operations'"
+    }
+  ]
+}

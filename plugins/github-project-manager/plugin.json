@@ -1,0 +1,64 @@
+{
+  "name": "github-project-manager",
+  "version": "1.0.0",
+  "description": "GitHub Project Manager - Comprehensive project-first workflow management using GitHub Projects V2 via gh CLI with automation, field management, and modern project tracking",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "agents": [
+    {
+      "name": "project-manager",
+      "source": "./agents/project-manager.md",
+      "description": "Elite GitHub Projects V2 management specialist for all project operations"
+    },
+    {
+      "name": "project-architect",
+      "source": "./agents/project-architect.md",
+      "description": "Design and structure GitHub Projects with optimal fields, views, and workflows"
+    },
+    {
+      "name": "item-orchestrator",
+      "source": "./agents/item-orchestrator.md",
+      "description": "Manage project items including issues, PRs, and draft items with status tracking"
+    }
+  ],
+  "skills": [
+    {
+      "name": "project-workflow-patterns",
+      "source": "./skills/project-workflow-patterns"
+    },
+    {
+      "name": "project-field-management",
+      "source": "./skills/project-field-management"
+    }
+  ],
+  "commands": [
+    {
+      "name": "gh-project-create",
+      "source": "./commands/gh-project-create.md",
+      "description": "Create new GitHub project with guided workflow and field configuration"
+    },
+    {
+      "name": "gh-project-view",
+      "source": "./commands/gh-project-view.md",
+      "description": "View project details, items, and status with comprehensive reporting"
+    },
+    {
+      "name": "gh-item-add",
+      "source": "./commands/gh-item-add.md",
+      "description": "Add issues, PRs, or draft items to projects with field assignment"
+    },
+    {
+      "name": "gh-project-status",
+      "source": "./commands/gh-project-status.md",
+      "description": "Generate comprehensive status report of project progress and metrics"
+    },
+    {
+      "name": "gh-project-triage",
+      "source": "./commands/gh-project-triage.md",
+      "description": "Triage project items and ensure proper status and priority assignment"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
+}

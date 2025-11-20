@@ -98,6 +98,16 @@
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
       }
+    },
+    {
+      "name": "github-project-manager",
+      "source": "./plugins/github-project-manager",
+      "description": "GitHub Project Manager - Comprehensive project-first workflow management using GitHub Projects V2 via gh CLI with automation, field management, and modern project tracking",
+      "version": "1.0.0",
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }
