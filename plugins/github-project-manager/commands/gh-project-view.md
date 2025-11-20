@@ -20,12 +20,22 @@ Ask the user which project they want to view. Options:
 
 If listing projects:
 ```bash
-gh project list --owner "@me" --format json | jq -r '.[] | "#\(.number) - \(.title)"'
+gh project list --owner "@me" --format json | python3 -c "
+import json, sys
+projects = json.load(sys.stdin)
+for p in projects:
+    print(f\"#{p.get('number')} - {p.get('title')}\")
+"
 ```
 
 For organization projects:
 ```bash
-gh project list --owner "org-name" --format json | jq -r '.[] | "#\(.number) - \(.title)"'
+gh project list --owner "org-name" --format json | python3 -c "
+import json, sys
+projects = json.load(sys.stdin)
+for p in projects:
+    print(f\"#{p.get('number')} - {p.get('title')}\")
+"
 ```
 
 ### Step 2: Get Project Details
@@ -36,12 +46,12 @@ Fetch comprehensive project information:
 # Get project metadata
 PROJECT_DATA=$(gh project view <number> --owner "<owner>" --format json)
 
-# Parse key details
-PROJECT_ID=$(echo $PROJECT_DATA | jq -r '.id')
-PROJECT_TITLE=$(echo $PROJECT_DATA | jq -r '.title')
-PROJECT_URL=$(echo $PROJECT_DATA | jq -r '.url')
-CREATED_AT=$(echo $PROJECT_DATA | jq -r '.createdAt')
-UPDATED_AT=$(echo $PROJECT_DATA | jq -r '.updatedAt')
+# Parse key details using Python (safer than jq)
+PROJECT_ID=$(echo "$PROJECT_DATA" | python3 -c "import json, sys; print(json.load(sys.stdin).get('id', ''))")
+PROJECT_TITLE=$(echo "$PROJECT_DATA" | python3 -c "import json, sys; print(json.load(sys.stdin).get('title', ''))")
+PROJECT_URL=$(echo "$PROJECT_DATA" | python3 -c "import json, sys; print(json.load(sys.stdin).get('url', ''))")
+CREATED_AT=$(echo "$PROJECT_DATA" | python3 -c "import json, sys; print(json.load(sys.stdin).get('createdAt', ''))")
+UPDATED_AT=$(echo "$PROJECT_DATA" | python3 -c "import json, sys; print(json.load(sys.stdin).get('updatedAt', ''))")
 ```
 
 ### Step 3: Get Project Fields
@@ -51,8 +61,13 @@ Fetch all custom fields:
 ```bash
 FIELDS=$(gh project field-list <number> --owner "<owner>" --format json --limit 50)
 
-# Parse field details
-echo $FIELDS | jq -r '.[] | "- \(.name) (\(.dataType))"'
+# Parse field details using Python
+echo "$FIELDS" | python3 -c "
+import json, sys
+fields = json.load(sys.stdin)
+for field in fields:
+    print(f\"- {field.get('name')} ({field.get('dataType')})\")
+"
 ```
 
 ### Step 4: Get Project Items
@@ -62,8 +77,8 @@ Fetch all items with their field values:
 ```bash
 ITEMS=$(gh project item-list <number> --owner "<owner>" --format json --limit 100)
 
-# Count total items
-ITEM_COUNT=$(echo $ITEMS | jq '.items | length')
+# Count total items using Python
+ITEM_COUNT=$(echo "$ITEMS" | python3 -c "import json, sys; data=json.load(sys.stdin); print(len(data.get('items', [])))")
 ```
 
 ### Step 5: Analyze Item Distribution
@@ -72,77 +87,149 @@ Generate comprehensive statistics:
 
 #### Status Distribution
 ```bash
-# Group by Status field
-STATUS_DIST=$(echo $ITEMS | jq '[
-  .items[] |
-  .fieldValues[] |
-  select(.name=="Status")
-] | group_by(.name) | map({
-  status: .[0].name,
-  count: length
-})')
+# Save items to temp file for helper processing
+echo "$ITEMS" > /tmp/gh_items.json
 
-echo $STATUS_DIST | jq -r '.[] | "  \(.status): \(.count)"'
+# Use Python helper to count by field
+python3 -c "
+import json, sys
+with open('/tmp/gh_items.json') as f:
+    data = json.load(f)
+    items = data.get('items', [])
+
+    # Count by Status
+    status_counts = {}
+    for item in items:
+        for fv in item.get('fieldValues', []):
+            if fv.get('name') == 'Status':
+                status = fv.get('name') or 'Unset'
+                status_counts[status] = status_counts.get(status, 0) + 1
+                break
+
+    for status, count in sorted(status_counts.items()):
+        print(f'  {status}: {count}')
+"
 ```
 
 #### Priority Distribution
 ```bash
-PRIORITY_DIST=$(echo $ITEMS | jq '[
-  .items[] |
-  .fieldValues[] |
-  select(.name=="Priority")
-] | group_by(.name) | map({
-  priority: .[0].name,
-  count: length
-})')
+python3 -c "
+import json
+with open('/tmp/gh_items.json') as f:
+    data = json.load(f)
+    items = data.get('items', [])
 
-echo $PRIORITY_DIST | jq -r '.[] | "  \(.priority): \(.count)"'
+    # Count by Priority
+    priority_counts = {}
+    for item in items:
+        for fv in item.get('fieldValues', []):
+            if fv.get('name') == 'Priority':
+                priority = fv.get('name') or 'Unset'
+                priority_counts[priority] = priority_counts.get(priority, 0) + 1
+                break
+
+    for priority, count in sorted(priority_counts.items()):
+        print(f'  {priority}: {count}')
+"
 ```
 
 #### Item Types
 ```bash
-# Count issues vs PRs vs drafts
-ISSUE_COUNT=$(echo $ITEMS | jq '[.items[] | select(.content.type=="Issue")] | length')
-PR_COUNT=$(echo $ITEMS | jq '[.items[] | select(.content.type=="PullRequest")] | length')
-DRAFT_COUNT=$(echo $ITEMS | jq '[.items[] | select(.content.type=="DraftIssue")] | length')
+# Count issues vs PRs vs drafts using Python
+ISSUE_COUNT=$(python3 -c "import json; data=json.load(open('/tmp/gh_items.json')); print(len([i for i in data.get('items', []) if i.get('content', {}).get('type') == 'Issue']))")
+PR_COUNT=$(python3 -c "import json; data=json.load(open('/tmp/gh_items.json')); print(len([i for i in data.get('items', []) if i.get('content', {}).get('type') == 'PullRequest']))")
+DRAFT_COUNT=$(python3 -c "import json; data=json.load(open('/tmp/gh_items.json')); print(len([i for i in data.get('items', []) if i.get('content', {}).get('type') == 'DraftIssue']))")
 ```
 
 ### Step 6: Identify Items Requiring Attention
 
 #### High Priority Items Not Started
 ```bash
-# P0/P1 items in Backlog or Todo
-URGENT_BACKLOG=$(echo $ITEMS | jq -r '
-  .items[] |
-  select(
-    (.fieldValues[] | select(.name=="Priority" and (.name=="P0" or .name=="P1"))) and
-    (.fieldValues[] | select(.name=="Status" and (.name=="Backlog" or .name=="Todo")))
-  ) |
-  "  - #\(.content.number // "draft") \(.content.title)"
-')
+# P0/P1 items in Backlog or Todo using Python
+python3 -c "
+import json
+with open('/tmp/gh_items.json') as f:
+    data = json.load(f)
+    items = data.get('items', [])
+
+    for item in items:
+        priority = None
+        status = None
+
+        for fv in item.get('fieldValues', []):
+            if fv.get('name') == 'Priority':
+                priority = fv.get('name')
+            elif fv.get('name') == 'Status':
+                status = fv.get('name')
+
+        # Check if P0 or P1 and in Backlog or Todo
+        if priority in ['P0', 'P1'] and status in ['Backlog', 'Todo']:
+            content = item.get('content', {})
+            number = content.get('number', 'draft')
+            title = content.get('title', 'Untitled')
+            print(f'  - #{number} {title}')
+"
 ```
 
 #### Stale Items (In Progress > 7 days)
 ```bash
-SEVEN_DAYS_AGO=$(date -v-7d +%Y-%m-%d)
+THRESHOLD_DATE=$(date -v-7d +%Y-%m-%d 2>/dev/null || date -d '7 days ago' +%Y-%m-%d)
 
-STALE_ITEMS=$(echo $ITEMS | jq -r --arg threshold "$SEVEN_DAYS_AGO" '
-  .items[] |
-  select(
-    (.fieldValues[] | select(.name=="Status" and .name=="In Progress")) and
-    (.content.updatedAt | split("T")[0] < $threshold)
-  ) |
-  "  - #\(.content.number // "draft") \(.content.title) (updated: \(.content.updatedAt | split("T")[0]))"
-')
+python3 -c "
+import json
+from datetime import datetime, timedelta
+
+with open('/tmp/gh_items.json') as f:
+    data = json.load(f)
+    items = data.get('items', [])
+    threshold = datetime.now() - timedelta(days=7)
+
+    for item in items:
+        status = None
+        for fv in item.get('fieldValues', []):
+            if fv.get('name') == 'Status':
+                status = fv.get('name')
+                break
+
+        if status in ['In Progress', 'In Review']:
+            content = item.get('content', {})
+            updated_str = content.get('updatedAt', '')
+
+            if updated_str:
+                try:
+                    updated_at = datetime.fromisoformat(updated_str.replace('Z', '+00:00'))
+                    if updated_at < threshold:
+                        number = content.get('number', 'draft')
+                        title = content.get('title', 'Untitled')
+                        updated_date = updated_str.split('T')[0]
+                        days_old = (datetime.now() - updated_at).days
+                        print(f'  - #{number} {title} (updated: {updated_date}, {days_old} days ago)')
+                except:
+                    pass
+"
 ```
 
 #### Items in Review
 ```bash
-REVIEW_ITEMS=$(echo $ITEMS | jq -r '
-  .items[] |
-  select(.fieldValues[] | select(.name=="Status" and .name=="In Review")) |
-  "  - #\(.content.number // "draft") \(.content.title)"
-')
+python3 -c "
+import json
+with open('/tmp/gh_items.json') as f:
+    data = json.load(f)
+    items = data.get('items', [])
+
+    for item in items:
+        status = None
+        for fv in item.get('fieldValues', []):
+            if fv.get('name') == 'Status':
+                status = fv.get('name')
+                break
+
+        if status == 'In Review':
+            content = item.get('content', {})
+            number = content.get('number', 'draft')
+            title = content.get('title', 'Untitled')
+            print(f'  - #{number} {title}')
+"
 ```
 
 ### Step 7: Generate Comprehensive Report

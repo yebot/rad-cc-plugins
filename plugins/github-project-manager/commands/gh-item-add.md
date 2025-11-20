@@ -16,16 +16,34 @@ This command guides you through adding items to GitHub Projects with proper fiel
 Ask the user which project to add items to:
 
 ```bash
-# List available projects
-gh project list --owner "@me" --format json | jq -r '.[] | "#\(.number) - \(.title)"'
+# List available projects using Python for safe JSON parsing
+gh project list --owner "@me" --format json | python3 -c "
+import json, sys
+projects = json.load(sys.stdin)
+for p in projects:
+    print(f\"#{p.get('number')} - {p.get('title')}\")
+"
 
 # For organization
-gh project list --owner "org-name" --format json | jq -r '.[] | "#\(.number) - \(.title)"'
+gh project list --owner "org-name" --format json | python3 -c "
+import json, sys
+projects = json.load(sys.stdin)
+for p in projects:
+    print(f\"#{p.get('number')} - {p.get('title')}\")
+"
 ```
 
 Get the project ID:
 ```bash
-PROJECT_ID=$(gh project list --owner "@me" --format json | jq -r '.[] | select(.number==<number>) | .id')
+PROJECT_ID=$(gh project list --owner "@me" --format json | python3 -c "
+import json, sys
+projects = json.load(sys.stdin)
+target_number = <number>  # Replace with actual number
+for p in projects:
+    if p.get('number') == target_number:
+        print(p.get('id', ''))
+        break
+")
 ```
 
 ### Step 2: Determine Item Type
@@ -51,8 +69,15 @@ If adding existing issue/PR:
 
 3. **Capture item ID** from output or query:
    ```bash
-   ITEM_ID=$(gh project item-list <project-number> --owner "@me" --format json --limit 100 | \
-     jq -r '.items[] | select(.content.url=="<url>") | .id')
+   ITEM_ID=$(gh project item-list <project-number> --owner "@me" --format json --limit 100 | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+target_url = '<url>'  # Replace with actual URL
+for item in data.get('items', []):
+    if item.get('content', {}).get('url') == target_url:
+        print(item.get('id', ''))
+        break
+")
    ```
 
 ### Step 3B: Create Draft Item
@@ -70,7 +95,7 @@ If creating draft item:
      --body "<body>" \
      --format json)
 
-   ITEM_ID=$(echo $DRAFT_RESPONSE | jq -r '.id')
+   ITEM_ID=$(echo "$DRAFT_RESPONSE" | python3 -c "import json, sys; print(json.load(sys.stdin).get('id', ''))")
    ```
 
 3. **Note**: Draft items can be converted to issues later when ready
@@ -82,8 +107,13 @@ Fetch available fields for the project:
 ```bash
 FIELDS=$(gh project field-list <project-number> --owner "@me" --format json)
 
-# Show fields to user
-echo $FIELDS | jq -r '.[] | "- \(.name) (\(.dataType))"'
+# Show fields to user using Python
+echo "$FIELDS" | python3 -c "
+import json, sys
+fields = json.load(sys.stdin)
+for field in fields:
+    print(f\"- {field.get('name')} ({field.get('dataType')})\")
+"
 ```
 
 ### Step 5: Set Initial Field Values
@@ -92,22 +122,61 @@ Ask user which fields to set initially (optional but recommended):
 
 #### Set Status
 ```bash
-# Get Status field ID and options
-STATUS_FIELD=$(echo $FIELDS | jq -r '.[] | select(.name=="Status") | .id')
-STATUS_OPTIONS=$(echo $FIELDS | jq -r '.[] | select(.name=="Status") | .options[] | "\(.name): \(.id)"')
+# Get Status field ID and options using Python
+echo "$FIELDS" > /tmp/gh_fields.json
 
-# Show options to user, get selection
-# Then update:
+STATUS_FIELD=$(python3 -c "
+import json
+with open('/tmp/gh_fields.json') as f:
+    fields = json.load(f)
+    for field in fields:
+        if field.get('name') == 'Status':
+            print(field.get('id', ''))
+            break
+")
+
+# Show options to user
+python3 -c "
+import json
+with open('/tmp/gh_fields.json') as f:
+    fields = json.load(f)
+    for field in fields:
+        if field.get('name') == 'Status':
+            for option in field.get('options', []):
+                print(f\"{option.get('name')}: {option.get('id')}\")
+            break
+"
+
+# Then update (after user selects option):
 gh project item-edit --id $ITEM_ID --project-id $PROJECT_ID \
   --field-id $STATUS_FIELD --single-select-option-id <option-id>
 ```
 
 #### Set Priority
 ```bash
-PRIORITY_FIELD=$(echo $FIELDS | jq -r '.[] | select(.name=="Priority") | .id')
-PRIORITY_OPTIONS=$(echo $FIELDS | jq -r '.[] | select(.name=="Priority") | .options[] | "\(.name): \(.id)"')
+PRIORITY_FIELD=$(python3 -c "
+import json
+with open('/tmp/gh_fields.json') as f:
+    fields = json.load(f)
+    for field in fields:
+        if field.get('name') == 'Priority':
+            print(field.get('id', ''))
+            break
+")
 
-# Show options, get selection, update
+# Show options
+python3 -c "
+import json
+with open('/tmp/gh_fields.json') as f:
+    fields = json.load(f)
+    for field in fields:
+        if field.get('name') == 'Priority':
+            for option in field.get('options', []):
+                print(f\"{option.get('name')}: {option.get('id')}\")
+            break
+"
+
+# Update after selection
 gh project item-edit --id $ITEM_ID --project-id $PROJECT_ID \
   --field-id $PRIORITY_FIELD --single-select-option-id <option-id>
 ```
@@ -144,14 +213,24 @@ gh project item-edit --id $ITEM_ID --project-id $PROJECT_ID \
 Confirm the item was added successfully:
 
 ```bash
-# View the item in the project
-gh project item-list <project-number> --owner "@me" --format json --limit 100 | \
-  jq -r '.items[] | select(.id=="'$ITEM_ID'") | {
-    title: .content.title,
-    type: .content.type,
-    url: .content.url,
-    fieldValues: .fieldValues
-  }'
+# View the item in the project using Python
+gh project item-list <project-number> --owner "@me" --format json --limit 100 | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+target_id = '$ITEM_ID'
+
+for item in data.get('items', []):
+    if item.get('id') == target_id:
+        content = item.get('content', {})
+        result = {
+            'title': content.get('title'),
+            'type': content.get('type'),
+            'url': content.get('url'),
+            'fieldValues': item.get('fieldValues', [])
+        }
+        print(json.dumps(result, indent=2))
+        break
+"
 ```
 
 ### Step 7: Provide Summary

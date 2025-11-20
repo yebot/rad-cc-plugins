@@ -35,8 +35,22 @@ gh project create --owner "<owner>" --title "<title>" --format json
 
 Parse the output to get the project ID and number:
 ```bash
-PROJECT_ID=$(gh project create --owner "@me" --title "Q1 2025 Roadmap" --format json | jq -r '.id')
-PROJECT_NUMBER=$(gh project list --owner "@me" --format json | jq -r '.[] | select(.title=="Q1 2025 Roadmap") | .number')
+# Create project and capture output
+PROJECT_JSON=$(gh project create --owner "@me" --title "Q1 2025 Roadmap" --format json)
+
+# Use Python helper to parse JSON safely
+PROJECT_ID=$(echo "$PROJECT_JSON" | python3 -c "import json, sys; data=json.load(sys.stdin); print(data.get('id', ''))")
+
+# Get project number from list
+PROJECT_LIST=$(gh project list --owner "@me" --format json)
+PROJECT_NUMBER=$(echo "$PROJECT_LIST" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for project in data:
+    if project.get('title') == 'Q1 2025 Roadmap':
+        print(project.get('number', ''))
+        break
+")
 ```
 
 ### Step 3: Create Core Fields
@@ -129,11 +143,27 @@ gh project field-create $PROJECT_ID --owner "<owner>" \
 - For organization repos: Use the org name
 
 ```bash
-# For personal repos
-gh project link $PROJECT_NUMBER --owner "your-username" --repo your-username/repo-name
+# Extract owner from repository string (handles owner/repo format)
+REPO_OWNER=$(echo "$REPOSITORY" | python3 -c "
+import sys
+repo = sys.stdin.read().strip()
+# Handle owner/repo format
+if '/' in repo:
+    # Strip any URL prefix if present
+    if 'github.com/' in repo:
+        repo = repo.split('github.com/')[-1]
+    owner = repo.split('/')[0]
+    print(owner)
+else:
+    print(repo)
+")
 
-# For organization repos
-gh project link $PROJECT_NUMBER --owner "org-name" --repo org-name/repo-name
+# Link project to repository
+gh project link $PROJECT_NUMBER --owner "$REPO_OWNER" --repo "$REPOSITORY"
+
+# Example for specific cases:
+# Personal repo: gh project link $PROJECT_NUMBER --owner "your-username" --repo your-username/repo-name
+# Organization repo: gh project link $PROJECT_NUMBER --owner "org-name" --repo org-name/repo-name
 ```
 
 ### Step 5: Generate Setup Summary
