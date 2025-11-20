@@ -2,7 +2,7 @@
 name: gh-item-add
 description: Add issues, PRs, or draft items to projects with field assignment
 tools: Bash, AskUserQuestion, TodoWrite
-model: sonnet
+model: inherit
 ---
 
 # Add Item to GitHub Project

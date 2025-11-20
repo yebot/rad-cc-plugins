@@ -2,7 +2,7 @@
 name: gh-project-create
 description: Create new GitHub project with guided workflow and field configuration
 tools: Bash, AskUserQuestion, TodoWrite
-model: sonnet
+model: inherit
 ---
 
 # Create GitHub Project

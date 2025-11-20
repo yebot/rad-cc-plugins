@@ -58,6 +58,39 @@ color: blue
 
 See `plugins/agent-architect/templates/claude-code-subagent-template.md` for the complete template.
 
+### Command Definition Format
+
+Commands use YAML frontmatter followed by markdown instructions:
+
+```yaml
+---
+name: command-name
+description: Brief description of what this command does
+tools: Bash, Read, Write
+model: inherit
+---
+```
+
+### Model Specification Guidelines
+
+**IMPORTANT**: Always use `model: inherit` in agent and command frontmatter.
+
+**Valid Model Specifications**:
+- `model: inherit` - **RECOMMENDED**: Inherits from parent/user settings
+- `model: claude-sonnet-4-5-20250929` - Full model ID (rarely needed)
+- Omit field entirely - Uses default model
+
+**Invalid Model Specifications** (will cause 404 errors):
+- ❌ `model: sonnet` - Not a valid model identifier
+- ❌ `model: opus` - Not a valid model identifier
+- ❌ `model: haiku` - Not a valid model identifier
+
+**Why `inherit` is preferred**:
+- Respects user's model preferences
+- Easier to maintain across plugin updates
+- Consistent with marketplace standards
+- Flexible for different deployment contexts
+
 ## Development Workflow
 
 ### Creating New Plugins

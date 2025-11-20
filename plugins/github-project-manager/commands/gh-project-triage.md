@@ -2,7 +2,7 @@
 name: gh-project-triage
 description: Triage project items and ensure proper status and priority assignment
 tools: Bash, AskUserQuestion, TodoWrite
-model: sonnet
+model: inherit
 ---
 
 # Triage GitHub Project Items

@@ -24,7 +24,7 @@ autoApprove:
   - Bash(gh pr view:*)
   - Bash(gh pr list:*)
   - Bash(gh repo view:*)
-model: sonnet
+model: inherit
 color: purple
 ---
 

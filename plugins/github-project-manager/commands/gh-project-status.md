@@ -2,7 +2,7 @@
 name: gh-project-status
 description: Generate comprehensive status report of project progress and metrics
 tools: Bash, Read, Write
-model: sonnet
+model: inherit
 ---
 
 # Generate Project Status Report

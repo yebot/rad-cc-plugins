@@ -7,7 +7,7 @@ autoApprove:
   - Bash(gh project field-list:*)
   - Bash(gh project item-list:*)
   - Bash(gh project list:*)
-model: sonnet
+model: inherit
 color: cyan
 ---
 

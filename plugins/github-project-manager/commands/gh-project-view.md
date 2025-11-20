@@ -2,7 +2,7 @@
 name: gh-project-view
 description: View project details, items, and status with comprehensive reporting
 tools: Bash, Read, Write
-model: sonnet
+model: inherit
 ---
 
 # View GitHub Project
