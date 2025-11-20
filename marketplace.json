@@ -88,6 +88,16 @@
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
       }
+    },
+    {
+      "name": "apple-notes-cli",
+      "source": "./plugins/apple-notes-cli",
+      "description": "Apple Notes CLI Expert - Manage Apple Notes via command-line with agents for CRUD operations, organization, templates, and export workflows",
+      "version": "1.0.0",
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }

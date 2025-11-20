@@ -1,0 +1,39 @@
+{
+  "name": "apple-notes-cli",
+  "version": "1.0.0",
+  "description": "Expert plugin for managing Apple Notes via the applenotescli command-line tool. Provides agents and workflows for creating, reading, updating, and organizing notes directly from the terminal.",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "agents": [
+    {
+      "name": "notes-manager",
+      "path": "./agents/notes-manager.md"
+    },
+    {
+      "name": "notes-organizer",
+      "path": "./agents/notes-organizer.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "notes-capture",
+      "path": "./commands/notes-capture.md"
+    },
+    {
+      "name": "notes-search",
+      "path": "./commands/notes-search.md"
+    },
+    {
+      "name": "notes-export",
+      "path": "./commands/notes-export.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "note-templates",
+      "path": "./skills/note-templates"
+    }
+  ]
+}
