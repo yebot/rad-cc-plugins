@@ -330,12 +330,30 @@ When presenting a design, structure it as:
 # Create project
 gh project create --owner "@me" --title "[Name]"
 
-# Create fields
-[Field creation commands]
+# Get project ID
+PROJECT_ID=$(gh project list --owner "@me" --format json | jq -r '.[0].id')
 
-# Link to repository
-gh project link [id] --owner "@me" --repo [repo]
+# Create fields (Status field already exists by default)
+# Priority field with options
+gh project field-create $PROJECT_ID --owner "@me" \
+  --data-type SINGLE_SELECT \
+  --name "Priority" \
+  --single-select-options "P0 (Critical),P1 (High),P2 (Medium),P3 (Low)"
+
+# Additional SINGLE_SELECT fields (always include options)
+gh project field-create $PROJECT_ID --owner "@me" \
+  --data-type SINGLE_SELECT \
+  --name "Component" \
+  --single-select-options "Frontend,Backend,Infrastructure"
+
+# Link to repository (owner must match repo owner)
+gh project link [number] --owner "actual-owner" --repo actual-owner/repo-name
 ```
+
+**IMPORTANT**:
+- Status field is built-in and already exists - never create it
+- SINGLE_SELECT fields require --single-select-options at creation time
+- Repository linking requires exact owner match (not "@me" for org repos)
 
 ### Team Guidelines
 [Instructions for team members]

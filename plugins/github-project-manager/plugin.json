@@ -1,6 +1,6 @@
 {
   "name": "github-project-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "GitHub Project Manager - Comprehensive project-first workflow management using GitHub Projects V2 via gh CLI with automation, field management, and modern project tracking",
   "author": {
     "name": "Tobey Forsman",

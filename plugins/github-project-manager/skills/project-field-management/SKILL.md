@@ -29,13 +29,21 @@ This skill provides deep knowledge of GitHub Projects V2 custom fields, their ty
 
 **CLI Creation**:
 ```bash
+# IMPORTANT: Status field is built-in and already exists in new projects!
+# Do NOT create a Status field - it's already there.
+
+# For other SINGLE_SELECT fields, options are REQUIRED at creation:
 gh project field-create <project-id> --owner "@me" \
-  --data-type SINGLE_SELECT --name "Status"
+  --data-type SINGLE_SELECT \
+  --name "Priority" \
+  --single-select-options "P0 (Critical),P1 (High),P2 (Medium),P3 (Low)"
 ```
 
-**Note**: CLI can create field but not options. Options must be added via:
-- GitHub UI: Project Settings → Fields → Edit field
-- GraphQL API: `addProjectV2Field` mutation with options
+**CRITICAL**:
+- Options MUST be provided at creation time using `--single-select-options`
+- Options cannot be added later via CLI
+- Format: Comma-separated, no spaces after commas
+- Status field is a built-in default field - never create it
 
 **Best Practices**:
 - Keep options list short (5-10 ideal)
@@ -431,11 +439,13 @@ done
 
 ## Common Field Configurations
 
+**NOTE**: Status field is built-in and already exists. The configurations below show recommended options for customizing the existing Status field via the GitHub UI, and CLI commands for creating other fields.
+
 ### Agile Scrum
 
 ```yaml
 Status:
-  type: SINGLE_SELECT
+  type: SINGLE_SELECT (Built-in - customize via UI)
   options: [Backlog, Todo, In Progress, In Review, Done]
 
 Priority:
@@ -520,6 +530,29 @@ Owner:
 
 ## Troubleshooting Field Issues
 
+### Cannot Create Status Field
+
+**Problem**: Error when trying to create Status field
+
+**Cause**: Status is a built-in default field that already exists in all new projects
+
+**Solution**:
+- Do NOT create a Status field
+- The field already exists with default options
+- Customize options via GitHub UI if needed (Project Settings → Fields → Status)
+
+### Field Creation Fails for SINGLE_SELECT
+
+**Problem**: `gh project field-create` succeeds but field has no options
+
+**Cause**: Options were not provided at creation time
+
+**Solution**:
+- Always include `--single-select-options` parameter
+- Format: `--single-select-options "Option1,Option2,Option3"`
+- No spaces after commas
+- Options cannot be added later via CLI
+
 ### Field Update Fails
 
 **Problem**: `gh project item-edit` returns error
@@ -563,15 +596,13 @@ gh auth status
 
 **Problem**: CLI created field has no options
 
-**Cause**: CLI cannot add options, only create field
+**Cause**: Options were not provided at creation time (required parameter was missing)
 
-**Solution**: Use GitHub UI or GraphQL API
-```
-1. Go to project settings
-2. Click on field name
-3. Add options with names and colors
-4. Save
-```
+**Solution**:
+- SINGLE_SELECT fields require `--single-select-options` at creation time
+- Options cannot be added later via CLI
+- If field already exists without options, delete and recreate with options
+- Or use GitHub UI to manually add options (Project Settings → Fields)
 
 ### Iteration Field Not Working
 
@@ -584,6 +615,24 @@ gh auth status
 2. Click on Iteration field
 3. Set start date and duration
 4. Save (future iterations auto-generate)
+
+### Repository Linking Fails
+
+**Problem**: `gh project link` returns error or permission denied
+
+**Cause**: Owner parameter doesn't match repository owner
+
+**Solution**:
+- The `--owner` parameter MUST match the repository owner exactly
+- Cannot use "@me" for organization repositories
+- Examples:
+  ```bash
+  # For personal repo
+  gh project link 1 --owner "your-username" --repo your-username/repo-name
+
+  # For org repo
+  gh project link 1 --owner "org-name" --repo org-name/repo-name
+  ```
 
 ## Field Best Practices Summary
 

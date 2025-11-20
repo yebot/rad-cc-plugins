@@ -112,16 +112,24 @@ Every project should have these core fields:
    # Always get project ID first
    PROJECT_ID=$(gh project list --owner "@me" --format json | jq -r '.[0].id')
 
-   # Create Status field
-   gh project field-create $PROJECT_ID --owner "@me" --data-type SINGLE_SELECT --name Status
+   # NOTE: Status field is built-in and already exists - do NOT create it
 
-   # Create Priority field
-   gh project field-create $PROJECT_ID --owner "@me" --data-type SINGLE_SELECT --name Priority
+   # Create Priority field with options
+   gh project field-create $PROJECT_ID --owner "@me" \
+     --data-type SINGLE_SELECT \
+     --name "Priority" \
+     --single-select-options "P0 (Critical),P1 (High),P2 (Medium),P3 (Low)"
    ```
+
+   **IMPORTANT**:
+   - Status field already exists in new projects (built-in default)
+   - SINGLE_SELECT fields require `--single-select-options` at creation time
+   - Options are comma-separated with no spaces after commas
 
 3. **Link to Repository**:
    ```bash
-   gh project link $PROJECT_ID --owner "@me" --repo owner/repo
+   # Owner must match repository owner (cannot use "@me" for org repos)
+   gh project link $PROJECT_NUMBER --owner "actual-owner" --repo actual-owner/repo-name
    ```
 
 ### When Adding Items

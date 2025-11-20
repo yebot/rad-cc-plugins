@@ -43,73 +43,97 @@ PROJECT_NUMBER=$(gh project list --owner "@me" --format json | jq -r '.[] | sele
 
 Based on the project type, create appropriate fields:
 
+**IMPORTANT NOTES**:
+- The "Status" field is a **built-in default field** that already exists in new projects. Do NOT create it.
+- For SINGLE_SELECT fields, options must be provided at creation time using `--single-select-options`
+- Options are comma-separated, no spaces after commas
+
 #### For All Project Types:
 
-**Status Field**:
+**Priority Field** (Status already exists):
 ```bash
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Status"
+# Priority field with options
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type SINGLE_SELECT \
+  --name "Priority" \
+  --single-select-options "P0 (Critical),P1 (High),P2 (Medium),P3 (Low)"
 ```
-
-After creation, you'll need to use the GitHub UI or API to add status options. Document the recommended options:
-- Agile: Backlog, Todo, In Progress, In Review, Done
-- Roadmap: Idea, Planned, In Development, Launched
-- Bug Tracking: New, Triaged, In Progress, Fixed, Verified
-
-**Priority Field**:
-```bash
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Priority"
-```
-
-Recommended options: P0 (Critical), P1 (High), P2 (Medium), P3 (Low)
 
 #### Additional Fields by Type:
 
 **Agile Sprint**:
 ```bash
 # Story Points
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type NUMBER --name "Story Points"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type NUMBER --name "Story Points"
 
 # Sprint (Iteration)
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type ITERATION --name "Sprint"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type ITERATION --name "Sprint"
 
 # Team Member
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Team Member"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type SINGLE_SELECT \
+  --name "Team Member" \
+  --single-select-options "Alice,Bob,Charlie,Diana"
 ```
 
 **Product Roadmap**:
 ```bash
 # Quarter
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Quarter"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type SINGLE_SELECT \
+  --name "Quarter" \
+  --single-select-options "Q1 2025,Q2 2025,Q3 2025,Q4 2025"
 
 # Launch Date
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type DATE --name "Launch Date"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type DATE --name "Launch Date"
 
 # Impact (customer count)
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type NUMBER --name "Impact"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type NUMBER --name "Impact"
 
 # Owner
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type TEXT --name "Owner"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type TEXT --name "Owner"
 ```
 
 **Bug Tracking**:
 ```bash
 # Severity
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Severity"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type SINGLE_SELECT \
+  --name "Severity" \
+  --single-select-options "Critical,High,Medium,Low"
 
 # Component
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type SINGLE_SELECT --name "Component"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type SINGLE_SELECT \
+  --name "Component" \
+  --single-select-options "Frontend,Backend,API,Database,Infrastructure"
 
 # Affected Users
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type NUMBER --name "Affected Users"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type NUMBER --name "Affected Users"
 
 # Reported Date
-gh project field-create $PROJECT_ID --owner "<owner>" --data-type DATE --name "Reported Date"
+gh project field-create $PROJECT_ID --owner "<owner>" \
+  --data-type DATE --name "Reported Date"
 ```
 
 ### Step 4: Link to Repository (if provided)
 
+**IMPORTANT**: The `--owner` parameter must match the repository owner:
+- For personal repos: Use your GitHub username (not "@me")
+- For organization repos: Use the org name
+
 ```bash
-gh project link $PROJECT_NUMBER --owner "<owner>" --repo <owner>/<repo-name>
+# For personal repos
+gh project link $PROJECT_NUMBER --owner "your-username" --repo your-username/repo-name
+
+# For organization repos
+gh project link $PROJECT_NUMBER --owner "org-name" --repo org-name/repo-name
 ```
 
 ### Step 5: Generate Setup Summary
@@ -126,17 +150,19 @@ Provide the user with a comprehensive summary:
 - **URL**: https://github.com/users/[owner]/projects/[number] (or org URL)
 
 ### Fields Created
-- Status (Single Select)
-- Priority (Single Select)
+- Status (Built-in default field - already exists)
+- Priority (Single Select with P0-P3 options)
 - [Additional fields based on type...]
 
 ### Next Steps
 
-1. **Configure Field Options** (via GitHub UI):
-   - Go to your project settings
-   - Edit each Single Select field to add options
-   - Recommended Status options: [list]
-   - Recommended Priority options: P0, P1, P2, P3
+1. **Customize Status Field Options** (via GitHub UI):
+   - Status field exists by default with basic options
+   - Go to project settings to customize options if needed
+   - Recommended options by type:
+     * Agile: Backlog, Todo, In Progress, In Review, Done
+     * Roadmap: Idea, Planned, In Development, Launched
+     * Bug Tracking: New, Triaged, In Progress, Fixed, Verified
 
 2. **Create Views**:
    - Board View: Group by Status for kanban workflow
@@ -159,7 +185,10 @@ Provide the user with a comprehensive summary:
 
 ## Important Notes
 
-- **Field Options**: The gh CLI can create fields but cannot add Single Select options directly. Users must use the GitHub UI to configure dropdown options.
+- **Status Field**: The "Status" field is a built-in default field that already exists in new projects. Do NOT attempt to create it.
+- **SINGLE_SELECT Fields**: Options MUST be provided at creation time using `--single-select-options` parameter. Options cannot be added later via CLI.
+- **Field Options Format**: Comma-separated, no spaces after commas: `"Option1,Option2,Option3"`
+- **Repository Linking**: The `--owner` parameter must match the repository owner exactly (cannot use "@me" for org repos)
 - **Validation**: Verify the project was created successfully by viewing it: `gh project view [number] --owner [owner]`
 - **Permissions**: Ensure the user has the 'project' scope: `gh auth status`
   - If missing: `gh auth refresh -s project`
@@ -168,12 +197,12 @@ Provide the user with a comprehensive summary:
 
 - [ ] Project created with unique title
 - [ ] Project ID and number captured
-- [ ] Core fields (Status, Priority) created
+- [ ] Priority field created with options
 - [ ] Type-specific fields created
 - [ ] Repository linked (if applicable)
 - [ ] Comprehensive setup summary provided
 - [ ] Next steps documented for the user
-- [ ] Field option configuration instructions provided
+- [ ] Status field customization instructions provided (if needed)
 
 ## Error Handling
 
