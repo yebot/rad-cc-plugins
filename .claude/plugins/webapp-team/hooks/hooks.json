@@ -1,0 +1,86 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "filter": "Bash(git commit*)|Bash(git add*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '🔍 Pre-commit Review Reminder:' && echo '  • Security: Check for hardcoded secrets, API keys, passwords' && echo '  • QA: Remove console.logs, debugger statements, TODO comments' && echo '  • Use /code-review for comprehensive review before committing'"
+        ]
+      },
+      {
+        "filter": "Write(*.tsx)|Write(*.jsx)|Write(**/components/*.ts)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '📦 New Component Reminder:' && echo '  • Include TypeScript types for props' && echo '  • Add accessibility attributes (aria-*, role)' && echo '  • Consider loading, error, and empty states' && echo '  • Export from index if part of component library'"
+        ]
+      },
+      {
+        "filter": "Write(**/api/**/*.ts)|Write(**/routes/**/*.ts)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '🔌 API Route Reminder:' && echo '  • Validate all input with schema (Zod)' && echo '  • Add proper error handling' && echo '  • Include authentication/authorization checks' && echo '  • Document endpoint in API spec'"
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "filter": "Edit(package.json)|Write(package.json)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '📦 Dependency Change Detected!' && echo '' && echo '🔒 Security Checklist:' && echo '  [ ] Run npm audit or yarn audit' && echo '  [ ] Check for known vulnerabilities' && echo '  [ ] Verify package is actively maintained' && echo '' && echo '📊 Impact Assessment:' && echo '  [ ] Check bundle size impact' && echo '  [ ] Verify license compatibility' && echo '  [ ] Test in all environments' && echo '' && echo 'Run: npm audit && npx bundlephobia <package>'"
+        ]
+      },
+      {
+        "filter": "Edit(requirements.txt)|Write(requirements.txt)|Edit(pyproject.toml)|Write(pyproject.toml)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '🐍 Python Dependency Change Detected!' && echo '' && echo '🔒 Security Checklist:' && echo '  [ ] Run pip-audit' && echo '  [ ] Check PyPI for security advisories' && echo '  [ ] Verify package source' && echo '' && echo 'Run: pip-audit'"
+        ]
+      },
+      {
+        "filter": "Bash(git diff*)|Bash(git log*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$TOOL_OUTPUT\" | grep -qE '^\\+.*console\\.log|^\\+.*debugger|^\\+.*TODO'; then echo '⚠️  QA Alert: Found potential debug code or TODOs in changes'; echo 'Review before committing:'; echo '  • console.log statements'; echo '  • debugger statements'; echo '  • TODO comments'; fi"
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(create|write|make).*(pr|pull request)'; then echo '📝 PR Summary Reminder:' && echo '  Use /ship-checklist before creating PR' && echo '  Include:' && echo '    • Summary of changes (what and why)' && echo '    • User impact assessment' && echo '    • Test coverage notes' && echo '    • Screenshots for UI changes'; fi"
+        ]
+      },
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(deploy|ship|release|launch)'; then echo '🚀 Launch Reminder:' && echo '  Consider running /ship-checklist for comprehensive pre-launch review' && echo '  Checklist includes: DevOps, QA, Security, Analytics, Support'; fi"
+        ]
+      },
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(new feature|implement|build|create).*(feature|component|page|api)'; then echo '💡 Feature Development Reminder:' && echo '  Consider running /feature-kickoff for structured planning' && echo '  Gets input from: PM, UX, Engineering, Growth'; fi"
+        ]
+      },
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$PROMPT\" | grep -qiE '(bug|error|broken|not working|issue|debug)'; then echo '🐛 Debugging Reminder:' && echo '  Consider using /debug-assist for collaborative debugging' && echo '  Provides systematic investigation plan'; fi"
+        ]
+      }
+    ]
+  }
+}
