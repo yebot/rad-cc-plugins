@@ -1,0 +1,140 @@
+{
+  "name": "webapp-team",
+  "version": "0.1.0",
+  "description": "Webapp Team - A virtual web app development team with 12 specialized agents for engineering, product, design, growth, and operations",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "agents": [
+    {
+      "name": "full-stack-engineer",
+      "source": "./agents/full-stack-engineer.md",
+      "description": "Senior Full-Stack Engineer for end-to-end feature development, TypeScript/React/Node.js"
+    },
+    {
+      "name": "frontend-engineer",
+      "source": "./agents/frontend-engineer.md",
+      "description": "Frontend Engineer specializing in React/Next.js, performance, and component libraries"
+    },
+    {
+      "name": "backend-engineer",
+      "source": "./agents/backend-engineer.md",
+      "description": "Backend/API Engineer for API design, databases, and integrations"
+    },
+    {
+      "name": "devops-engineer",
+      "source": "./agents/devops-engineer.md",
+      "description": "DevOps/Platform Engineer for CI/CD, infrastructure, and monitoring"
+    },
+    {
+      "name": "qa-engineer",
+      "source": "./agents/qa-engineer.md",
+      "description": "QA/Test Engineer for test strategy, automation, and quality gates"
+    },
+    {
+      "name": "security-engineer",
+      "source": "./agents/security-engineer.md",
+      "description": "Security Engineer for security audits, auth, and compliance"
+    },
+    {
+      "name": "product-manager",
+      "source": "./agents/product-manager.md",
+      "description": "Product Manager for requirements, prioritization, and roadmap"
+    },
+    {
+      "name": "ui-ux-designer",
+      "source": "./agents/ui-ux-designer.md",
+      "description": "UI/UX Designer for user flows, accessibility, and design systems"
+    },
+    {
+      "name": "growth-marketer",
+      "source": "./agents/growth-marketer.md",
+      "description": "Growth Marketing Generalist for SEO, analytics, and conversion optimization"
+    },
+    {
+      "name": "content-creator",
+      "source": "./agents/content-creator.md",
+      "description": "Content Creator/Copywriter for blog posts, landing pages, and product copy"
+    },
+    {
+      "name": "data-analyst",
+      "source": "./agents/data-analyst.md",
+      "description": "Data/Analytics Specialist for event tracking, dashboards, and experiments"
+    },
+    {
+      "name": "customer-support",
+      "source": "./agents/customer-support.md",
+      "description": "Customer Support Lead for documentation, feedback synthesis, and bug translation"
+    }
+  ],
+  "commands": [
+    {
+      "name": "team-consult",
+      "source": "./commands/team-consult.md",
+      "description": "Consult with the full team on any topic - automatically routes to relevant agents"
+    },
+    {
+      "name": "team-roster",
+      "source": "./commands/team-roster.md",
+      "description": "Display all available team agents and their specialties"
+    },
+    {
+      "name": "team-standup",
+      "source": "./commands/team-standup.md",
+      "description": "Run a virtual standup across relevant team agents"
+    },
+    {
+      "name": "feature-kickoff",
+      "source": "./commands/feature-kickoff.md",
+      "description": "Kick off a new feature with full team input"
+    },
+    {
+      "name": "code-review",
+      "source": "./commands/code-review.md",
+      "description": "Get comprehensive code review from relevant specialists"
+    },
+    {
+      "name": "ship-checklist",
+      "source": "./commands/ship-checklist.md",
+      "description": "Pre-launch checklist from all team perspectives"
+    },
+    {
+      "name": "debug-assist",
+      "source": "./commands/debug-assist.md",
+      "description": "Collaborative debugging with relevant specialists"
+    },
+    {
+      "name": "hire-for",
+      "source": "./commands/hire-for.md",
+      "description": "Get job description and interview plan for a role"
+    }
+  ],
+  "skills": [
+    {
+      "name": "write-prd",
+      "source": "./skills/write-prd"
+    },
+    {
+      "name": "estimate-complexity",
+      "source": "./skills/estimate-complexity"
+    },
+    {
+      "name": "write-test-plan",
+      "source": "./skills/write-test-plan"
+    },
+    {
+      "name": "security-checklist",
+      "source": "./skills/security-checklist"
+    },
+    {
+      "name": "analytics-plan",
+      "source": "./skills/analytics-plan"
+    },
+    {
+      "name": "write-user-docs",
+      "source": "./skills/write-user-docs"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
+}

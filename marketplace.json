@@ -108,6 +108,16 @@
         "name": "Tobey Forsman",
         "email": "tobeyforsman@gmail.com"
       }
+    },
+    {
+      "name": "webapp-team",
+      "source": "./plugins/webapp-team",
+      "description": "Webapp Team - A virtual web app development team with 12 specialized agents for engineering, product, design, growth, and operations",
+      "version": "0.1.0",
+      "author": {
+        "name": "Tobey Forsman",
+        "email": "tobeyforsman@gmail.com"
+      }
     }
   ]
 }
