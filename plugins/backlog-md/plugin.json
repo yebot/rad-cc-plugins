@@ -1,6 +1,6 @@
 {
   "name": "backlog-md",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Comprehensive Backlog.md integration via MCP for Claude Code - manage tasks, epics, dependencies, and learnings using markdown-native project management with MCP support",
   "author": {
     "name": "Tobey Forsman"
@@ -72,6 +72,11 @@
       "name": "work",
       "description": "Start working on a task by ID with guided completion and automatic next-task transition",
       "path": "./commands/work.md"
+    },
+    {
+      "name": "guide",
+      "description": "Quick reference guide showing all commands, agents, and workflows",
+      "path": "./commands/guide.md"
     }
   ],
   "skills": [
