@@ -1,7 +1,7 @@
 {
   "name": "backlog-md",
+  "version": "1.1.0",
   "description": "Comprehensive Backlog.md integration via MCP for Claude Code - manage tasks, epics, dependencies, and learnings using markdown-native project management with MCP support",
-  "version": "1.0.0",
   "author": {
     "name": "Tobey Forsman"
   },
@@ -14,5 +14,71 @@
     "kanban",
     "epics",
     "dependencies"
+  ],
+  "agents": [
+    {
+      "name": "backlog-scout",
+      "description": "Searches and analyzes backlog for relevant tasks. Use PROACTIVELY when exploring task context.",
+      "path": "./agents/backlog-scout.md"
+    },
+    {
+      "name": "task-aligner",
+      "description": "Ensures current work aligns with backlog tasks. Use PROACTIVELY to maintain task discipline.",
+      "path": "./agents/task-aligner.md"
+    },
+    {
+      "name": "unplanned-handler",
+      "description": "Handles unplanned work by creating or updating tasks. Use PROACTIVELY for scope changes.",
+      "path": "./agents/unplanned-handler.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "backlog-init",
+      "description": "Initialize a new Backlog.md project in the current directory",
+      "path": "./commands/backlog-init.md"
+    },
+    {
+      "name": "board",
+      "description": "View and interact with the Backlog.md Kanban board",
+      "path": "./commands/board.md"
+    },
+    {
+      "name": "deps",
+      "description": "Manage task dependencies and visualize dependency graphs",
+      "path": "./commands/deps.md"
+    },
+    {
+      "name": "epic",
+      "description": "Create and manage epics with subtask hierarchies",
+      "path": "./commands/epic.md"
+    },
+    {
+      "name": "learnings",
+      "description": "Record and review project learnings and retrospectives",
+      "path": "./commands/learnings.md"
+    },
+    {
+      "name": "task-align",
+      "description": "Align current work with an existing backlog task",
+      "path": "./commands/task-align.md"
+    },
+    {
+      "name": "task-create",
+      "description": "Create a new task with full metadata support",
+      "path": "./commands/task-create.md"
+    },
+    {
+      "name": "work",
+      "description": "Start working on a task by ID with guided completion and automatic next-task transition",
+      "path": "./commands/work.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "backlog-workflow",
+      "description": "Expert knowledge for working with Backlog.md task management",
+      "path": "./skills/backlog-workflow"
+    }
   ]
 }
