@@ -1,11 +1,18 @@
 {
   "name": "documentation-tools",
-  "version": "1.3.0",
-  "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal Claude Code context",
+  "version": "1.4.0",
+  "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal AI agent context",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
   },
+  "agents": [
+    {
+      "name": "claude-to-agents-converter",
+      "source": "./agents/claude-to-agents-converter.md",
+      "description": "Converts CLAUDE.md files to generic AGENTS.md files. Use PROACTIVELY when CLAUDE.md files are created or updated."
+    }
+  ],
   "commands": [
     {
       "name": "link-docs-to-claude",
@@ -16,6 +23,12 @@
       "name": "plan-claude-md",
       "source": "./commands/plan-claude-md.md",
       "description": "Analyze repository structure and recommend optimal CLAUDE.md placement strategy"
+    },
+    {
+      "name": "sync-agents-md",
+      "source": "./commands/sync-agents-md.md",
+      "description": "Synchronize all CLAUDE.md files to AGENTS.md files with generic AI agent language"
     }
-  ]
+  ],
+  "hooks": "./hooks/hooks.json"
 }

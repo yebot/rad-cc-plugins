@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "filter": "Write(*CLAUDE.md)|Edit(*CLAUDE.md)|Write(*claude.md)|Edit(*claude.md)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '📄 CLAUDE.md updated! Syncing to AGENTS.md...' && echo '' && echo 'ℹ️  Use the claude-to-agents-converter agent to update AGENTS.md' && echo '   Or run /sync-agents-md to update all AGENTS.md files' && echo '' && echo 'This keeps your documentation accessible to all AI coding assistants.'"
+        ]
+      }
+    ]
+  }
+}
