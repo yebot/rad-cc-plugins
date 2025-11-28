@@ -1,0 +1,55 @@
+{
+  "name": "jira-cli",
+  "version": "1.0.0",
+  "description": "Expert Jira CLI assistant for managing issues, sprints, and workflows using ankitpokhrel/jira-cli",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "agents": [
+    {
+      "name": "jira-manager",
+      "description": "Expert Jira issue manager using jira-cli. Use PROACTIVELY for Jira issue operations.",
+      "path": "./agents/jira-manager.md"
+    },
+    {
+      "name": "jira-sprint-master",
+      "description": "Sprint and epic management specialist. Use PROACTIVELY for sprint planning and tracking.",
+      "path": "./agents/jira-sprint-master.md"
+    },
+    {
+      "name": "jira-query-builder",
+      "description": "JQL query expert for advanced issue searching. Use PROACTIVELY for complex queries.",
+      "path": "./agents/jira-query-builder.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "jira-setup",
+      "description": "Initialize and configure jira-cli authentication and project settings",
+      "path": "./commands/jira-setup.md"
+    },
+    {
+      "name": "jira-issue-workflow",
+      "description": "Complete issue lifecycle management from creation to completion",
+      "path": "./commands/jira-issue-workflow.md"
+    },
+    {
+      "name": "jira-sprint-planning",
+      "description": "Sprint planning, backlog grooming, and sprint execution workflows",
+      "path": "./commands/jira-sprint-planning.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "jira-jql-patterns",
+      "description": "Master JQL query construction for advanced issue filtering and reporting",
+      "path": "./skills/jira-jql-patterns"
+    },
+    {
+      "name": "jira-workflow-transitions",
+      "description": "Understanding and navigating Jira workflow states and transitions",
+      "path": "./skills/jira-workflow-transitions"
+    }
+  ]
+}
