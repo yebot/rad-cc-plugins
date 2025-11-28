@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "backlog": {
+      "command": "backlog",
+      "args": ["mcp", "start"],
+      "description": "Backlog.md MCP server providing 75+ tools for task management, dependencies, epics, acceptance criteria, and project analytics"
+    }
+  }
+}

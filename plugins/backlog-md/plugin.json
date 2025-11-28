@@ -1,0 +1,18 @@
+{
+  "name": "backlog-md",
+  "description": "Comprehensive Backlog.md integration via MCP for Claude Code - manage tasks, epics, dependencies, and learnings using markdown-native project management with MCP support",
+  "version": "1.0.0",
+  "author": {
+    "name": "Tobey Forsman"
+  },
+  "license": "MIT",
+  "keywords": [
+    "backlog",
+    "tasks",
+    "project-management",
+    "mcp",
+    "kanban",
+    "epics",
+    "dependencies"
+  ]
+}
