@@ -37,7 +37,7 @@ Guide the user through initializing a Backlog.md presence in the current reposit
      - Label: "MCP Server"
        Description: "Use Model Context Protocol for direct integration (recommended for Claude Code workflows)"
      - Label: "CLI Commands"
-       Description: "Use backlog-md CLI commands via bash (requires CLI installation)"
+       Description: "Use backlog-md-cli commands via bash (requires CLI installation)"
 
    **Understanding the options:**
 
@@ -49,10 +49,10 @@ Guide the user through initializing a Backlog.md presence in the current reposit
      - Recommended for most users
 
    - **CLI Commands**:
-     - Uses the backlog-md command-line tool
+     - Uses the backlog-md-cli command-line tool
      - Requires separate installation (`npm install -g @backlog-md/cli`)
      - Traditional CLI workflow
-     - Good for users who want to use backlog-md outside Claude Code
+     - Good for users who want to use backlog-md-cli outside Claude Code
 
    **Note the user's preference** for use in subsequent steps.
 
@@ -93,10 +93,10 @@ Guide the user through initializing a Backlog.md presence in the current reposit
    **If backlog CLI is not installed:**
    - Show installation instructions:
      ```bash
-     # Install backlog-md CLI
+     # Install backlog-md-cli
      npm install -g @backlog-md/cli
      # or
-     brew install backlog-md
+     brew install backlog-md-cli
      ```
    - Ask user to install, then retry
 

@@ -2,7 +2,7 @@
 name: backlog-task-manager
 description: Expert at managing Backlog.md tasks via CLI with strict workflow discipline and file naming enforcement. Use PROACTIVELY when users want to create, update, or work on Backlog.md tasks. Enforces the critical `task-{id} - {title}.md` naming convention.
 tools: Bash, Glob, Grep, AskUserQuestion, TodoWrite
-model: sonnet
+model: inherit
 color: green
 ---
 
@@ -313,7 +313,7 @@ If naming is incorrect, alert user immediately and explain the issue.
 ## Integration with Reference Documentation
 
 When you need detailed information:
-- Read the comprehensive guide: `docs/backlog-md-usage.md` (in this plugin)
+- Read the comprehensive guide: `docs/backlog-md-cli-usage.md` (in this plugin)
 - Reference the quick guide: Use the `backlog-quick-reference` skill
 
 ## Remember

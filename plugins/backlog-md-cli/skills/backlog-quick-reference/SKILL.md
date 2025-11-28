@@ -37,7 +37,7 @@ disable-model-invocation: false
 
 Backlog.md is a comprehensive CLI tool for managing project tasks, acceptance criteria, and documentation. All task modifications MUST use CLI commands.
 
-**Reference Guide**: For complete documentation, see `docs/backlog-md-usage.md` in this plugin
+**Reference Guide**: For complete documentation, see `docs/backlog-md-cli-usage.md` in this plugin
 
 ---
 
@@ -250,7 +250,7 @@ A task is Done only when ALL of these are complete:
 For complete documentation including all options and advanced features:
 ```bash
 # Read comprehensive guide
-cat docs/backlog-md-usage.md
+cat docs/backlog-md-cli-usage.md
 
 # CLI help
 backlog --help

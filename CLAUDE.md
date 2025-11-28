@@ -17,7 +17,7 @@ rad-cc-plugins/
 │   ├── git-github-operations/   # Git workflow automation
 │   ├── agent-architect/         # Tools for designing subagents
 │   ├── github-issues/           # GitHub Issues management via gh CLI
-│   ├── backlog-md/              # Task management with Backlog.md CLI
+│   ├── backlog-md-cli/           # Task management with Backlog.md CLI
 │   └── astro-content-author/    # Astro content creation and management
 ```
 
@@ -122,7 +122,7 @@ Commands are markdown files with instructions for Claude Code:
 
 ### Working with Hooks
 
-The `backlog-md` plugin demonstrates advanced hook usage:
+The `backlog-md-cli` plugin demonstrates advanced hook usage:
 
 - `tool-use` events can block or warn on tool calls
 - `user-prompt-submit` events can provide contextual reminders
@@ -263,9 +263,142 @@ description: Expert at X. Use PROACTIVELY when Y occurs.
 
 Agents specify only needed tools via `tools:` frontmatter (principle of least privilege).
 
+## Plugin Helper Modules Pattern
+
+Some plugins include helper modules for complex operations:
+
+### Python Helper Modules
+
+When plugins need reliable JSON processing or complex logic, create Python helper modules in `plugins/{name}/helpers/`:
+
+**Example**: `github-project-manager/helpers/gh_project_helpers.py`
+- Provides reusable Python functions for JSON processing
+- Eliminates shell escaping issues with `jq`
+- Includes CLI interface for standalone usage
+- Can be imported as module or called directly
+
+**Pattern**:
+```python
+#!/usr/bin/env python3
+class PluginHelpers:
+    @staticmethod
+    def helper_method(data):
+        # Implementation
+        pass
+
+if __name__ == '__main__':
+    # CLI interface
+    pass
+```
+
+**Usage in commands**:
+```bash
+# Direct Python processing (no jq escaping issues)
+gh project list --format json | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+# Process data...
+"
+
+# Or use helper module
+python3 helpers/gh_project_helpers.py filter-items items.json --field Status "In Progress"
+```
+
+### Bash Helper Scripts
+
+For reusable bash functions, create sourced helper scripts:
+
+**Example**: `github-project-manager/helpers/gh_status_helpers.sh`
+```bash
+#!/usr/bin/env bash
+source helpers/gh_status_helpers.sh
+
+# Use helper functions
+save_items_json "$ITEMS"
+count_by_field "Status"
+get_stale_items 7
+```
+
+**When to use helpers**:
+- Complex JSON processing with nested objects
+- Repeated operations across multiple commands
+- Logic that benefits from proper error handling
+- Operations that would be fragile in bash/jq
+
+## Hook Patterns and Use Cases
+
+Hooks enable event-driven workflows. See `plugins/backlog-md-cli/hooks/hooks.json` for advanced patterns.
+
+### Hook Types
+
+**PreToolUse**: Block or warn before tool execution
+```json
+{
+  "filter": "Edit(*backlog/tasks/*)",
+  "command": "bash",
+  "args": ["-c", "echo 'BLOCKED: Use CLI instead' && exit 1"]
+}
+```
+
+**PostToolUse**: Validate or notify after tool execution
+```json
+{
+  "filter": "Bash(backlog task create*)",
+  "command": "bash",
+  "args": ["-c", "# Validate task file naming"]
+}
+```
+
+**UserPromptSubmit**: Provide contextual reminders
+```json
+{
+  "command": "bash",
+  "args": ["-c", "if echo \"$PROMPT\" | grep -q 'complete'; then echo 'Reminder: Check DoD'; fi"]
+}
+```
+
+### Hook Best Practices
+
+1. **Enforcement**: Use PreToolUse with `exit 1` to block operations
+2. **Guidance**: Use warnings (no exit) to suggest better alternatives
+3. **Validation**: Use PostToolUse to check file patterns/naming
+4. **Context**: Use UserPromptSubmit for workflow reminders
+5. **Filter patterns**: Match specific tools/paths with glob syntax
+
+## Common Development Tasks
+
+### Validate Plugin Structure
+```bash
+# Check JSON syntax
+cat plugins/plugin-name/plugin.json | jq .
+
+# Verify marketplace registration
+cat marketplace.json | jq '.plugins[] | select(.name=="plugin-name")'
+
+# Check helper script executability
+ls -l plugins/*/helpers/*
+```
+
+### Sync Marketplace Registry
+```bash
+# Always sync after updating marketplace.json
+cp marketplace.json .claude-plugin/marketplace.json
+```
+
+### Test Plugin Locally
+```bash
+# Install plugin from local path
+/plugin install /path/to/plugin-dir
+
+# Or test specific components
+# Agents: Available via Task tool
+# Commands: Available as /command-name
+# Skills: Available via Skill tool
+```
+
 ## Working in This Repository
 
 - No build/compile step - plugins are markdown and JSON
-- No tests to run (documentation-based repository)
-- Validation: Check JSON syntax and required metadata fields
+- No unit tests - validation through JSON syntax and field checks
 - Follow naming conventions: kebab-case for files and identifiers
+- All helper scripts should be executable (chmod +x)

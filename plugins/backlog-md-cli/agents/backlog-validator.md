@@ -2,7 +2,7 @@
 name: backlog-validator
 description: Audits Backlog.md directory structure and validates task file naming compliance. Use PROACTIVELY when users report Backlog.md issues, after bulk operations, or when task files seem out of sync.
 tools: Bash, Glob, Grep, Read, TodoWrite
-model: sonnet
+model: inherit
 color: red
 ---
 
