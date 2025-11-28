@@ -15,8 +15,7 @@
       "description": "Git & Github Operations - Streamlined git and GitHub workflow commands",
       "version": "1.0.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -25,8 +24,7 @@
       "description": "Agent Architect - Tools and templates for designing Claude Code subagents",
       "version": "1.0.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -35,8 +33,7 @@
       "description": "GitHub Issues Management - Elite agent for managing GitHub Issues using the gh CLI",
       "version": "1.1.1",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -45,8 +42,7 @@
       "description": "Backlog.md Task Management - CLI-first workflow orchestration for Git-native project management with strict file naming enforcement",
       "version": "1.1.2",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -55,8 +51,7 @@
       "description": "Astro Content Author - Comprehensive toolkit for creating and managing content in Astro projects including markdown files, content collections, images, data fetching, and Astro DB",
       "version": "1.0.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -65,8 +60,7 @@
       "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal AI agent context, with CLAUDE.md to AGENTS.md conversion",
       "version": "1.4.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -75,8 +69,7 @@
       "description": "Jira CLI Expert - Comprehensive toolkit for managing Jira issues, sprints, and workflows using ankitpokhrel/jira-cli with minimal trial and error",
       "version": "1.0.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -85,8 +78,7 @@
       "description": "JUCE Dev Team - Advanced features: DAW compatibility testing, performance profiling, architecture patterns, comprehensive DAW guide",
       "version": "1.5.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -95,8 +87,7 @@
       "description": "Apple Notes CLI Expert - Manage Apple Notes via command-line with agents for CRUD operations, organization, templates, and export workflows",
       "version": "1.0.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -105,8 +96,7 @@
       "description": "GitHub Project Manager - Comprehensive project-first workflow management using GitHub Projects V2 via gh CLI with automation, field management, and modern project tracking",
       "version": "1.1.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
     },
     {
@@ -115,9 +105,19 @@
       "description": "Webapp Team - A virtual web app development team with 12 specialized agents for engineering, product, design, growth, and operations",
       "version": "0.1.0",
       "author": {
-        "name": "Tobey Forsman",
-        "email": "tobeyforsman@gmail.com"
+        "name": "Tobey Forsman"
       }
+    },
+    {
+      "name": "backlog-md",
+      "source": "./plugins/backlog-md",
+      "description": "Comprehensive Backlog.md integration - markdown-native task management with MCP support, specialized subagents for task alignment and planning, and workflow automation hooks",
+      "version": "1.0.0",
+      "author": {
+        "name": "Tobey Forsman"
+      },
+      "category": "project-management",
+      "tags": ["backlog", "tasks", "mcp", "kanban", "project-management", "epics", "dependencies"]
     }
   ]
 }

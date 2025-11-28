@@ -92,8 +92,7 @@ When fixing issues:
      "description": "From plugin.json",
      "version": "From plugin.json",
      "author": {
-       "name": "Tobey Forsman",
-       "email": "tobeyforsman@gmail.com"
+       "name": "Tobey Forsman"
      }
    }
    ```
@@ -109,7 +108,7 @@ When fixing issues:
 
 ## Important Rules
 
-1. **Author Consistency**: All plugins use author "Tobey Forsman" with email "tobeyforsman@gmail.com"
+1. **Author Consistency**: All plugins use author name "Tobey Forsman" (no email in plugin author fields)
 
 2. **Source Path Format**: Always use `"./plugins/{plugin-name}"` format
 
