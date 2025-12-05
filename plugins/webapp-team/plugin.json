@@ -1,7 +1,7 @@
 {
   "name": "webapp-team",
-  "version": "0.1.0",
-  "description": "Webapp Team - A virtual web app development team with 12 specialized agents for engineering, product, design, growth, and operations",
+  "version": "0.2.0",
+  "description": "Webapp Team - A virtual web app development team with 13 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -66,6 +66,11 @@
       "name": "customer-support",
       "source": "./agents/customer-support.md",
       "description": "Customer Support Lead for documentation, feedback synthesis, and bug translation"
+    },
+    {
+      "name": "prisma-engineer",
+      "source": "./agents/prisma-engineer.md",
+      "description": "Prisma ORM database expert for schema design, migrations, queries, and performance optimization"
     }
   ],
   "commands": [
@@ -134,6 +139,10 @@
     {
       "name": "write-user-docs",
       "source": "./skills/write-user-docs"
+    },
+    {
+      "name": "prisma-orm",
+      "source": "./skills/prisma-orm"
     }
   ],
   "hooks": "./hooks/hooks.json"
