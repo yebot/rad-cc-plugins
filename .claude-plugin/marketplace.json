@@ -102,8 +102,8 @@
     {
       "name": "webapp-team",
       "source": "./plugins/webapp-team",
-      "description": "Webapp Team - A virtual web app development team with 12 specialized agents for engineering, product, design, growth, and operations",
-      "version": "0.1.0",
+      "description": "Webapp Team - A virtual web app development team with 13 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise",
+      "version": "0.2.0",
       "author": {
         "name": "Tobey Forsman"
       }
@@ -112,7 +112,7 @@
       "name": "backlog-md",
       "source": "./plugins/backlog-md",
       "description": "Comprehensive Backlog.md integration - markdown-native task management with MCP support, specialized subagents for task alignment and planning, and workflow automation hooks",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "author": {
         "name": "Tobey Forsman"
       },
