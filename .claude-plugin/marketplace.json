@@ -118,6 +118,17 @@
       },
       "category": "project-management",
       "tags": ["backlog", "tasks", "mcp", "kanban", "project-management", "epics", "dependencies"]
+    },
+    {
+      "name": "linear-clerk",
+      "source": "./plugins/linear-clerk",
+      "description": "Linear Clerk - Linear integration for backlog, task, and project management using linearis CLI",
+      "version": "1.1.0",
+      "author": {
+        "name": "Tobey Forsman"
+      },
+      "category": "project-management",
+      "tags": ["linear", "issues", "tasks", "project-management", "linearis"]
     }
   ]
 }

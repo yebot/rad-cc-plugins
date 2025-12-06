@@ -1,0 +1,24 @@
+{
+  "name": "linear-clerk",
+  "version": "1.1.0",
+  "description": "Linear integration for backlog, task, and project management using linearis CLI",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "skills": [
+    {
+      "name": "linear-integration",
+      "source": "./skills/linear-integration",
+      "description": "Quick reference for linearis CLI commands and Linear workflow"
+    }
+  ],
+  "commands": [
+    {
+      "name": "linear",
+      "source": "./commands/linear.md",
+      "description": "Linear issue operations"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
+}

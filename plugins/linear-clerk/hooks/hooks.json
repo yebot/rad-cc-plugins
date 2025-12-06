@@ -1,0 +1,10 @@
+{
+  "hooks": [
+    {
+      "type": "PostToolUse",
+      "filter": "Bash(git commit*)",
+      "command": "bash",
+      "args": ["-c", "echo '💡 Update Linear? Run: linearis issues update <ID> --state \"In Review\"'"]
+    }
+  ]
+}
