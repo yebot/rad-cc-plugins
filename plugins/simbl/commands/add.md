@@ -14,8 +14,8 @@ Quickly capture a new task with minimal friction and automatic priority detectio
 
 ### Step 1: Parse Input
 
-- The first line/argument is the task **title**
-- If user includes extra lines or pasted content, use that as `--content`
+- The first line/argument can loosely be assumed to be the task **title**
+- If user includes extra lines or pasted content, assume this will be part of the `--content`
 
 **Title Length & Content Extraction:**
 
@@ -24,7 +24,11 @@ If the supplied argument string is **over 90 characters** OR **contains an examp
 1. Extract a succinct title (under 80 characters) that captures the core task
 2. Move the remaining detail into `--content`
 
-This keeps titles scannable while preserving full context in the task body.
+This keeps titles scannable while preserving full context in the task body. DO NOT explain why title extraction is needed.
+
+**Multiple Task Expansion:**
+
+If the input clearly describes multiple distinct tasks, you may create separate tasks. However, **each task MUST include full context in its `--content`** - do not assume context carries over between tasks. Each task should be independently actionable without referencing the others.
 
 ### Step 2: Auto-Priority Detection
 
