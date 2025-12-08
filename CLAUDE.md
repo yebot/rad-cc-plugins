@@ -402,3 +402,4 @@ cp marketplace.json .claude-plugin/marketplace.json
 - No unit tests - validation through JSON syntax and field checks
 - Follow naming conventions: kebab-case for files and identifiers
 - All helper scripts should be executable (chmod +x)
+- After every successful push to github, provide the user with one-shot commands to update the plugin or marketplace in their other working sessions.
