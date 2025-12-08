@@ -52,8 +52,10 @@ simbl list --limit 5            # Limit results
 
 ```bash
 simbl show task-1
-simbl show 1                    # Short form
+simbl show 1                    # Short form (digits only)
 ```
+
+> **Note:** Any command accepting a task ID supports short form. If user provides just digits (e.g., "9"), treat as "task-9" (or "{prefix}-9" with custom prefix).
 
 ### Updating Tasks
 

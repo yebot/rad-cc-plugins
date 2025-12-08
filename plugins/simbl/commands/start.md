@@ -15,8 +15,9 @@ Begin focused work on a specified task by marking it in-progress and displaying 
 ### Step 1: Parse Task ID
 
 Extract the task ID from `$ARGUMENTS`:
-- Accept formats: `task-42`, `42`, `task-1`, `1`
-- Normalize to the form used by SIMBL
+- Accept formats: `task-42`, `42`, or just digits
+- If user supplies only digits (e.g., "9"), use "task-9" (or "{prefix}-9" if a custom prefix is configured)
+- The CLI accepts short form, so passing just the number works
 
 ### Step 2: Mark as In-Progress
 
