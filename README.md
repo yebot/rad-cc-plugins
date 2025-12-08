@@ -10,9 +10,9 @@ A curated marketplace of Claude Code plugins to supercharge your AI-assisted dev
 
 | Plugin | Version | Description |
 |--------|---------|-------------|
-| **backlog-md** | v1.3.1 | Comprehensive Backlog.md integration with MCP support, specialized subagents for task alignment and planning, and workflow automation hooks |
-| **backlog-md-cli** | v1.1.2 | CLI-first workflow orchestration for Git-native project management with strict file naming enforcement |
-| **simbl** | v1.0.0 | Lightweight companion for SIMBL CLI backlog manager with task hygiene, quick capture, and reduced context-switching |
+| **backlog-md** | v1.3.1 | Comprehensive [Backlog.md](https://github.com/MrLesk/Backlog.md) integration with MCP support, specialized subagents for task alignment and planning, and workflow automation hooks |
+| **backlog-md-cli** | v1.1.2 | CLI-first workflow orchestration for [Backlog.md](https://github.com/MrLesk/Backlog.md) with strict file naming enforcement |
+| **simbl** | v1.0.0 | Lightweight companion for [SIMBL](https://github.com/yebot/simbl) CLI backlog manager with task hygiene, quick capture, and reduced context-switching |
 | **linear-clerk** | v1.1.0 | Linear integration for backlog, task, and project management using linearis CLI |
 | **jira-cli** | v1.0.0 | Comprehensive toolkit for managing Jira issues, sprints, and workflows using ankitpokhrel/jira-cli |
 
