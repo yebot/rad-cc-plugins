@@ -8,7 +8,7 @@ Begin focused work on a specified task by marking it in-progress and displaying 
 
 ## Arguments
 
-- `$ARGUMENTS` - Task identifier (e.g., "task-42", "42")
+- `$ARGUMENTS` - Task identifier (e.g., "task-42", "42", "customPrefix-42")
 
 ## Instructions
 
@@ -16,7 +16,7 @@ Begin focused work on a specified task by marking it in-progress and displaying 
 
 Extract the task ID from `$ARGUMENTS`:
 - Accept formats: `task-42`, `42`, or just digits
-- If user supplies only digits (e.g., "9"), use "task-9" (or "{prefix}-9" if a custom prefix is configured)
+- If user supplies only digits (e.g., "9"), use "task-9" (or "{prefix}-9" if a custom `prefix` is configured in `.simbl/config.yaml`)
 - The CLI accepts short form, so passing just the number works
 
 ### Step 2: Mark as In-Progress
