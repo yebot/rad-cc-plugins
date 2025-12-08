@@ -1,6 +1,6 @@
 {
   "name": "simbl",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Lightweight companion for SIMBL CLI backlog manager - task hygiene, quick capture, and reduced context-switching during coding sessions",
   "author": {
     "name": "Tobey Forsman"
