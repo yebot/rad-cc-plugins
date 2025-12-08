@@ -182,3 +182,40 @@ simbl update task-1 --append "### Notes
 - Point 1
 - Point 2"
 ```
+
+## Common Mistakes
+
+### Wrong flags/commands
+
+| ❌ Wrong | ✅ Correct |
+|----------|-----------|
+| `--description` | `--content` |
+| `simbl edit` | `simbl update` |
+| `simbl modify` | `simbl update` |
+
+### Relationship syntax (flags required, not positional)
+
+```bash
+# ❌ Wrong - positional args don't work
+simbl relate task-2 depends-on task-1
+
+# ✅ Correct - use flag syntax
+simbl relate task-2 --depends-on task-1
+simbl relate task-2 --parent task-1
+```
+
+### Available flags reference
+
+**`simbl add`**:
+- `--priority <N>` - Set priority (1-9)
+- `--tags "tag1,tag2"` - Add tags (comma-separated)
+- `--content "..."` - Set description/content
+
+**`simbl update`**:
+- `--title "..."` - Replace title
+- `--content "..."` - Replace content
+- `--append "..."` - Add to existing content
+
+**`simbl relate`**:
+- `--depends-on <id>` - This task depends on another
+- `--parent <id>` - This task is a subtask of another

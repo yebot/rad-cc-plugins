@@ -134,7 +134,7 @@
       "name": "simbl",
       "source": "./plugins/simbl",
       "description": "SIMBL Tools - Lightweight companion for SIMBL CLI backlog manager with task hygiene, quick capture, and reduced context-switching",
-      "version": "1.2.2",
+      "version": "1.3.0",
       "author": {
         "name": "Tobey Forsman"
       },
