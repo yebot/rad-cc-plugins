@@ -1,0 +1,13 @@
+{
+  "PostToolUse": [
+    {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "if echo \"$TOOL_OUTPUT\" | grep -qiE '(passed|success|0 failed|All tests passed|PASS)'; then echo 'simbl: Tests passing - consider updating task status with simbl done <id>'; fi"
+        }
+      ]
+    }
+  ]
+}

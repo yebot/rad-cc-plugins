@@ -1,0 +1,53 @@
+{
+  "name": "simbl",
+  "version": "1.0.0",
+  "description": "Lightweight companion for SIMBL CLI backlog manager - task hygiene, quick capture, and reduced context-switching during coding sessions",
+  "author": {
+    "name": "Tobey Forsman"
+  },
+  "license": "MIT",
+  "keywords": [
+    "simbl",
+    "tasks",
+    "backlog",
+    "project-management",
+    "quick-capture",
+    "hygiene"
+  ],
+  "agents": [
+    {
+      "name": "task-agent",
+      "description": "Task hygiene companion for SIMBL. Use PROACTIVELY after completing code changes, when encountering bugs not in backlog, or when backlog needs cleanup.",
+      "path": "./agents/task-agent.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "simbl-start",
+      "description": "Begin working on a SIMBL task - marks it in-progress and displays context",
+      "path": "./commands/start.md"
+    },
+    {
+      "name": "simbl-add",
+      "description": "Quick-capture a new task with auto-priority detection from keywords",
+      "path": "./commands/add.md"
+    },
+    {
+      "name": "simbl-brief",
+      "description": "Show project snapshot - recent completions, in-progress work, and what's next",
+      "path": "./commands/brief.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "cli-guide",
+      "description": "SIMBL CLI command reference and usage guide",
+      "path": "./skills/cli-guide"
+    },
+    {
+      "name": "effective-tasks",
+      "description": "Best practices for writing SIMBL tasks that Claude can execute with zero context",
+      "path": "./skills/effective-tasks"
+    }
+  ]
+}
