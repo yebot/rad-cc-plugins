@@ -4,25 +4,46 @@
 
 A curated marketplace of Claude Code plugins to supercharge your AI-assisted development workflow.
 
-## What's Inside
+## Plugins (14)
 
-### Workflow & Project Management
+### Project Management
 
-- **backlog-md-cli** (v1.1.2) - CLI-first workflow orchestration for [Backlog.md](https://github.com/MrLesk/Backlog.md) project management with strict file naming enforcement and automated validation hooks
-- **github-issues** (v1.1.1) - Elite agent for managing GitHub Issues using the gh CLI with priority labels, status management, and smart issue tracking
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| **backlog-md** | v1.3.1 | Comprehensive Backlog.md integration with MCP support, specialized subagents for task alignment and planning, and workflow automation hooks |
+| **backlog-md-cli** | v1.1.2 | CLI-first workflow orchestration for Git-native project management with strict file naming enforcement |
+| **simbl** | v1.0.0 | Lightweight companion for SIMBL CLI backlog manager with task hygiene, quick capture, and reduced context-switching |
+| **linear-clerk** | v1.1.0 | Linear integration for backlog, task, and project management using linearis CLI |
+| **jira-cli** | v1.0.0 | Comprehensive toolkit for managing Jira issues, sprints, and workflows using ankitpokhrel/jira-cli |
 
-### Git & GitHub
+### GitHub
 
-- **git-github-operations** (v1.0.0) - Streamlined git and GitHub workflow commands for efficient version control operations
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| **github-project-manager** | v1.1.0 | Comprehensive project-first workflow management using GitHub Projects V2 via gh CLI with automation and field management |
+| **github-issues** | v1.1.1 | Elite agent for managing GitHub Issues using the gh CLI |
+| **git-github-operations** | v1.0.0 | Streamlined git and GitHub workflow commands |
 
-### Content Creation
+### Development Teams
 
-- **astro-content-author** (v1.0.0) - Comprehensive toolkit for creating and managing content in Astro projects including markdown files, content collections, images, data fetching, and Astro DB
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| **webapp-team** | v0.2.0 | Virtual web app development team with 13+ specialized agents for engineering, product, design, growth, and operations |
+| **juce-dev-team** | v1.5.0 | Audio plugin development team with DAW compatibility testing, performance profiling, and architecture patterns |
 
-### Development Tools
+### Content & Documentation
 
-- **documentation-tools** (v1.3.0) - Utilities for managing and organizing repository documentation for optimal Claude Code context, including commands to link documentation and plan CLAUDE.md files
-- **agent-architect** (v1.0.0) - Tools and templates for designing Claude Code subagents with best practices and reusable patterns
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| **astro-content-author** | v1.0.0 | Comprehensive toolkit for creating and managing content in Astro projects including collections, images, and data fetching |
+| **documentation-tools** | v1.4.0 | Utilities for managing repository documentation with CLAUDE.md to AGENTS.md conversion |
+| **apple-notes-cli** | v1.0.0 | Manage Apple Notes via command-line with agents for CRUD operations, organization, and export workflows |
+
+### Meta
+
+| Plugin | Version | Description |
+|--------|---------|-------------|
+| **agent-architect** | v1.0.0 | Tools and templates for designing Claude Code subagents with best practices and reusable patterns |
 
 ## Installation
 
