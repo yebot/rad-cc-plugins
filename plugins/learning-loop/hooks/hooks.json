@@ -1,0 +1,31 @@
+{
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Bash(git commit*)",
+      "command": "bash",
+      "args": [
+        "-c",
+        "COMMIT_COUNT=$(git log --oneline --since='1 hour ago' 2>/dev/null | wc -l | tr -d ' '); if [ \"$COMMIT_COUNT\" -ge 3 ]; then echo ''; echo '---'; echo 'Tip: You have '$COMMIT_COUNT' commits this hour.'; echo 'Consider running /reflect to capture learnings.'; fi"
+      ]
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "Bash(git push*)",
+      "command": "bash",
+      "args": [
+        "-c",
+        "if [ -d '.learning-loop' ]; then PENDING=$(python3 plugins/learning-loop/helpers/learning_helpers.py pending-count 2>/dev/null || echo '0'); if [ \"$PENDING\" -gt 0 ]; then echo ''; echo 'Reminder: You have '$PENDING' pending improvement suggestions.'; echo 'Run /review-suggestions to apply them before pushing.'; fi; fi"
+      ]
+    },
+    {
+      "event": "Stop",
+      "matcher": "",
+      "command": "bash",
+      "args": [
+        "-c",
+        "if [ -d '.learning-loop' ]; then PENDING=$(python3 plugins/learning-loop/helpers/learning_helpers.py pending-count 2>/dev/null || echo '0'); if [ \"$PENDING\" -gt 0 ]; then echo ''; echo '---'; echo 'Session ending with '$PENDING' pending improvement suggestions.'; echo 'Run /review-suggestions next time to apply them.'; fi; fi"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "learning-loop",
+  "version": "1.1.0",
+  "description": "Self-improvement workflows for Claude Code - captures session learnings, analyzes patterns, and suggests improvements to CLAUDE.md, agents, and documentation",
+  "author": {
+    "name": "Tobey Forsman",
+    "email": "tobeyforsman@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "retrospective",
+    "self-improvement",
+    "learnings",
+    "documentation",
+    "context-management"
+  ],
+  "agents": [
+    {
+      "name": "session-analyzer",
+      "description": "Analyzes completed work sessions for learnings. Use PROACTIVELY after significant work blocks or when user indicates session completion.",
+      "path": "./agents/session-analyzer.md"
+    },
+    {
+      "name": "improvement-suggester",
+      "description": "Generates concrete improvement suggestions for CLAUDE.md, agents, and documentation. Use after session-analyzer identifies learnings.",
+      "path": "./agents/improvement-suggester.md"
+    }
+  ],
+  "commands": [
+    {
+      "name": "reflect",
+      "description": "Run a session retrospective to capture learnings and generate improvement suggestions",
+      "path": "./commands/reflect.md"
+    },
+    {
+      "name": "review-suggestions",
+      "description": "Review and selectively apply pending improvement suggestions",
+      "path": "./commands/review-suggestions.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "learning-taxonomy",
+      "description": "Expert knowledge for categorizing and routing learnings to appropriate targets",
+      "path": "./skills/learning-taxonomy"
+    }
+  ],
+  "hooks": "./hooks/hooks.json"
+}

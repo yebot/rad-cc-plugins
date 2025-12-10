@@ -140,6 +140,17 @@
       },
       "category": "project-management",
       "tags": ["simbl", "tasks", "backlog", "quick-capture", "hygiene"]
+    },
+    {
+      "name": "learning-loop",
+      "source": "./plugins/learning-loop",
+      "description": "Learning Loop - Self-improvement workflows that capture session learnings and suggest improvements to CLAUDE.md, agents, and documentation with full memory hierarchy awareness",
+      "version": "1.1.0",
+      "author": {
+        "name": "Tobey Forsman"
+      },
+      "category": "context-management",
+      "tags": ["learnings", "self-improvement", "retrospective", "documentation", "context"]
     }
   ]
 }
