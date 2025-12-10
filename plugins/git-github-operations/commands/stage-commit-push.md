@@ -16,6 +16,42 @@ You are helping the user perform a complete git workflow: staging changes, creat
    - Check the current branch with `git branch --show-current`
    - Push to the remote with `git push` (or `git push -u origin <branch>` if not tracking)
    - Confirm the push was successful
+5. **Check for GitHub Actions**:
+   - After a successful push, check for workflow files that may trigger
+   - Provide a direct link to the Actions page if workflows exist
+
+## GitHub Actions Awareness
+
+After pushing, check if the repository has GitHub Actions workflows that will be triggered:
+
+1. **Check for workflow files**:
+   ```bash
+   ls .github/workflows/*.yml .github/workflows/*.yaml 2>/dev/null
+   ```
+
+2. **If workflows exist**, examine them to identify:
+   - Which workflows trigger on `push` to the current branch
+   - Which workflows trigger on `pull_request` events
+   - Any workflows with `workflow_dispatch` (manual triggers)
+
+3. **Provide a direct link to the running action**:
+   - Extract the repository owner and name from the remote URL:
+     ```bash
+     git remote get-url origin | sed -E 's|.*github\.com[:/]([^/]+)/([^/.]+)(\.git)?|\1/\2|'
+     ```
+   - Generate the Actions URL: `https://github.com/{owner}/{repo}/actions`
+   - For the specific workflow run, provide: `https://github.com/{owner}/{repo}/actions/workflows/{workflow-file}`
+
+4. **Example output after push**:
+   ```
+   Push successful!
+
+   GitHub Actions triggered:
+   - ci.yml (runs on push to main)
+   - deploy.yml (runs on push to main)
+
+   View running workflows: https://github.com/owner/repo/actions
+   ```
 
 ## Important Notes and Guidelines
 
@@ -28,3 +64,4 @@ You are helping the user perform a complete git workflow: staging changes, creat
 - If there are merge conflicts or issues, report them to the user
 - If the push fails (e.g., diverged branches), explain the issue and suggest solutions
 - Be careful with force pushes - only suggest if explicitly requested and after warning
+- If no GitHub Actions workflows exist, simply skip the Actions notification
