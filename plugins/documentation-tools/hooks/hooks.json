@@ -2,11 +2,19 @@
   "hooks": {
     "PostToolUse": [
       {
-        "filter": "Write(*CLAUDE.md)|Edit(*CLAUDE.md)|Write(*claude.md)|Edit(*claude.md)",
+        "filter": "Write(*CLAUDE.md)|Edit(*CLAUDE.md)|Write(*claude.md)|Edit(*claude.md)|Write(*CLAUDE.local.md)|Edit(*CLAUDE.local.md)",
         "command": "bash",
         "args": [
           "-c",
-          "echo '📄 CLAUDE.md updated! Syncing to AGENTS.md...' && echo '' && echo 'ℹ️  Use the claude-to-agents-converter agent to update AGENTS.md' && echo '   Or run /sync-agents-md to update all AGENTS.md files' && echo '' && echo 'This keeps your documentation accessible to all AI coding assistants.'"
+          "echo '📄 Claude Code memory file updated!' && echo '' && echo 'ℹ️  To sync with AGENTS.md:' && echo '   • Use the claude-to-agents-converter agent' && echo '   • Or run /sync-agents-md to update all AGENTS.md files' && echo '' && echo 'This keeps your documentation accessible to all AI coding assistants.'"
+        ]
+      },
+      {
+        "filter": "Write(*/.claude/rules/*.md)|Edit(*/.claude/rules/*.md)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "echo '📋 Claude Code rule file updated!' && echo '' && echo 'Note: .claude/rules/ files are Claude Code-specific.' && echo 'They do not need AGENTS.md equivalents.'"
         ]
       }
     ]

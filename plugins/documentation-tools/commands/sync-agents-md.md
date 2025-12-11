@@ -8,88 +8,121 @@ allowed-tools:
 
 # Sync CLAUDE.md to AGENTS.md
 
-Convert all CLAUDE.md files in the repository to generic AGENTS.md files that work with any AI coding assistant. This command transforms Claude-specific terminology to AI-agnostic language while preserving all technical content and maintaining documentation hierarchy.
+Convert all CLAUDE.md files in the repository to generic AGENTS.md files that work with any AI coding assistant. This command transforms Claude-specific terminology to AI-agnostic language while preserving all technical content, import syntax, and documentation hierarchy.
+
+## What Gets Converted
+
+| Source File | Target File | Convert? |
+|-------------|-------------|----------|
+| `./CLAUDE.md` | `./AGENTS.md` | ✅ Yes |
+| `./.claude/CLAUDE.md` | `./.claude/AGENTS.md` | ✅ Yes |
+| `./CLAUDE.local.md` | `./AGENTS.local.md` | ✅ Yes |
+| `./.claude/rules/*.md` | N/A | ❌ Skip (implementation-specific) |
+| `~/.claude/*` | N/A | ❌ Never (user's personal files) |
+
+**Note:** `.claude/rules/` files are Claude Code-specific configuration and don't need AI-agnostic versions.
 
 ## Instructions
 
-1. **Find all CLAUDE.md files in the repository**:
+### Phase 1: Discover Memory Files
+
+1. **Find all CLAUDE.md and CLAUDE.local.md files**:
 
    ```bash
-   find . \( -name "CLAUDE.md" -o -name "claude.md" \) -type f | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | sort
+   find . \( -name "CLAUDE.md" -o -name "claude.md" -o -name "CLAUDE.local.md" \) -type f | grep -v node_modules | grep -v .git | grep -v dist | grep -v build | grep -v ".claude/rules" | sort
    ```
 
-   - Identify all CLAUDE.md files (case variations)
-   - Filter out build/dependency directories
-   - Sort for organized processing
+   **Exclude:**
+   - Build/dependency directories
+   - `.claude/rules/` files (Claude Code-specific)
+   - User memory (`~/.claude/`) - never touch
 
-2. **Prepare for batch conversion**:
+2. **Display found files**:
 
-   a) **Display found files to user**:
    ```
-   Found CLAUDE.md files:
+   Found memory files to convert:
+
+   CLAUDE.md files:
    - ./CLAUDE.md
    - ./src/components/CLAUDE.md
    - ./packages/api/CLAUDE.md
-   - ./services/auth/CLAUDE.md
+
+   CLAUDE.local.md files:
+   - ./CLAUDE.local.md
 
    Total: X files
+
+   Skipped (not converted):
+   - ./.claude/rules/*.md (Claude Code-specific rules)
    ```
 
-   b) **Confirm scope with user** (if many files):
-   - If more than 5 files found, show the list
-   - Let user know the conversion will begin
-   - Note that AGENTS.md files will be created/updated in same directories
+### Phase 2: Process Each File
 
-3. **Process each CLAUDE.md file using the claude-to-agents-converter agent**:
+3. **Process files using claude-to-agents-converter agent**:
 
-   a) **For each CLAUDE.md file found**:
+   **Processing order** (important for link consistency):
+   1. Root `./CLAUDE.md` first
+   2. Root `./CLAUDE.local.md`
+   3. First-level subdirectory CLAUDE.md files
+   4. Deeper nested files
 
-   - Use the Task tool to launch the `claude-to-agents-converter` agent
-   - Pass the specific file path to convert
-   - Wait for conversion to complete
-   - Track the result (success/failure)
-
-   b) **Agent invocation format**:
+   **Agent invocation**:
    ```
    Task(
      subagent_type: "claude-to-agents-converter",
      description: "Convert CLAUDE.md to AGENTS.md",
-     prompt: "Convert the CLAUDE.md file at [FILE_PATH] to AGENTS.md. Apply all transformation rules to make the documentation AI-agnostic. Report the transformations made."
+     prompt: "Convert the file at [FILE_PATH] to its AGENTS.md equivalent. Apply all transformation rules including import syntax (@CLAUDE.md → @AGENTS.md). Report transformations made."
    )
    ```
 
-   c) **Process files in order** (root first, then nested):
-   - Start with root CLAUDE.md (if exists)
-   - Then process subdirectory CLAUDE.md files alphabetically
-   - This ensures parent-child link consistency
-
 4. **Track conversion results**:
 
-   Keep a running tally:
    ```
    Conversion Progress:
    ✅ ./CLAUDE.md → ./AGENTS.md
+   ✅ ./CLAUDE.local.md → ./AGENTS.local.md
    ✅ ./src/components/CLAUDE.md → ./src/components/AGENTS.md
-   ✅ ./packages/api/CLAUDE.md → ./packages/api/AGENTS.md
-   ⚠️  ./services/auth/CLAUDE.md → (warning: ...)
+   ⚠️  ./packages/api/CLAUDE.md → (warning: no Claude-specific content found)
    ```
 
-5. **Verify conversions**:
+### Phase 3: Transform Import References
 
-   After all conversions complete:
+5. **Key transformations** (handled by agent):
 
-   a) **Count created/updated files**:
+   | Claude-Specific | Generic |
+   |-----------------|---------|
+   | `@CLAUDE.md` | `@AGENTS.md` |
+   | `@path/to/CLAUDE.md` | `@path/to/AGENTS.md` |
+   | `@CLAUDE.local.md` | `@AGENTS.local.md` |
+   | `@~/.claude/file.md` | `@~/.ai-agent/file.md` |
+   | `.claude/rules/` references | Keep as-is (Claude-specific) |
+
+   **Import syntax transformation examples:**
+
+   Before (CLAUDE.md):
+   ```markdown
+   See @README.md for overview.
+   Child context: @src/components/CLAUDE.md
+   Personal prefs: @~/.claude/my-prefs.md
+   ```
+
+   After (AGENTS.md):
+   ```markdown
+   See @README.md for overview.
+   Child context: @src/components/AGENTS.md
+   Personal prefs: @~/.ai-agent/my-prefs.md
+   ```
+
+### Phase 4: Verify and Report
+
+6. **Verify conversions**:
+
    ```bash
-   find . \( -name "AGENTS.md" -o -name "agents.md" \) -type f | grep -v node_modules | grep -v .git | wc -l
+   # Count AGENTS.md files created
+   find . \( -name "AGENTS.md" -o -name "AGENTS.local.md" \) -type f | grep -v node_modules | wc -l
    ```
 
-   b) **Quick validation check** (optional):
-   - Verify AGENTS.md files exist alongside CLAUDE.md files
-   - Check file sizes are similar (content preserved)
-
-6. **Report final results**:
-
-   Provide comprehensive summary:
+7. **Final report**:
 
    ```
    📄 CLAUDE.md → AGENTS.md Synchronization Complete!
@@ -99,156 +132,112 @@ Convert all CLAUDE.md files in the repository to generic AGENTS.md files that wo
    ⚠️  Warnings: Z
    ❌ Failed: 0
 
-   Created/Updated AGENTS.md files:
+   Created/Updated files:
    - ./AGENTS.md (3,245 bytes)
+   - ./AGENTS.local.md (892 bytes)
    - ./src/components/AGENTS.md (1,892 bytes)
    - ./packages/api/AGENTS.md (2,456 bytes)
-   - ./services/auth/AGENTS.md (1,234 bytes)
 
-   Common transformations applied:
+   Transformations applied:
    - "Claude Code" → "AI coding assistants"
    - "Claude" → "AI agent" / "AI assistant"
-   - CLAUDE.md links → AGENTS.md links
+   - @CLAUDE.md imports → @AGENTS.md imports
+   - @CLAUDE.local.md → @AGENTS.local.md
    - URLs to claude.ai/code removed
+   - /memory command → "memory management command"
 
-   ✅ All CLAUDE.md files now have corresponding AGENTS.md versions!
+   Skipped files:
+   - ./.claude/rules/*.md (Claude Code-specific, no conversion needed)
+
+   ✅ All memory files now have AI-agnostic versions!
 
    Next Steps:
    - Review AGENTS.md files for accuracy
-   - Commit both CLAUDE.md and AGENTS.md to version control
-   - AGENTS.md files will auto-sync when CLAUDE.md is updated (via hooks)
+   - Commit both CLAUDE.md and AGENTS.md versions
+   - Hooks will auto-sync when CLAUDE.md files are updated
    ```
 
-7. **Handle edge cases**:
+## Special Handling
 
-   | Issue | Solution |
-   |-------|----------|
-   | No CLAUDE.md files found | Report "No CLAUDE.md files found in repository" |
-   | Agent conversion fails | Report specific file and error, continue with others |
-   | AGENTS.md already exists | Overwrite with new conversion (sync means update) |
-   | Nested CLAUDE.md hierarchy | Process root first to ensure link consistency |
+### CLAUDE.local.md Files
 
-## Important Guidelines
+- Convert to `AGENTS.local.md`
+- Preserve gitignore status (both are personal files)
+- Transform any CLAUDE-specific references
 
-### Processing Order
+### Path-Specific Rules References
+
+If a CLAUDE.md references `.claude/rules/` files:
+
+```markdown
+# In CLAUDE.md
+See @.claude/rules/testing.md for test conventions.
+```
+
+Keep these references as-is in AGENTS.md (they're Claude Code-specific configuration):
+
+```markdown
+# In AGENTS.md
+See @.claude/rules/testing.md for test conventions.
+```
+
+### Import Syntax with paths: Frontmatter
+
+If CLAUDE.md has path-specific rule references, preserve the frontmatter:
+
+```markdown
+---
+paths: src/api/**/*.ts
+---
+```
+
+This frontmatter is kept in AGENTS.md (generic functionality).
+
+## Error Handling
+
+| Issue | Solution |
+|-------|----------|
+| No CLAUDE.md files found | Report "No CLAUDE.md files found" |
+| Agent conversion fails | Report error, continue with other files |
+| AGENTS.md already exists | Overwrite (sync means update) |
+| .claude/rules/ files found | Skip with note (Claude Code-specific) |
+| User memory referenced | Transform path, don't access |
+
+## Processing Order
 
 **Why order matters:**
-- Parent CLAUDE.md files often reference child CLAUDE.md files
-- Converting parent first ensures child references are updated consistently
-- Alphabetical processing of subdirectories maintains predictable order
+- Parent CLAUDE.md files reference child CLAUDE.md files
+- Converting parent first ensures @CLAUDE.md → @AGENTS.md transformations are consistent
+- Alphabetical subdirectory processing maintains predictability
 
-**Recommended order:**
-1. `./CLAUDE.md` (root - always first)
-2. First-level subdirectories (e.g., `./src/CLAUDE.md`, `./packages/CLAUDE.md`)
-3. Deeper nesting (e.g., `./src/components/CLAUDE.md`)
-
-### Transformation Consistency
-
-All files should receive identical transformation rules:
-- ✅ Same terminology replacements across all files
-- ✅ All CLAUDE.md → AGENTS.md link updates
-- ✅ Consistent handling of Claude Code specific features
-- ✅ Preservation of technical content in all files
-
-### Agent Delegation
-
-- **Always use the Task tool** to invoke the `claude-to-agents-converter` agent
-- **Do NOT attempt manual conversion** - the agent has specialized logic
-- **Let the agent handle** each file independently for robustness
-
-### Error Handling
-
-If a conversion fails:
-- Report the specific file and error
-- Continue processing remaining files
-- Include failed files in final summary
-- Suggest manual review for failed conversions
-
-## Use Cases
-
-### Initial Setup
-First time creating AGENTS.md versions of existing CLAUDE.md files:
-```
-/sync-agents-md
-```
-
-### After Bulk CLAUDE.md Updates
-Multiple CLAUDE.md files were updated, need to sync all:
-```
-/sync-agents-md
-```
-
-### Recovery
-AGENTS.md files got out of sync or were deleted:
-```
-/sync-agents-md
-```
-
-### Verification
-Check that all CLAUDE.md files have corresponding AGENTS.md:
-```
-/sync-agents-md
-```
+**Order:**
+1. `./CLAUDE.md` (root)
+2. `./CLAUDE.local.md` (root local)
+3. `./.claude/CLAUDE.md` (if exists)
+4. First-level subdirectories alphabetically
+5. Deeper nesting levels
 
 ## Best Practices
 
-1. **Run after major CLAUDE.md changes**: If you've restructured or significantly updated CLAUDE.md files
+1. **Run after major CLAUDE.md changes**: Especially if you've restructured or added new files
 
-2. **Commit both versions**: Always commit both CLAUDE.md and AGENTS.md to version control together
+2. **Commit both versions**: Always commit CLAUDE.md and AGENTS.md together
 
-3. **Review first conversion**: On initial setup, review the generated AGENTS.md files to ensure quality
+3. **Review first conversion**: Check generated AGENTS.md files for quality
 
-4. **Use hooks for maintenance**: After initial setup, the hooks will keep files in sync automatically
+4. **Use hooks for maintenance**: After initial setup, hooks auto-sync on CLAUDE.md updates
 
-5. **Periodic sync**: Run occasionally to catch any files that might have been missed
-
-## Example Scenarios
-
-### Scenario 1: New Repository Setup
-
-```
-User has been using CLAUDE.md files, wants to add AGENTS.md versions.
-
-1. Run: /sync-agents-md
-2. Review generated AGENTS.md files
-3. Commit all AGENTS.md files
-4. Hooks will maintain sync going forward
-```
-
-### Scenario 2: Monorepo with Multiple CLAUDE.md Files
-
-```
-Monorepo with CLAUDE.md in:
-- ./CLAUDE.md (root)
-- ./packages/web/CLAUDE.md
-- ./packages/api/CLAUDE.md
-- ./packages/shared/CLAUDE.md
-
-1. Run: /sync-agents-md
-2. Agent processes all 4 files
-3. Creates 4 corresponding AGENTS.md files
-4. All child references updated consistently
-```
-
-### Scenario 3: AGENTS.md Out of Sync
-
-```
-User updated CLAUDE.md files manually, AGENTS.md is outdated.
-
-1. Run: /sync-agents-md
-2. All AGENTS.md files overwritten with fresh conversions
-3. Sync restored
-```
+5. **Skip rules/ intentionally**: `.claude/rules/` are Claude Code-specific and don't need generic versions
 
 ## Definition of Done
 
-- [ ] All CLAUDE.md files found in repository
-- [ ] Each CLAUDE.md file processed by claude-to-agents-converter agent
-- [ ] Conversions completed in correct order (root first)
-- [ ] All successful conversions tracked
-- [ ] Any failures or warnings noted
-- [ ] AGENTS.md files verified to exist
-- [ ] Comprehensive summary report provided
-- [ ] User informed of next steps
-- [ ] Total file counts match expectations
-- [ ] No CLAUDE.md files left without corresponding AGENTS.md
+- [ ] All CLAUDE.md files found (excluding rules/)
+- [ ] All CLAUDE.local.md files found
+- [ ] Each file processed by claude-to-agents-converter agent
+- [ ] Import syntax transformed (@CLAUDE.md → @AGENTS.md)
+- [ ] Conversions completed in correct order
+- [ ] Results tracked (success/warning/failure)
+- [ ] AGENTS.md and AGENTS.local.md files verified
+- [ ] Skipped files noted (rules/)
+- [ ] Summary report provided
+- [ ] Next steps communicated

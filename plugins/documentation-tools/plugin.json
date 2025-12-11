@@ -1,7 +1,7 @@
 {
   "name": "documentation-tools",
-  "version": "1.4.0",
-  "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal AI agent context",
+  "version": "2.0.0",
+  "description": "Documentation Tools - Complete Claude Code memory management with support for CLAUDE.md, .claude/rules/, imports, and AI-agnostic AGENTS.md conversion",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -10,24 +10,31 @@
     {
       "name": "claude-to-agents-converter",
       "source": "./agents/claude-to-agents-converter.md",
-      "description": "Converts CLAUDE.md files to generic AGENTS.md files. Use PROACTIVELY when CLAUDE.md files are created or updated."
+      "description": "Converts CLAUDE.md files to generic AGENTS.md files with import syntax transformation. Use PROACTIVELY when CLAUDE.md files are created or updated."
     }
   ],
   "commands": [
     {
       "name": "link-docs-to-claude",
       "source": "./commands/link-docs-to-claude.md",
-      "description": "Link all documentation files to CLAUDE.md for better context availability"
+      "description": "Link documentation files to Claude Code memory using @import syntax"
     },
     {
       "name": "plan-claude-md",
       "source": "./commands/plan-claude-md.md",
-      "description": "Analyze repository structure and recommend optimal CLAUDE.md placement strategy"
+      "description": "Analyze repository and recommend Claude Code memory strategy (CLAUDE.md, .claude/rules/, imports)"
     },
     {
       "name": "sync-agents-md",
       "source": "./commands/sync-agents-md.md",
-      "description": "Synchronize all CLAUDE.md files to AGENTS.md files with generic AI agent language"
+      "description": "Synchronize all CLAUDE.md files to AI-agnostic AGENTS.md files"
+    }
+  ],
+  "skills": [
+    {
+      "name": "memory-hierarchy",
+      "source": "./skills/memory-hierarchy",
+      "description": "Complete reference for Claude Code memory system including all file types, locations, and import syntax"
     }
   ],
   "hooks": "./hooks/hooks.json"

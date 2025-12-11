@@ -57,11 +57,13 @@
     {
       "name": "documentation-tools",
       "source": "./plugins/documentation-tools",
-      "description": "Documentation Tools - Utilities for managing and organizing repository documentation for optimal AI agent context, with CLAUDE.md to AGENTS.md conversion",
-      "version": "1.4.0",
+      "description": "Documentation Tools - Complete Claude Code memory management with .claude/rules/, @import syntax, CLAUDE.local.md, and AI-agnostic AGENTS.md conversion",
+      "version": "2.0.0",
       "author": {
         "name": "Tobey Forsman"
-      }
+      },
+      "category": "context-management",
+      "tags": ["documentation", "claude-md", "agents-md", "memory", "rules", "imports"]
     },
     {
       "name": "jira-cli",

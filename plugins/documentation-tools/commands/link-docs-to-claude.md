@@ -1,5 +1,5 @@
 ---
-description: Link all documentation files to CLAUDE.md for better context availability
+description: Link documentation files to Claude Code memory using import syntax (@path) for better context availability
 allowed-tools:
   - Bash
   - Glob
@@ -8,423 +8,326 @@ allowed-tools:
   - Edit
 ---
 
-# Link All Documentation to CLAUDE.md
+# Link Documentation to Claude Code Memory
 
-Ensure all documentation files in the repository are properly referenced in CLAUDE.md files for maximum context availability.
+Ensure all documentation files in the repository are properly referenced in Claude Code memory files using the modern import syntax (`@path/to/file`).
+
+## Claude Code Import Syntax
+
+Claude Code supports importing files with `@path/to/file` syntax:
+
+```markdown
+# In CLAUDE.md
+See @README.md for project overview.
+Architecture details: @docs/architecture.md
+API reference: @docs/api/README.md
+```
+
+**Benefits over markdown links:**
+- Claude Code loads imported content automatically
+- Keeps memory files focused
+- Recursive imports supported (max 5 levels)
+- Works with relative, absolute, and home directory paths (`@~/...`)
 
 ## Instructions
 
-1. **Find all CLAUDE.md files in the repository**:
+### Phase 1: Discover Memory Files
+
+1. **Find all Claude Code memory files**:
+
    ```bash
-   find . -name "CLAUDE.md" -o -name "claude.md" | grep -v node_modules | grep -v .git
+   # Find all memory files
+   find . \( -name "CLAUDE.md" -o -name "CLAUDE.local.md" \) 2>/dev/null | grep -v node_modules | grep -v .git
+
+   # Find rules files
+   find . -path "*/.claude/rules/*.md" 2>/dev/null | grep -v node_modules
+
+   # Check for .claude directory
+   ls -la .claude/ 2>/dev/null
+   ls -la .claude/rules/ 2>/dev/null
    ```
 
-   - Identify the root CLAUDE.md (typically at repository root)
-   - Note any subdirectory CLAUDE.md files
-   - These will be the target files for adding documentation references
+2. **Categorize memory files**:
 
-2. **Inventory all markdown documentation files**:
+   | Type | Files | Can Modify |
+   |------|-------|------------|
+   | Project memory | `./CLAUDE.md`, `./.claude/CLAUDE.md` | Yes |
+   | Project rules | `./.claude/rules/*.md` | Yes (carefully) |
+   | Project local | `./CLAUDE.local.md` | Ask first (personal) |
+   | User memory | `~/.claude/*` | Never modify |
 
-   Use the Glob tool to find all markdown files:
+   **Important**: Never modify `~/.claude/CLAUDE.md` or `~/.claude/rules/` - those are user's personal files.
+
+### Phase 2: Inventory Documentation Files
+
+3. **Find all markdown documentation**:
+
+   Use Glob to find documentation files:
    ```
    pattern: "**/*.md"
    ```
 
-   **Filter the results to exclude:**
-   - `node_modules/` directories
-   - `.git/` directories
-   - Hidden directories (`.*/`)
-   - The CLAUDE.md files themselves
-   - Common non-documentation files:
-     - `README.md` (usually already referenced)
-     - `CHANGELOG.md`
-     - `LICENSE.md`
-     - Package/build files
-
-   **Focus on documentation files like:**
+   **Include:**
    - `docs/**/*.md`
    - `documentation/**/*.md`
    - Architecture documents
    - API documentation
    - How-to guides
    - Technical specifications
-   - Any `.md` files in project subdirectories
 
-3. **For each documentation file found**:
+   **Exclude:**
+   - `node_modules/`, `.git/`, vendor directories
+   - Memory files (CLAUDE.md, CLAUDE.local.md)
+   - `README.md` at root (usually primary doc)
+   - `CHANGELOG.md`, `LICENSE.md`
+   - `.claude/rules/*.md` (these ARE memory, not docs to import)
+   - Generated/build output files
 
-   a) **Read the file to understand its purpose**:
-      - Use the Read tool to examine the first 20-50 lines
-      - Identify the document's primary topic/purpose
-      - Note any key sections or headings
+4. **For each documentation file**:
 
-   b) **Check if it's already referenced in any CLAUDE.md**:
-      - Use Grep to search all CLAUDE.md files for the document's path
-      - Search for both absolute and relative path references
-      - Check for variations (with/without leading `./`, etc.)
+   a) Read first 20-50 lines to understand purpose
+   b) Check if already imported in any memory file:
       ```bash
-      # Example grep pattern
-      grep -r "path/to/doc.md" . --include="CLAUDE.md" --include="claude.md"
+      grep -r "@path/to/doc.md" . --include="CLAUDE.md" --include="*.md" -l | grep -v node_modules
       ```
+   c) Mark unreferenced files for addition
 
-   c) **If NOT already referenced**:
-      - Mark this file as needing a reference
-      - Determine the best CLAUDE.md file to add it to (see step 4)
+### Phase 3: Add Import References
 
-4. **Determine the best CLAUDE.md file for each unreferenced doc**:
+5. **Determine best memory file for each doc**:
 
-   **Decision logic:**
+   | Documentation Type | Best Memory Target |
+   |-------------------|-------------------|
+   | Repository-wide docs | Root `./CLAUDE.md` |
+   | API documentation | `./CLAUDE.md` or `.claude/rules/api.md` |
+   | Testing guides | `.claude/rules/testing.md` if exists, else `./CLAUDE.md` |
+   | Component-specific | Subdirectory `CLAUDE.md` if exists |
+   | Setup/config docs | `./CLAUDE.md` |
 
-   - **Root CLAUDE.md**: Use for:
-     - Repository-wide documentation
-     - Architecture documents
-     - Top-level guides
-     - Cross-cutting concerns
-     - Docs in `docs/` or `documentation/` at root level
+6. **Add imports using `@path` syntax**:
 
-   - **Subdirectory CLAUDE.md**: Use for:
-     - Documentation specific to that subdirectory's domain
-     - Component-specific guides
-     - Module-level technical docs
-     - When a CLAUDE.md exists in or near the doc's directory
+   a) Read target memory file to understand structure
 
-   **When in doubt**: Default to root CLAUDE.md for broader visibility.
-
-5. **Add references to the appropriate CLAUDE.md file(s)**:
-
-   a) **Read the target CLAUDE.md file** to understand its structure
-
-   b) **Find or create an appropriate section** for documentation references:
-      - Look for existing sections like:
-        - "## Documentation"
-        - "## Additional Resources"
-        - "## Reference Materials"
-        - "## Related Documentation"
-      - If none exist, create a new section near the end:
-        ```markdown
-        ## Related Documentation
-
-        Additional documentation files in this repository:
-        ```
-
-   c) **Add the reference with a brief context note**:
+   b) Find or create documentation section:
       ```markdown
-      - [Relative/Path/To/Doc.md](Relative/Path/To/Doc.md) - Brief description of what this doc covers
+      ## Documentation References
+
+      Project documentation (automatically imported):
       ```
 
-   **Guidelines for the brief description:**
-   - One line, 5-15 words
-   - Describe the purpose or content
-   - Use active language
-   - Examples:
-     - "API endpoint specifications and request/response formats"
-     - "Database schema design and migration guide"
-     - "Component architecture and design patterns"
-     - "Deployment procedures and environment configuration"
+   c) Add imports with context:
+      ```markdown
+      ## Documentation References
 
-   d) **Use the Edit tool** to add the reference to the CLAUDE.md file
-      - Add to existing documentation section if present
-      - Maintain alphabetical or logical ordering
-      - Keep consistent formatting with existing references
-
-6. **Optimize documentation link hierarchy** (handle subdirectory CLAUDE.md files):
-
-   **Scenario**: A parent CLAUDE.md may contain links to documentation that would be more appropriately referenced in a newly created subdirectory CLAUDE.md file (closer to the relevant code).
-
-   a) **For each subdirectory CLAUDE.md file** (if any exist):
-
-      - Identify its directory path (e.g., `components/auth/CLAUDE.md`)
-      - Determine its "scope" (the subdirectory it covers)
-
-   b) **Review parent CLAUDE.md files for potentially misplaced references**:
-
-      - Read each parent CLAUDE.md (especially root CLAUDE.md)
-      - Examine all documentation references in the "Related Documentation" or similar sections
-
-   c) **Evaluate each reference for relocation**:
-
-      For each documentation link in a parent CLAUDE.md, check:
-
-      - **Is the referenced file within or closely related to a subdirectory that has its own CLAUDE.md?**
-
-        Example scenarios where relocation makes sense:
-        - Root CLAUDE.md links to `components/auth/README.md` → Move to `components/auth/CLAUDE.md`
-        - Root CLAUDE.md links to `services/api/endpoints.md` → Move to `services/CLAUDE.md` or `services/api/CLAUDE.md`
-        - `src/CLAUDE.md` links to `src/utils/helpers/guide.md` → Move to `src/utils/CLAUDE.md`
-
-      - **Would the reference provide more value at the lower level?**
-
-        Consider:
-        - Proximity to relevant code
-        - Specificity of the documentation (component-specific vs. project-wide)
-        - Whether the subdirectory CLAUDE.md is missing critical context
-
-      - **Should it remain at the parent level?**
-
-        Keep references in parent CLAUDE.md if:
-        - Documentation covers cross-cutting concerns
-        - File provides repository-wide context
-        - Documentation spans multiple subdirectories
-        - The doc is a top-level architecture/overview document
-
-   d) **Move references when appropriate**:
-
-      For references that should be relocated:
-
-      1. **Read the subdirectory CLAUDE.md** to understand its structure
-      2. **Add the reference** to the subdirectory CLAUDE.md:
-         - Adjust the relative path from the new location
-         - Place in appropriate section (create "## Related Documentation" if needed)
-         - Keep the same description or refine it for local context
-      3. **Remove the reference** from the parent CLAUDE.md:
-         - Use Edit tool to cleanly remove the line
-         - Preserve formatting and surrounding references
-         - Don't leave empty sections (remove section if last item)
-
-   e) **Document moved references**:
-
-      Keep track of relocations for the summary report:
-      ```
-      Moved references:
-      - docs/auth/oauth.md: CLAUDE.md → components/auth/CLAUDE.md
-      - services/api/endpoints.md: CLAUDE.md → services/CLAUDE.md
+      Architecture and design: @docs/architecture.md
+      API specification: @docs/api/openapi.md
+      Database schema: @docs/database/schema.md
+      Testing guide: @docs/testing.md
       ```
 
-   **Important considerations**:
-   - Don't create duplicate references (check subdirectory CLAUDE.md first)
-   - Relative paths will change when moving between CLAUDE.md files
-   - When in doubt, leave the reference in the parent (no harm in redundancy)
-   - This is an optimization step—only move references when clearly beneficial
+   **Guidelines:**
+   - Use `@relative/path` format (not markdown links)
+   - Add brief context before or after the import
+   - Group related imports together
+   - One import per line for clarity
 
-7. **Group related documentation** (optional enhancement):
+7. **Import format examples**:
 
-   If multiple documentation files share a common theme or directory:
-   - Group them together in the CLAUDE.md
-   - Use subheadings or bullet point hierarchy
-   - Example:
-     ```markdown
-     ## Related Documentation
-
-     ### API Documentation
-     - [docs/api/endpoints.md](docs/api/endpoints.md) - REST API endpoint reference
-     - [docs/api/authentication.md](docs/api/authentication.md) - Auth flows and token management
-
-     ### Development Guides
-     - [docs/setup.md](docs/setup.md) - Local development environment setup
-     - [docs/testing.md](docs/testing.md) - Testing strategy and guidelines
-     ```
-
-8. **Link child CLAUDE.md files to parent CLAUDE.md files**:
-
-   **Purpose**: Create navigation links from parent CLAUDE.md files to child CLAUDE.md files for easy context discovery.
-
-   a) **Identify CLAUDE.md hierarchy**:
-      - From step 1, you have a list of all CLAUDE.md files
-      - Identify which is the root CLAUDE.md (typically `./CLAUDE.md`)
-      - Identify all subdirectory CLAUDE.md files (e.g., `./src/components/CLAUDE.md`)
-
-   b) **For the root CLAUDE.md** (and any parent CLAUDE.md files):
-
-      - **Find all child CLAUDE.md files**:
-        - Any CLAUDE.md file in a subdirectory relative to this parent
-        - Example: If parent is `./CLAUDE.md`, children include:
-          - `./src/components/design/CLAUDE.md`
-          - `./packages/api/CLAUDE.md`
-          - `./services/auth/CLAUDE.md`
-
-      - **Read each child CLAUDE.md to get context**:
-        - Read the first 5-10 lines of the child CLAUDE.md
-        - Extract the title (first `# Heading`) if present
-        - Infer purpose from title or path if no clear title
-
-      - **Check if child is already referenced**:
-        - Search parent CLAUDE.md for references to the child file path
-        - Look for existing "## Subdirectory Context Files" or similar section
-
-      - **Add or update the "Subdirectory Context Files" section**:
-
-        In the parent CLAUDE.md, find or create this section (typically after main content, before "Related Documentation"):
-
-        ```markdown
-        ## Subdirectory Context Files
-
-        Additional CLAUDE.md files in subdirectories provide focused context for specific areas:
-
-        - [src/components/design/CLAUDE.md](src/components/design/CLAUDE.md) - Design system components
-        - [packages/api/CLAUDE.md](packages/api/CLAUDE.md) - Backend API service
-        - [services/auth/CLAUDE.md](services/auth/CLAUDE.md) - Authentication service
-        ```
-
-        **Guidelines for child CLAUDE.md descriptions**:
-        - Use the title from the child file if available
-        - Or describe the subdirectory's purpose (e.g., "Backend API service", "Design system components")
-        - Keep descriptions brief (3-8 words)
-        - Focus on what that area contains or does
-
-      - **Use relative paths**:
-        - All paths should be relative to the parent CLAUDE.md location
-        - Example: Root `./CLAUDE.md` → child `./src/auth/CLAUDE.md` = link path `src/auth/CLAUDE.md`
-
-      - **Use Edit tool to add the section**:
-        - If section doesn't exist, add it before "## Related Documentation"
-        - If section exists, add missing child references
-        - Keep links alphabetically sorted or grouped logically by area
-        - Don't duplicate existing references
-
-   c) **Handle nested hierarchies** (if applicable):
-
-      - If a subdirectory CLAUDE.md also has children (e.g., `src/CLAUDE.md` and `src/components/CLAUDE.md`):
-        - Link `./CLAUDE.md` → `src/CLAUDE.md` (child)
-        - Link `src/CLAUDE.md` → `src/components/CLAUDE.md` (grandchild)
-        - Each parent only links to its direct children, not grandchildren
-
-      - This creates a natural navigation hierarchy:
-        ```
-        ./CLAUDE.md
-        └── links to: src/CLAUDE.md, packages/CLAUDE.md
-
-        src/CLAUDE.md
-        └── links to: src/components/CLAUDE.md, src/utils/CLAUDE.md
-        ```
-
-   d) **Track child CLAUDE.md links for reporting**:
-
-      Keep count of:
-      - Child CLAUDE.md files found
-      - Child CLAUDE.md links already present
-      - New child CLAUDE.md links added
-      - Which parent files were updated
-
-9. **Report results to the user**:
-
-   Provide a summary:
-   ```
-   📚 Documentation Linking Complete!
-
-   Total markdown files found: X
-   Already referenced in CLAUDE.md: Y
-   Newly added references: Z
-   References relocated: M
-
-   Child CLAUDE.md files:
-   - Total child CLAUDE.md files found: N
-   - Child CLAUDE.md links added: P
-
-   Updated files:
-   - CLAUDE.md (+Z references, -M moved, +P child CLAUDE.md links)
-   - path/to/subdirectory/CLAUDE.md (+N references, +M moved in)
-
-   New references added:
-   - docs/api/endpoints.md → CLAUDE.md
-   - docs/setup.md → CLAUDE.md
-   - components/auth/README.md → components/CLAUDE.md
-
-   References relocated for better hierarchy:
-   - components/auth/oauth-guide.md: CLAUDE.md → components/auth/CLAUDE.md
-   - services/api/endpoints.md: CLAUDE.md → services/CLAUDE.md
-
-   Child CLAUDE.md links added:
-   - src/components/design/CLAUDE.md → CLAUDE.md
-   - packages/api/CLAUDE.md → CLAUDE.md
+   **Simple imports:**
+   ```markdown
+   See @docs/setup.md for local development setup.
+   API reference: @docs/api/README.md
    ```
 
-10. **Suggest next steps**:
-   - "Review the added references for accuracy"
-   - "Consider updating the brief descriptions if needed"
-   - "Run this command periodically to catch new documentation"
+   **Grouped imports:**
+   ```markdown
+   ## Architecture Documentation
 
-## Important Guidelines
+   System overview: @docs/architecture/overview.md
+   Database design: @docs/architecture/database.md
+   API design: @docs/architecture/api.md
+   ```
 
-### What to Reference
-- ✅ Technical documentation files
-- ✅ Architecture and design docs
-- ✅ API specifications
-- ✅ How-to guides and tutorials
-- ✅ Developer onboarding docs
-- ✅ Configuration references
+   **Inline context:**
+   ```markdown
+   For authentication details, see @docs/auth/README.md which covers OAuth2 flows and JWT handling.
+   ```
 
-### What to Skip
-- ❌ CLAUDE.md files in "Related Documentation" sections (but DO link them in "Subdirectory Context Files")
-- ❌ README.md at root (usually already referenced or primary doc)
-- ❌ CHANGELOG.md (version history, not context)
-- ❌ LICENSE.md (legal, not development context)
-- ❌ node_modules/ and vendor directories
-- ❌ Build output or generated files
-- ❌ Package manager files (package.json, etc.)
+### Phase 4: Optimize Hierarchy
 
-### Reference Format
-- Always use relative paths from the CLAUDE.md location
-- Use markdown link syntax: `[display text](path/to/file.md)`
-- Include brief, helpful descriptions
-- Maintain consistent formatting with existing references
+8. **Move imports to appropriate level**:
 
-### Best Practices
-- Group related documentation together
-- Use clear section headers
-- Keep descriptions concise but informative
-- Alphabetize or logically order references
-- Use Edit tool to maintain file formatting
-- Don't duplicate references (check first!)
+   If root CLAUDE.md imports docs that belong to a subdirectory:
 
-## Error Handling
+   **Before:**
+   ```markdown
+   # Root CLAUDE.md
+   Component guide: @src/components/auth/guide.md
+   ```
 
-| Issue | Solution |
-|-------|----------|
-| No CLAUDE.md found | Create one at root with basic structure |
-| CLAUDE.md has no documentation section | Create "## Related Documentation" section |
-| Ambiguous best location | Default to root CLAUDE.md, note in description |
-| File already referenced | Skip, note in summary |
-| Circular reference risk | Never reference CLAUDE.md in itself |
-| Binary or non-text .md files | Skip after read attempt fails |
+   **After (if src/components/auth/CLAUDE.md exists):**
+   ```markdown
+   # Root CLAUDE.md
+   # (removed - now in subdirectory CLAUDE.md)
 
-## Example Output Structure
+   # src/components/auth/CLAUDE.md
+   Component guide: @./guide.md
+   ```
 
-For a root CLAUDE.md file after running this command:
+   **Decision criteria for relocation:**
+   - Doc is within subdirectory that has its own CLAUDE.md
+   - Doc is specific to that subdirectory's domain
+   - Moving provides better locality
 
-```markdown
-# Project Name
+   **Keep in parent if:**
+   - Doc covers cross-cutting concerns
+   - Doc spans multiple subdirectories
+   - It's an overview/architecture document
 
-Project overview and instructions...
+9. **Link child CLAUDE.md files**:
 
-## Repository Structure
+   In parent CLAUDE.md, add navigation to child memory files:
 
-...existing content...
+   ```markdown
+   ## Subdirectory Context
 
-## Subdirectory Context Files
+   Additional context for specific areas:
+   - @src/components/CLAUDE.md - UI component patterns
+   - @packages/api/CLAUDE.md - Backend API service
+   - @services/auth/CLAUDE.md - Authentication service
+   ```
 
-Additional CLAUDE.md files in subdirectories provide focused context for specific areas:
+   **Note:** Use `@path` syntax for child CLAUDE.md links too.
 
-- [src/components/design/CLAUDE.md](src/components/design/CLAUDE.md) - Design system components
-- [packages/api/CLAUDE.md](packages/api/CLAUDE.md) - Backend API service
-- [services/auth/CLAUDE.md](services/auth/CLAUDE.md) - Authentication service
+### Phase 5: Handle Special Cases
 
-## Related Documentation
+10. **Rules files (`.claude/rules/`)**:
 
-Additional documentation files in this repository:
+    Rules files are memory, not documentation to import. However, you CAN:
+    - Add imports TO rules files (docs relevant to that topic)
+    - Reference rules files from CLAUDE.md using `@.claude/rules/topic.md`
 
-- [docs/api/endpoints.md](docs/api/endpoints.md) - REST API endpoint specifications
-- [docs/api/authentication.md](docs/api/authentication.md) - OAuth2 authentication flow
-- [docs/architecture/database.md](docs/architecture/database.md) - Database schema and design patterns
-- [docs/deployment.md](docs/deployment.md) - Production deployment procedures
-- [docs/setup.md](docs/setup.md) - Local development environment setup
-- [docs/testing.md](docs/testing.md) - Testing strategy and CI/CD integration
-```
+    Example in `.claude/rules/testing.md`:
+    ```markdown
+    ---
+    paths: **/*.test.ts
+    ---
+
+    # Testing Rules
+
+    See @docs/testing/patterns.md for detailed examples.
+
+    ## Conventions
+    - Use describe/it blocks
+    - Mock external services
+    ```
+
+11. **CLAUDE.local.md**:
+
+    This is the user's personal file. Before modifying:
+    - Ask user permission
+    - Only add personal/local references
+    - Don't add team documentation here
+
+12. **Large documentation sets**:
+
+    For projects with many docs, use hierarchical imports:
+
+    ```markdown
+    # In CLAUDE.md
+    ## Documentation
+
+    All documentation is in the docs/ directory:
+    - Overview: @docs/README.md (imports other docs)
+
+    # In docs/README.md
+    ## Documentation Index
+
+    Architecture: @./architecture/README.md
+    API: @./api/README.md
+    Guides: @./guides/README.md
+    ```
+
+### Phase 6: Report Results
+
+13. **Provide summary**:
+
+    ```
+    📚 Documentation Linking Complete!
+
+    Memory files found:
+    - Project: ./CLAUDE.md, ./.claude/CLAUDE.md
+    - Rules: ./.claude/rules/*.md (3 files)
+    - Local: ./CLAUDE.local.md (not modified)
+
+    Documentation files:
+    - Total found: 24
+    - Already imported: 8
+    - Newly imported: 12
+    - Skipped (non-doc): 4
+
+    Imports added:
+    - ./CLAUDE.md: +8 imports
+      - @docs/architecture.md
+      - @docs/api/README.md
+      ...
+    - ./.claude/rules/testing.md: +2 imports
+      - @docs/testing/patterns.md
+      - @docs/testing/mocking.md
+
+    Child CLAUDE.md links added:
+    - @src/components/CLAUDE.md → ./CLAUDE.md
+    - @packages/api/CLAUDE.md → ./CLAUDE.md
+
+    References relocated:
+    - @src/auth/guide.md: CLAUDE.md → src/auth/CLAUDE.md
+    ```
+
+14. **Suggest next steps**:
+    - Review added imports for accuracy
+    - Run `/memory` to see loaded files
+    - Consider creating `.claude/rules/` if topic-specific patterns exist
+    - Run periodically to catch new documentation
+
+## Import Syntax Reference
+
+| Syntax | Description |
+|--------|-------------|
+| `@docs/file.md` | Relative to current file |
+| `@./file.md` | Explicitly relative |
+| `@../other/file.md` | Parent directory |
+| `@~/path/file.md` | User home directory |
+| `@/absolute/path.md` | Absolute path |
+
+**Not evaluated inside:**
+- Code blocks (` ``` `)
+- Inline code (`` ` ``)
+
+## What to Import vs Link
+
+| Content | Use Import (`@path`) | Use Markdown Link |
+|---------|---------------------|-------------------|
+| Technical docs | ✅ Yes | No |
+| API specs | ✅ Yes | No |
+| Architecture docs | ✅ Yes | No |
+| External URLs | No | ✅ Yes |
+| README.md (for navigation) | ✅ Yes | No |
+| Child CLAUDE.md files | ✅ Yes | Alternative |
 
 ## Definition of Done
 
-- [ ] All CLAUDE.md files identified
-- [ ] All markdown documentation files inventoried
-- [ ] Each doc checked for existing references
-- [ ] Unreferenced docs identified
-- [ ] Best CLAUDE.md target determined for each unreferenced doc
-- [ ] References added with appropriate brief descriptions
-- [ ] Documentation link hierarchy optimized (references moved to subdirectory CLAUDE.md files where appropriate)
-- [ ] Relative paths updated correctly for any moved references
-- [ ] Child CLAUDE.md files identified and hierarchy established
-- [ ] Parent CLAUDE.md files updated with "Subdirectory Context Files" section
-- [ ] All child CLAUDE.md files linked from appropriate parent CLAUDE.md files
-- [ ] Child CLAUDE.md descriptions extracted or inferred
-- [ ] CLAUDE.md files updated using Edit tool
-- [ ] Summary report provided to user (including child CLAUDE.md links)
-- [ ] No duplicate references created
-- [ ] No circular references created
-- [ ] User informed of next steps
+- [ ] All memory files discovered (CLAUDE.md, rules/, local)
+- [ ] Documentation files inventoried
+- [ ] Existing imports identified
+- [ ] Unreferenced docs marked
+- [ ] Best memory target determined for each doc
+- [ ] Imports added using `@path` syntax
+- [ ] Imports grouped logically
+- [ ] Context provided for each import
+- [ ] Hierarchy optimized (subdirectory relocation)
+- [ ] Child CLAUDE.md files linked
+- [ ] Rules files handled appropriately
+- [ ] CLAUDE.local.md respected (not modified without asking)
+- [ ] User memory (~/.claude/) not touched
+- [ ] Summary report provided
+- [ ] Next steps suggested
