@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "filter": "Bash(git commit*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "ENABLED=$(grep -l 'BRANCH-WORKFLOW-ENABLED' CLAUDE.md CLAUDE.local.md 2>/dev/null); if [ -n \"$ENABLED\" ]; then BRANCH=$(git branch --show-current 2>/dev/null); if [ \"$BRANCH\" = 'main' ] || [ \"$BRANCH\" = 'master' ]; then echo ''; echo '--- Branch Workflow Warning ---'; echo \"You are committing directly to '$BRANCH'.\"; echo ''; echo 'Recommended workflow:'; echo '  1. Create a feature branch: git checkout -b feat/your-feature'; echo '  2. Make your commits there'; echo \"  3. Create a PR to merge back to '$BRANCH'\"; echo ''; echo 'To disable this warning: /toggle-branch-workflow'; echo '---'; fi; fi"
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "filter": "Bash(git push*)",
+        "command": "bash",
+        "args": [
+          "-c",
+          "ENABLED=$(grep -l 'BRANCH-WORKFLOW-ENABLED' CLAUDE.md CLAUDE.local.md 2>/dev/null); if [ -n \"$ENABLED\" ]; then BRANCH=$(git branch --show-current 2>/dev/null); if [ \"$BRANCH\" != 'main' ] && [ \"$BRANCH\" != 'master' ] && [ -n \"$BRANCH\" ]; then echo ''; echo 'Reminder: Create a PR for this branch when ready:'; echo \"  gh pr create --title 'feat: ...' --body '...'\"; fi; fi"
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "bash",
+        "args": [
+          "-c",
+          "ENABLED=$(grep -l 'BRANCH-WORKFLOW-ENABLED' CLAUDE.md CLAUDE.local.md 2>/dev/null); if [ -n \"$ENABLED\" ]; then BRANCH=$(git branch --show-current 2>/dev/null); if [ \"$BRANCH\" != 'main' ] && [ \"$BRANCH\" != 'master' ] && [ -n \"$BRANCH\" ]; then FETCH_HEAD=\".git/FETCH_HEAD\"; if [ -f \"$FETCH_HEAD\" ]; then LAST_FETCH=$(stat -f %m \"$FETCH_HEAD\" 2>/dev/null || stat -c %Y \"$FETCH_HEAD\" 2>/dev/null || echo 0); NOW=$(date +%s); HOURS_AGO=$(( (NOW - LAST_FETCH) / 3600 )); THRESHOLD=${BRANCH_SYNC_HOURS:-2}; if [ \"$HOURS_AGO\" -ge \"$THRESHOLD\" ]; then echo \"\"; echo \"--- Sync Reminder ---\"; echo \"Last fetch was ${HOURS_AGO}h ago. Consider syncing with main:\"; echo \"  git fetch origin && git rebase origin/main\"; echo \"---\"; fi; fi; fi; fi"
+        ]
+      }
+    ]
+  }
+}

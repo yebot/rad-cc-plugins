@@ -1,12 +1,21 @@
 {
   "name": "git-github-operations",
-  "version": "1.1.0",
-  "description": "Git & Github Operations - Streamlined git and GitHub workflow commands",
-  "author": "Tobey Forsman",
+  "version": "1.2.0",
+  "description": "Git & Github Operations - Streamlined git workflows with optional branch-based workflow enforcement",
+  "author": {
+    "name": "Tobey Forsman"
+  },
   "commands": [
     {
       "name": "stage-commit-push",
       "source": "./commands/stage-commit-push.md"
+    },
+    {
+      "name": "toggle-branch-workflow",
+      "source": "./commands/toggle-branch-workflow.md"
     }
-  ]
+  ],
+  "hooks": {
+    "source": "./hooks/hooks.json"
+  }
 }

@@ -4,6 +4,23 @@ You are helping the user perform a complete git workflow: staging changes, creat
 
 ## Instructions
 
+### 0. Check Branch Workflow Status
+
+Before proceeding, check if branch-based workflow is enabled:
+
+```bash
+grep -q "BRANCH-WORKFLOW-ENABLED" CLAUDE.md 2>/dev/null || grep -q "BRANCH-WORKFLOW-ENABLED" CLAUDE.local.md 2>/dev/null
+```
+
+If enabled **AND** currently on `main` or `master`:
+- Inform the user: "Branch workflow is enabled. You're on [main/master]."
+- Ask: "Would you like to create a feature branch first?"
+- If yes, suggest a branch name based on the changes and run:
+  ```bash
+  git checkout -b feat/suggested-name
+  ```
+- If no, proceed but note the workflow deviation
+
 1. **Check git status**: Run `git status` to see what changes exist
 2. **Stage changes**:
    - Ask the user which files to stage, or if they want to stage all changes
