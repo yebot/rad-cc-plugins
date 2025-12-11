@@ -9,5 +9,16 @@
         }
       ]
     }
+  ],
+  "Stop": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "BUN_BUILD_MAX_AGE_HOURS=${BUN_BUILD_MAX_AGE_HOURS:-6}; count=$(find . -maxdepth 1 -name '.*.bun-build' -type f -mmin +$((BUN_BUILD_MAX_AGE_HOURS * 60)) 2>/dev/null | wc -l | tr -d ' '); if [ \"$count\" -gt 0 ]; then find . -maxdepth 1 -name '.*.bun-build' -type f -mmin +$((BUN_BUILD_MAX_AGE_HOURS * 60)) -delete 2>/dev/null && echo \"simbl: Cleaned $count stale Bun build artifact(s) older than ${BUN_BUILD_MAX_AGE_HOURS}h\"; fi"
+        }
+      ]
+    }
   ]
 }
