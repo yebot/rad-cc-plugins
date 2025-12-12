@@ -42,8 +42,6 @@ Then:
    - If file doesn't exist: Use the Write tool to create it with the template block
 3. Report success: "Branch workflow ENABLED in [filename]. Commits to main/master will trigger warnings."
 
-**IMPORTANT**: Do NOT use an "Update" tool - it doesn't exist. Use Edit (for existing files) or Write (for new files).
-
 **Template to append** (get from plugin `docs/branch-workflow-instructions.md` or use this):
 
 ```markdown
