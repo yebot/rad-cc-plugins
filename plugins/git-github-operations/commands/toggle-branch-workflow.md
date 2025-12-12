@@ -7,6 +7,7 @@ allowed-tools:
   - Edit
   - Grep
   - Glob
+  - Skill
   - AskUserQuestion
 ---
 
@@ -46,23 +47,26 @@ Ask the user TWO questions using AskUserQuestion:
 
 Then:
 
-1. **Read the target file** using the Read tool (if it exists)
-2. **Select the appropriate template**:
-   - Standard mode: Use the template from `docs/branch-workflow-standard.md`
-   - Worktree mode: Use the template from `docs/branch-workflow-worktree.md`
-3. **Append the template** to the file content:
+1. **Load the skill**: Use `Skill("git-github-operations:branch-workflow")` to get the templates
+2. **Read the target file** using the Read tool (if it exists)
+3. **Select the appropriate template** from the skill:
+   - Standard mode: Use the "Standard Mode Template" section
+   - Worktree mode: Use the "Worktree Mode Template" section
+4. **Append the template** to the file content:
    - If file exists: Use the Edit tool with `old_string` as the last line(s) of the file, and `new_string` as those lines plus the template
    - If file doesn't exist: Use the Write tool to create it with the template
-4. Report success with the mode enabled
+5. Report success with the mode enabled
 
 ### Templates
 
-**Standard Mode** (`docs/branch-workflow-standard.md`):
+Templates are defined in the `branch-workflow` skill. Use `Skill("git-github-operations:branch-workflow")` to access them.
+
+**Standard Mode**:
 - Traditional `git checkout -b` workflow
 - Switch between branches in same directory
 - Good for: Solo developers, simple projects, linear workflows
 
-**Worktree Mode** (`docs/branch-workflow-worktree.md`):
+**Worktree Mode**:
 - Each feature branch in separate directory
 - Parallel development without context switching
 - Good for: Multiple features, PR reviews while developing, team workflows

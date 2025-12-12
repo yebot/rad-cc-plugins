@@ -13,7 +13,7 @@
       "name": "git-github-operations",
       "source": "./plugins/git-github-operations",
       "description": "Git & Github Operations - Streamlined git workflows with optional branch-based workflow enforcement",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "author": {
         "name": "Tobey Forsman"
       }
