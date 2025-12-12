@@ -51,22 +51,6 @@ When working on tracked tasks:
 - Link PRs to tasks in the PR description
 - Update task status when PR is merged
 
-### Worktrees (Optional)
-
-For working on multiple branches simultaneously, consider git worktrees:
-```bash
-# Create a worktree for a feature
-git worktree add ../project-feat-branch feat/your-feature
-
-# List active worktrees
-git worktree list
-
-# Remove when done
-git worktree remove ../project-feat-branch
-```
-
-See `docs/worktree-patterns.md` in the git-github-operations plugin for more patterns.
-
 ### Configuration
 
 - **Sync reminder threshold**: Set `BRANCH_SYNC_HOURS` env var (default: 2 hours)
