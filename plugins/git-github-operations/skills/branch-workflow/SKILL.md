@@ -10,18 +10,31 @@ Use this template when the user chooses **Standard** workflow mode:
 <!-- BRANCH-WORKFLOW-ENABLED -->
 ## Branch-Based Workflow
 
-This project uses a branch-based development workflow. Follow these practices:
+This project uses a branch-based development workflow.
+
+### CRITICAL: Branch Check Before ANY Work
+
+**STOP.** Before making ANY code changes (Edit, Write, or running commands that modify files):
+
+1. Run: `git branch --show-current`
+2. If on `main` or `master`: **CREATE A FEATURE BRANCH FIRST**
+3. Do NOT proceed with file modifications until on a feature branch
+
+This is **NON-NEGOTIABLE**. Never edit files while on a protected branch.
 
 ### Branch Strategy
 
-- **Protected branches**: `main`, `master` - never commit directly
-- **Feature branches**: Create from main for all new work
+- **Protected branches**: `main`, `master` - never commit directly, never edit files on these branches
+- **Feature branches**: Create from main for ALL new work
 - **Branch naming**: Use prefixes like `feat/`, `fix/`, `refactor/`, `docs/`
 
 ### Workflow Steps
 
-1. **Start new work**: Always create a feature branch
+1. **Before ANY work**: Check and create branch if needed
    ```bash
+   # Check current branch
+   git branch --show-current
+   # If on main/master, create feature branch:
    git checkout main
    git pull origin main
    git checkout -b feat/your-feature-name
@@ -33,7 +46,7 @@ This project uses a branch-based development workflow. Follow these practices:
    git commit -m "feat: description of change"
    ```
 
-3. **Stay in sync**: Periodically rebase on main (hooks will remind you)
+3. **Stay in sync**: Periodically rebase on main
    ```bash
    git fetch origin
    git rebase origin/main
@@ -58,7 +71,6 @@ When working on tracked tasks:
 - Reference task IDs in branch names: `feat/TASK-123-add-feature`
 - Include task references in commit messages: `feat: add feature [TASK-123]`
 - Link PRs to tasks in the PR description
-- Update task status when PR is merged
 
 ### Configuration
 
@@ -79,19 +91,31 @@ Use this template when the user chooses **Worktree** workflow mode:
 <!-- WORKTREE-MODE -->
 ## Branch-Based Workflow (Worktree Mode)
 
-This project uses a worktree-based development workflow. Each feature gets its own directory, allowing parallel development without branch switching.
+This project uses a worktree-based development workflow. Each feature gets its own directory.
+
+### CRITICAL: Worktree Check Before ANY Work
+
+**STOP.** Before making ANY code changes (Edit, Write, or running commands that modify files):
+
+1. Run: `git branch --show-current`
+2. If on `main` or `master`: **CREATE A WORKTREE FIRST**
+3. Do NOT proceed with file modifications until in a feature worktree
+
+This is **NON-NEGOTIABLE**. Never edit files while on a protected branch.
 
 ### Branch Strategy
 
-- **Protected branches**: `main`, `master` - never commit directly
-- **Feature branches**: Create via worktrees from main
+- **Protected branches**: `main`, `master` - never commit directly, never edit files on these branches
+- **Feature branches**: Create via worktrees from main for ALL new work
 - **Branch naming**: Use prefixes like `feat/`, `fix/`, `refactor/`, `docs/`
 
 ### Worktree Workflow
 
-1. **Start new work**: Create a worktree for the feature
+1. **Before ANY work**: Check branch and create worktree if needed
    ```bash
-   # From main repo directory
+   # Check current branch
+   git branch --show-current
+   # If on main/master, create worktree:
    git fetch origin
    git worktree add ../$(basename $PWD)-feat-name -b feat/feature-name origin/main
    cd ../$(basename $PWD)-feat-name
@@ -103,7 +127,7 @@ This project uses a worktree-based development workflow. Each feature gets its o
    git commit -m "feat: description of change"
    ```
 
-3. **Stay in sync**: Periodically rebase on main (hooks will remind you)
+3. **Stay in sync**: Periodically rebase on main
    ```bash
    git fetch origin
    git rebase origin/main
@@ -156,7 +180,6 @@ When working on tracked tasks:
 - Reference task IDs in branch names: `feat/TASK-123-add-feature`
 - Include task references in commit messages: `feat: add feature [TASK-123]`
 - Link PRs to tasks in the PR description
-- Update task status when PR is merged
 
 ### Configuration
 
