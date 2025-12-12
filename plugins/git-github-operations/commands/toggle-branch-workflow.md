@@ -36,10 +36,13 @@ Ask the user where to add the workflow instructions:
 
 Then:
 
-1. Read the template from the plugin docs (or use the embedded template below)
-2. Check if the target file exists; create it if not
-3. Append the workflow instruction block to the file
-4. Report success: "Branch workflow ENABLED in [filename]. Commits to main/master will trigger warnings."
+1. **Read the target file** using the Read tool (if it exists)
+2. **Append the template** to the file content:
+   - If file exists: Use the Edit tool with `old_string` as the last line(s) of the file, and `new_string` as those lines plus the template block below
+   - If file doesn't exist: Use the Write tool to create it with the template block
+3. Report success: "Branch workflow ENABLED in [filename]. Commits to main/master will trigger warnings."
+
+**IMPORTANT**: Do NOT use an "Update" tool - it doesn't exist. Use Edit (for existing files) or Write (for new files).
 
 **Template to append** (get from plugin `docs/branch-workflow-instructions.md` or use this):
 
