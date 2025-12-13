@@ -387,83 +387,64 @@ get_stale_items 7
 
 ## Hook Patterns and Use Cases
 
-Hooks enable event-driven workflows. See `plugins/backlog-md/hooks/hooks.json` for a working example.
+Hooks enable event-driven workflows. See `plugins/backlog-md-cli/hooks/hooks.json` for a working example.
 
 ### Hooks.json Schema (CRITICAL)
 
-**The hooks schema requires a specific nested structure.** Using the wrong format causes validation errors.
+**The hooks schema requires a specific structure with a wrapper object.** Using the wrong format causes validation errors.
 
 **Correct Structure**:
-```json
-{
-  "PreToolUse": [
-    {
-      "matcher": "Bash(git commit*)",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "echo 'Warning message'"
-        }
-      ]
-    }
-  ],
-  "PostToolUse": [
-    {
-      "matcher": "Write|Edit",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "echo 'Post-tool notification'"
-        }
-      ]
-    }
-  ],
-  "UserPromptSubmit": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "echo 'Prompt reminder'"
-        }
-      ]
-    }
-  ]
-}
-```
-
-**Key Requirements**:
-- NO wrapper `"hooks": { }` at top level - hook types are at root
-- Use `matcher` NOT `filter` for tool matching patterns
-- Each hook type item MUST have a `hooks` array inside it
-- Each hook in the array needs `type: "command"` and `command` string
-- Use `|` for multiple matchers (e.g., `"Write|Edit|MultiEdit"`)
-- Empty `matcher: ""` matches all (useful for UserPromptSubmit)
-
-**INVALID Structure** (causes "hooks: Required" errors):
 ```json
 {
   "hooks": {
     "PreToolUse": [
       {
-        "filter": "...",
+        "filter": "Bash(git commit*)",
         "command": "bash",
-        "args": ["-c", "..."]
+        "args": ["-c", "echo 'Warning message'"]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "filter": "Bash(git push*)",
+        "command": "bash",
+        "args": ["-c", "echo 'Post-tool notification'"]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "command": "bash",
+        "args": ["-c", "echo 'Prompt reminder'"]
       }
     ]
   }
 }
 ```
 
-**Reference**: `plugins/backlog-md/hooks/hooks.json` for working example
+**Key Requirements**:
+- MUST have `"hooks": { }` wrapper at top level
+- Use `filter` for tool matching patterns (glob syntax)
+- Each hook has `command` (usually "bash") and `args` array
+- UserPromptSubmit hooks don't need a filter
+- Use `|` for multiple filters (e.g., `"Edit(*)|Write(*)"`)
+- Use `exit 1` in args to block operations
+
+**Plugin.json hooks reference** (string path, not object):
+```json
+{
+  "hooks": "./hooks/hooks.json"
+}
+```
+
+**Reference**: `plugins/backlog-md-cli/hooks/hooks.json` for comprehensive example
 
 ### Hook Best Practices
 
-1. **Enforcement**: Use `exit 1` in command to block operations
+1. **Enforcement**: Use `exit 1` in args to block operations
 2. **Guidance**: Use warnings (no exit) to suggest better alternatives
 3. **Validation**: Use PostToolUse to check after file modifications
 4. **Context**: Use UserPromptSubmit for workflow reminders
-5. **Matcher patterns**: Use glob syntax for tools (e.g., `Bash(git *)`, `Write|Edit`)
+5. **Filter patterns**: Use glob syntax for tools (e.g., `Bash(git *)`, `Edit(*backlog/*)`)
 
 ## Common Development Tasks
 
