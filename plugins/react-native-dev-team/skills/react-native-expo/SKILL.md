@@ -20,8 +20,8 @@ Build cross-platform mobile apps for iOS and Android using React Native with Exp
 3. For Expo Router navigation, see [references/expo-router-reference.md](references/expo-router-reference.md)
 4. For app.json, eas.json, and builds, see [references/expo-config-eas-reference.md](references/expo-config-eas-reference.md)
 5. For state management and patterns, see [references/common-patterns.md](references/common-patterns.md)
-6. **PROACTIVELY fetch https://docs.expo.dev/llms.txt** for comprehensive Expo documentation links when you need deeper information on any Expo topic not covered in the local references
-7. **PROACTIVELY fetch https://reactnative.dev/llms.txt** for comprehensive React Native documentation links when you need deeper information on React Native core APIs, components, or architecture
+6. PROACTIVELY fetch https://docs.expo.dev/llms.txt for comprehensive Expo documentation links when you need deeper information on any Expo topic not covered in the local references
+7. PROACTIVELY fetch https://reactnative.dev/llms.txt for comprehensive React Native documentation links when you need deeper information on React Native core APIs, components, or architecture
 
 ## Quick Start
 
