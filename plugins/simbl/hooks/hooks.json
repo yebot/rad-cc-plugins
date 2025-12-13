@@ -1,24 +1,14 @@
 {
-  "PostToolUse": [
-    {
-      "matcher": "Bash",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "if echo \"$TOOL_OUTPUT\" | grep -qiE '(passed|success|0 failed|All tests passed|PASS)'; then echo 'simbl: Tests passing - consider updating task status with simbl done <id>'; fi"
-        }
-      ]
-    }
-  ],
-  "Stop": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "BUN_BUILD_MAX_AGE_HOURS=${BUN_BUILD_MAX_AGE_HOURS:-6}; count=$(find . -maxdepth 1 -name '.*.bun-build' -type f -mmin +$((BUN_BUILD_MAX_AGE_HOURS * 60)) 2>/dev/null | wc -l | tr -d ' '); if [ \"$count\" -gt 0 ]; then find . -maxdepth 1 -name '.*.bun-build' -type f -mmin +$((BUN_BUILD_MAX_AGE_HOURS * 60)) -delete 2>/dev/null && echo \"simbl: Cleaned $count stale Bun build artifact(s) older than ${BUN_BUILD_MAX_AGE_HOURS}h\"; fi"
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "PostToolUse": [
+      {
+        "filter": "Bash",
+        "command": "bash",
+        "args": [
+          "-c",
+          "if echo \"$TOOL_OUTPUT\" | grep -qiE '(passed|success|0 failed|All tests passed|PASS)'; then echo 'simbl: Tests passing - consider updating task status with simbl done <id>'; fi"
+        ]
+      }
+    ]
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "simbl",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Lightweight companion for SIMBL CLI backlog manager - task hygiene, quick capture, and reduced context-switching during coding sessions",
   "author": {
     "name": "Tobey Forsman"
@@ -57,5 +57,6 @@
       "description": "Best practices for writing SIMBL tasks that Claude can execute with zero context",
       "path": "./skills/effective-tasks"
     }
-  ]
+  ],
+  "hooks": "./hooks/hooks.json"
 }
