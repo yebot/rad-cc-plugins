@@ -42,6 +42,44 @@ All `plugin.json` files must include:
 - `author`: Object with `name` and `email` fields (see example below)
 - Component arrays: `agents`, `commands`, `skills` (as applicable)
 
+### Plugin.json Schema (CRITICAL)
+
+**Adding invalid fields or structures causes "Invalid input" validation errors.** Always reference working plugins when unsure.
+
+**Agents array** - each object must have:
+```json
+{
+  "name": "agent-name",
+  "source": "./agents/agent-name.md",
+  "description": "Brief description"
+}
+```
+- Use `source` (webapp-team style) OR `path` (simbl style) - both work
+- All three fields are required
+
+**Skills array** - each object must have:
+```json
+{
+  "name": "skill-name",
+  "source": "./skills/skill-name"
+}
+```
+- Points to directory containing `SKILL.md`
+- `description` field is optional for skills
+
+**Commands array** - each object must have:
+```json
+{
+  "name": "command-name",
+  "source": "./commands/command-name.md",
+  "description": "Brief description"
+}
+```
+
+**Reference plugins for validation**:
+- `plugins/webapp-team/plugin.json` - comprehensive example with agents, commands, skills
+- `plugins/simbl/plugin.json` - example using `path` instead of `source`
+
 ### Agent Definition Format
 
 Agents use YAML frontmatter followed by markdown instructions:
@@ -57,6 +95,28 @@ color: blue
 ```
 
 See `plugins/agent-architect/templates/claude-code-subagent-template.md` for the complete template.
+
+### Agent Frontmatter Schema (CRITICAL)
+
+**ONLY use these validated frontmatter fields** in agent `.md` files. Adding non-standard fields causes plugin validation errors ("agents: Invalid input").
+
+**Standard Fields** (always safe):
+- `name` - Agent identifier (required)
+- `description` - When to use this agent (required)
+- `tools` - Comma-separated tool list (required)
+- `model` - Always use `inherit` (required)
+
+**Optional Fields** (validated in working plugins):
+- `color` - Display color (e.g., `"#2563eb"`, `blue`)
+- `role` - Role title for display
+- `expertise` - List of expertise areas
+- `triggers` - List of trigger conditions
+
+**INVALID Fields** (will cause validation errors):
+- ❌ `skills` - Not a valid agent frontmatter field
+- ❌ Any other custom fields not listed above
+
+**When in doubt**: Compare your agent frontmatter against working agents in `plugins/webapp-team/agents/` or `plugins/simbl/agents/`.
 
 ### Command Definition Format
 
