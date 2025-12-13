@@ -8,16 +8,25 @@ Begin focused work on a specified task by marking it in-progress and displaying 
 
 ## Arguments
 
-- `$ARGUMENTS` - Task identifier (e.g., "task-42", "42", "customPrefix-42")
+- `$ARGUMENTS` - Task identifier (e.g., "bnc-6", "task-42")
 
 ## Instructions
 
-### Step 1: Parse Task ID
+### Step 1: Resolve Full Task ID
 
-Extract the task ID from `$ARGUMENTS`:
-- Accept formats: `task-42`, `42`, or just digits
-- If user supplies only digits (e.g., "9"), use "task-9" (or "{prefix}-9" if a custom `prefix` is configured in `.simbl/config.yaml`)
-- The CLI accepts short form, so passing just the number works
+**CRITICAL**: The SIMBL CLI requires the full task ID including the prefix (e.g., `bnc-6`, not just `6`).
+
+1. If `$ARGUMENTS` already contains a hyphen (e.g., "bnc-6", "task-42"), use it as-is
+2. If `$ARGUMENTS` is just a number (e.g., "6"), you MUST determine the prefix first:
+
+   ```bash
+   # Get the prefix from config
+   simbl config get prefix 2>/dev/null || echo "task"
+   ```
+
+   Then construct the full ID: `{prefix}-{number}`
+
+3. **Fallback**: If config doesn't exist, run `simbl list` to see actual task IDs and infer the prefix pattern from them
 
 ### Step 2: Mark as In-Progress
 
@@ -57,30 +66,37 @@ Ask the user:
 
 ## Error Handling
 
-- **Task not found**: Search for similar tasks and suggest alternatives
+- **Task not found**:
+  - First, check if you used the correct prefix (run `simbl list` to see actual task IDs)
+  - If the prefix was wrong, retry with the correct full ID
+  - If still not found, suggest similar task numbers
 - **Already in-progress**: Inform user, show task anyway
-- **Invalid ID format**: Show accepted formats
+- **Invalid ID format**: Remind user that full task IDs are required (e.g., "bnc-6", not "6")
 
 ## Example
 
 ```
-User: /simbl-start 42
+User: /simbl:start 6
 
-Claude: Starting work on task-42: Fix null user crash in getProfile
+Claude: [Checks if "6" contains hyphen - it doesn't, so fetches prefix]
+Claude: [Runs: simbl config get prefix → "bnc"]
+Claude: [Constructs full ID: bnc-6]
+Claude: [Runs: simbl tag add bnc-6 in-progress]
+Claude: [Runs: simbl show bnc-6]
+
+Starting work on bnc-6: Implement peak amplitude analysis
 
 **Status**: Now in-progress
 
 **Description**:
-getProfile() in UserService crashes when user not found.
-File: src/services/UserService.ts:45-55
+Analyze audio files for peak amplitude during folder scanning.
 
 **Acceptance Criteria**:
-- [ ] GET /api/users/:id returns 404 for non-existent user
-- [ ] Response includes error message
+- [ ] Peak amplitude extracted during file processing
+- [ ] Value stored in manifest
 - [ ] Existing tests pass
-- [ ] New test covers null case
 
-**Tags**: [p2] [backend] [bug]
+**Tags**: [p1] [project:server]
 
 Ready to proceed with this task? Or would you like clarification on anything?
 ```
