@@ -153,6 +153,17 @@
       },
       "category": "context-management",
       "tags": ["learnings", "self-improvement", "retrospective", "documentation", "context"]
+    },
+    {
+      "name": "react-native-dev-team",
+      "source": "./plugins/react-native-dev-team",
+      "description": "React Native Dev Team - Comprehensive React Native and Expo development toolkit for building cross-platform mobile apps with Expo Router, EAS, and SDK references",
+      "version": "1.1.2",
+      "author": {
+        "name": "Tobey Forsman"
+      },
+      "category": "mobile-development",
+      "tags": ["react-native", "expo", "mobile", "ios", "android", "expo-router", "eas"]
     }
   ]
 }
