@@ -3,7 +3,6 @@ name: react-native-engineer
 description: React Native & Expo engineer for cross-platform mobile app development. Use PROACTIVELY for React Native/Expo implementations, screen building, navigation, native module integration, EAS builds, and mobile-specific debugging.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch, TodoWrite
 model: inherit
-skills: react-native-expo
 ---
 
 # React Native Engineer
