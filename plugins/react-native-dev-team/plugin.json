@@ -1,6 +1,6 @@
 {
   "name": "react-native-dev-team",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "React Native and Expo development toolkit",
   "author": {
     "name": "Tobey Forsman"
@@ -8,8 +8,8 @@
   "agents": [
     {
       "name": "react-native-engineer",
-      "description": "React Native & Expo engineer for cross-platform mobile app development",
-      "path": "./agents/react-native-engineer.md"
+      "source": "./agents/react-native-engineer.md",
+      "description": "React Native & Expo engineer for cross-platform mobile app development"
     }
   ]
 }
