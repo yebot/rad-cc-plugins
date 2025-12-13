@@ -1,6 +1,6 @@
 {
   "name": "react-native-dev-team",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "React Native and Expo development toolkit with comprehensive references for building cross-platform mobile apps",
   "author": {
     "name": "Tobey Forsman"
@@ -18,14 +18,15 @@
   "agents": [
     {
       "name": "react-native-engineer",
-      "source": "./agents/react-native-engineer.md",
-      "description": "React Native & Expo engineer for cross-platform mobile app development. Use PROACTIVELY for React Native/Expo implementations, screen building, navigation, native module integration, EAS builds, and mobile-specific debugging."
+      "description": "React Native & Expo engineer for cross-platform mobile app development. Use PROACTIVELY for React Native/Expo implementations, screen building, navigation, native module integration, EAS builds, and mobile-specific debugging.",
+      "path": "./agents/react-native-engineer.md"
     }
   ],
   "skills": [
     {
       "name": "react-native-expo",
-      "source": "./skills/react-native-expo"
+      "description": "Comprehensive React Native and Expo development skill for building cross-platform mobile apps",
+      "path": "./skills/react-native-expo"
     }
   ]
 }
