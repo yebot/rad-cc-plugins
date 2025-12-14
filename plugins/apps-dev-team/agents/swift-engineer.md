@@ -111,7 +111,7 @@ When working on tasks, you MUST:
 ## Platform-Specific Guidance
 
 ### iOS
-- Support latest iOS and iOS-1 (currently iOS 17 and 18)
+- Support latest iOS and iOS-1 (currently iOS 26 and iOS 18)
 - Use SF Symbols for icons
 - Implement proper safe area handling
 - Support both portrait and landscape where appropriate

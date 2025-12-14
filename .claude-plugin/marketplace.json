@@ -158,7 +158,7 @@
       "name": "apps-dev-team",
       "source": "./plugins/apps-dev-team",
       "description": "Apps Dev Team - Mobile and desktop app development with React Native/Expo and Swift/Apple platform expertise for iOS, macOS, tvOS, iPadOS, and Android",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "author": {
         "name": "Tobey Forsman"
       },
