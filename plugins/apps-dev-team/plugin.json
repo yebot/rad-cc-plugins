@@ -1,0 +1,32 @@
+{
+  "name": "apps-dev-team",
+  "version": "2.0.0",
+  "description": "Mobile and desktop app development toolkit with React Native/Expo and Swift/Apple platform expertise",
+  "author": {
+    "name": "Tobey Forsman"
+  },
+  "agents": [
+    {
+      "name": "react-native-engineer",
+      "description": "React Native & Expo engineer for cross-platform mobile app development. Use PROACTIVELY for React Native/Expo implementations.",
+      "path": "./agents/react-native-engineer.md"
+    },
+    {
+      "name": "swift-engineer",
+      "description": "Swift engineer for iOS, macOS, tvOS, and iPadOS app development. Use PROACTIVELY for native Apple platform implementations.",
+      "path": "./agents/swift-engineer.md"
+    }
+  ],
+  "skills": [
+    {
+      "name": "react-native-expo",
+      "description": "React Native and Expo development skill with SDK references",
+      "path": "./skills/react-native-expo"
+    },
+    {
+      "name": "swift",
+      "description": "Swift and Apple platform development skill for iOS, macOS, tvOS, and iPadOS",
+      "path": "./skills/swift"
+    }
+  ]
+}
