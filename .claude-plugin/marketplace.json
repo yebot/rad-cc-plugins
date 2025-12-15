@@ -104,8 +104,8 @@
     {
       "name": "webapp-team",
       "source": "./plugins/webapp-team",
-      "description": "Webapp Team - A virtual web app development team with 13 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise",
-      "version": "0.2.0",
+      "description": "Webapp Team - A virtual web app development team with 14 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise and system design",
+      "version": "0.3.0",
       "author": {
         "name": "Tobey Forsman"
       }

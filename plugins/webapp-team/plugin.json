@@ -1,7 +1,7 @@
 {
   "name": "webapp-team",
-  "version": "0.2.0",
-  "description": "Webapp Team - A virtual web app development team with 13 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise",
+  "version": "0.3.0",
+  "description": "Webapp Team - A virtual web app development team with 14 specialized agents for engineering, product, design, growth, and operations including Prisma ORM expertise and system design",
   "author": {
     "name": "Tobey Forsman",
     "email": "tobeyforsman@gmail.com"
@@ -71,6 +71,11 @@
       "name": "prisma-engineer",
       "source": "./agents/prisma-engineer.md",
       "description": "Prisma ORM database expert for schema design, migrations, queries, and performance optimization"
+    },
+    {
+      "name": "system-design-engineer",
+      "source": "./agents/system-design-engineer.md",
+      "description": "System Design Engineer for end-to-end architecture of scalable, robust, and performant services"
     }
   ],
   "commands": [
